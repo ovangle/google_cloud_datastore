@@ -1,0 +1,5993 @@
+---
+build.dart --machine --changed=pubspec.yaml
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/datastore.dart --changed=lib/src/schema_v1_pb2.dart
+err: ../tools/protoc-dart-plugin: program not found or is not executable
+--dart_out: protoc-gen-dart: Plugin failed with status code 1.
+build.dart finished [141 ms]
+
+---
+build.dart --machine --changed=tools/protoc-dart-plugin
+err: ../tools/protoc-dart-plugin: program not found or is not executable
+--dart_out: protoc-gen-dart: Plugin failed with status code 1.
+build.dart finished [127 ms]
+
+---
+build.dart --machine --changed=tools/protoc_plugin.dart
+err: ../tools/protoc-dart-plugin: program not found or is not executable
+--dart_out: protoc-gen-dart: Plugin failed with status code 1.
+build.dart finished [123 ms]
+
+---
+build.dart --machine --changed=pubspec.yaml
+err: ../tools/protoc-dart-plugin: program not found or is not executable
+--dart_out: protoc-gen-dart: Plugin failed with status code 1.
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=pubspec.yaml
+err: ../tools/protoc-dart-plugin: program not found or is not executable
+--dart_out: protoc-gen-dart: Plugin failed with status code 1.
+build.dart finished [124 ms]
+
+---
+build.dart --machine --changed=pubspec.yaml
+err: ../tools/protoc-dart-plugin: program not found or is not executable
+--dart_out: protoc-gen-dart: Plugin failed with status code 1.
+build.dart finished [137 ms]
+
+---
+build.dart --machine --changed=bin/protoc-dart-plugin --changed=bin/protoc_plugin.dart --removed=tools/protoc-d...
+err: ../tools/protoc-dart-plugin: program not found or is not executable
+--dart_out: protoc-gen-dart: Plugin failed with status code 1.
+build.dart finished [125 ms]
+
+---
+build.dart --machine --changed=pubspec.yaml
+err: ../tools/protoc-dart-plugin: program not found or is not executable
+--dart_out: protoc-gen-dart: Plugin failed with status code 1.
+build.dart finished [130 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+Unhandled exception:
+No top-level getter 'get:generateDir' declared.
+
+NoSuchMethodError : method not found: 'get:generateDir'
+Receiver: top-level
+Arguments: [...]
+#0      NoSuchMethodError._throwNew (dart:core-patch/errors_patch.dart:166)
+#1      generateMessages (file:///home/ovangle/dart/datastore/build.dart:44:9)
+#2      main (file:///home/ovangle/dart/datastore/build.dart:21:21)
+#3      _startIsolate.isolateStartHandler (dart:isolate-patch/isolate_patch.dart:214)
+#4      _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:115)
+build.dart finished [70 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [465 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [444 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [425 ms]
+
+---
+build.dart --machine --changed=lib/src/schema_v1_pb2.dart
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [427 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [465 ms]
+
+---
+build.dart --machine --changed=lib/src/schema_v1_pb2.dart
+
+build.dart finished [1280 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [828 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [443 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [449 ms]
+
+---
+build.dart --machine --changed=lib/src/schema_v1_pb2.dart
+
+build.dart finished [1245 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1290 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [914 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/schema_v1_pb2.dart
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --removed=proto/service.proto
+error: service.proto: No such file or directory
+build.dart finished [155 ms]
+
+---
+build.dart --machine --changed=proto/service.proto
+
+build.dart finished [415 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [475 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [463 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=proto/service.proto
+error: api.pb.dart: File not found.
+service.proto: Import "api.pb.dart" was not found or had errors.
+build.dart finished [130 ms]
+
+---
+build.dart --machine --changed=proto/service.proto
+error: api.pb.dart: File not found.
+service.proto: Import "api.pb.dart" was not found or had errors.
+service.proto:8:14: "LookupRequest" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:8:38: "LookupResponse" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:11:16: "RunQueryRequest" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:11:42: "RunQueryResponse" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:14:24: "BeginTransactionRequest" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:14:58: "BeginTransactionResponse" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:18:14: "CommitRequest" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:18:38: "CommitResponse" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:21:16: "RollbackRequest" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:21:42: "RollbackResponse" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:25:19: "AllocateIdsRequest" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+service.proto:25:48: "AllocateIdsResponse" seems to be defined in "api.proto", which is not imported by "service.proto".  To use it here, please add the necessary import.
+build.dart finished [126 ms]
+
+---
+build.dart --machine --changed=proto/service.proto
+
+build.dart finished [395 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [442 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [452 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --removed=lib/src/schema_v1_pb2.proto
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [466 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [8202 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [570 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [454 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [445 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [482 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [386 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [415 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1270 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1272 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1202 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1293 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [1311 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [690 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [500 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=pubspec.yaml
+
+build.dart finished [449 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [744 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [587 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [489 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [415 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [444 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [383 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [513 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [446 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [465 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [458 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [3903 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [426 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [482 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1442 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1224 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1309 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1601 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [537 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [441 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [452 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [465 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [455 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [410 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [521 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1343 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1394 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1253 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [450 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [441 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [482 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [458 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [715 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1239 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1323 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1221 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [1314 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [928 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [495 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [374 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [478 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1223 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1343 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1327 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [883 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [458 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1255 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1175 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [385 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [488 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [422 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1213 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1208 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [1336 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1066 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [484 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [455 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1361 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1213 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1559 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [754 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [432 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [442 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [554 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [435 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [494 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [446 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [437 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [435 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [426 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [543 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [434 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [465 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [494 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=pubspec.yaml
+
+build.dart finished [524 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [668 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1204 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1352 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1297 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1209 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [493 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [547 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [419 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1377 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1336 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1298 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1221 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [490 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [470 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [460 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1962 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1433 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [1194 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [492 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [422 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [430 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [432 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [463 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [430 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [453 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [425 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1208 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1282 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1239 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [439 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [467 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [435 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1333 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1326 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1477 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1101 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [453 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [454 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [446 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [546 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [462 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [422 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [450 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [474 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [426 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [527 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1180 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1383 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1229 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [1137 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [460 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [523 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [527 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [451 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [494 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [463 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [432 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [530 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1263 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1331 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1496 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1355 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1317 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [442 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1278 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1299 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1323 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1209 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1050 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [445 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1096 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1211 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1271 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [867 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [458 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [432 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1217 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1244 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1473 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [654 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [460 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [446 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [597 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1198 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1526 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [1343 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1118 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [427 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1258 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1251 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1564 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1347 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [739 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [466 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [442 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [437 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [380 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [372 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [385 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [443 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [450 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [457 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1204 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1287 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1360 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [737 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [435 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [434 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [461 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/entity.pb.dart --changed=lib/src/generated/key.pb.dart --chang...
+
+build.dart finished [480 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [441 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [466 ms]
+
+---
+build.dart --machine --ch---
+build.dart --machine --full
+
+build.dart finished [1398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1255 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [881 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [783 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [768 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1109 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [861 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [786 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [764 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [642 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [801 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [808 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [681 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [691 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [691 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1248 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [534 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [487 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [434 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [590 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [491 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [448 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [410 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [461 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [484 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [427 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [432 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [430 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [383 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [395 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [447 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [418 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [422 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [477 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [448 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [465 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [410 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [410 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [434 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [451 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [422 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [374 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [372 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [442 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [425 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [410 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [415 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [418 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [382 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [395 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [419 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [380 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [575 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [415 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --full
+
+build.dart finished [1752 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [841 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [891 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1092 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1759 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1314 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1128 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [726 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [965 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [646 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [580 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1250 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [987 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [6603 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [589 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [580 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [537 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [634 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [657 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [666 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [532 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [473 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [444 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [415 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [384 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [425 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [384 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [415 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [422 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [425 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [384 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [430 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [459 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [383 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [383 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [444 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [379 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [380 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [381 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [382 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [379 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [380 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [427 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [465 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [419 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [395 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [378 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [449 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [374 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [385 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [395 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [374 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [377 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [380 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [447 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [384 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [385 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [464 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [460 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [434 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [373 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [382 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [377 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [426 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [464 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [383 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [386 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [419 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [441 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [426 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [385 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/helpers.dart
+
+build.dart finished [386 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=pubspec.lock
+
+build.dart finished [459 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=test/all_tests.dart
+
+build.dart finished [439 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [570 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=test/all_tests.dart
+
+build.dart finished [386 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=test/all_tests.dart
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [471 ms]
+
+---
+build.dart --machine --changed=pubspec.yaml
+
+build.dart finished [464 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [666 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [483 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [395 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [386 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [372 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/datastore.dart
+
+build.dart finished [381 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [885 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/datastore.dart
+
+build.dart finished [373 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [381 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [367 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [379 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [381 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [452 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [7698 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2868 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [434 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [476 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [458 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [418 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [441 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [426 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [455 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [419 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [383 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [427 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [427 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [425 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [476 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [801 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [7007 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [418 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [632 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [375 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [373 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [415 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [386 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [380 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [455 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [441 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [443 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [453 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [449 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [427 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [418 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [426 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [462 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [385 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [448 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [415 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [479 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [432 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [448 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [447 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [427 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [410 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [369 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [490 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [419 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [456 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [435 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [447 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [422 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [395 ms]
+
+---
+build.dart --machine --changed=test/connection.dart
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --removed=test/all_tests.dart --removed=test/connection.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [422 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --full
+
+build.dart finished [2135 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2618 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2788 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [761 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [720 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [819 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2306 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2475 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2167 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [19575 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [772 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [644 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [820 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1986 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2032 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2229 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1376 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [868 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [451 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [452 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [520 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [441 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [485 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [426 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [467 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [427 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [457 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [470 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [377 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [4543 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [820 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [410 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [410 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [439 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [1215 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1275 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1360 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [943 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [434 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [712 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/key.pb.dart --changed=lib/src/generated/service.pb.dart
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [425 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [480 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [444 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [419 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [418 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2309 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/entity.pb.dart --changed=lib/src/generated/key.pb.dart --chang...
+
+build.dart finished [446 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [415 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [410 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [370 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [425 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [426 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=bin/test.dart --changed=lib/src/generated/api.pb.dart --changed=lib/src/generate...
+
+build.dart finished [488 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [443 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [452 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [426 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [422 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [434 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [434 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [400 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [423 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [435 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [435 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [441 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [470 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [431 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [434 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [468 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [437 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [484 ms]
+
+---
+build.dart --machine --changed=bin/test.dart
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [460 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [471 ms]
+
+---
+build.dart --machine --full
+
+build.dart finished [1567 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [948 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [701 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [682 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [969 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [720 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [764 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [684 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [572 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [543 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [451 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [382 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [375 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [391 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [528 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [419 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [429 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [438 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [385 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [418 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [394 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [399 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [381 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [381 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [411 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [370 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [420 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [388 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [403 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [409 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [419 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [387 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [379 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [398 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [379 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [382 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [382 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [395 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [389 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [392 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [424 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [382 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [386 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [397 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [416 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [414 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [385 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [440 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [380 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [393 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [378 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [382 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [377 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [381 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [478 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [501 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [430 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [375 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [413 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [421 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [382 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [383 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [386 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [454 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [377 ms]
+
+---
+build.dart --machine --full
+
+build.dart finished [3612 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [754 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [679 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [458 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [494 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [395 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [417 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [404 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart --changed=lib/src/generated/api.pb.dart --changed=lib/sr...
+
+build.dart finished [478 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [401 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [537 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [1518 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1450 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [405 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [428 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [396 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [390 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [436 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [484 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1269 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1214 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1298 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1377 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1230 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [924 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [425 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [508 ms]
+
+---
+build.dart --machine --changed=lib/src/connection.dart
+
+build.dart finished [472 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [407 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [406 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [410 ms]
+
+---
+build.dart --machine --full
+
+build.dart finished [3829 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [852 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [830 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [651 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [686 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [3072 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2368 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2052 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [761 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [653 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1070 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [823 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2067 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1954 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2013 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [758 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [780 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [709 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1614 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2098 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [2206 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1252 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1938 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [511 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [943 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1426 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1247 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1321 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1305 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1297 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [542 ms]
+
+---
+build.dart --machine --full
+
+build.dart finished [562 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [619 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [549 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [655 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1208 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1523 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1312 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1210 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [1303 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [782 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [439 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [468 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [468 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [402 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [379 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [412 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [408 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [385 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [395 ms]
+

@@ -1,0 +1,81 @@
+// An identifier for a particular subset of entities.
+//
+// Entities are partitioned into various subsets, each used by different
+// datasets and different namespaces within a dataset and so forth.
+//
+// All input partition IDs are normalized before use.
+// A partition ID is normalized as follows:
+//   If the partition ID is unset or is set to an empty partition ID, replace it
+//       with the context partition ID.
+//   Otherwise, if the partition ID has no dataset ID, assign it the context
+//       partition ID's dataset ID.
+// Unless otherwise documented, the context partition ID has the dataset ID set
+// to the context dataset ID and no other partition dimension set.
+//
+// A partition ID is empty if all of its fields are unset.
+//
+// Partition dimension:
+// A dimension may be unset.
+// A dimension's value must never be "".
+// A dimension's value must match [A-Za-z\d\.\-_]{1,100}
+// If the value of any dimension matches regex "__.*__",
+// the partition is reserved/read-only.
+// A reserved/read-only partition ID is forbidden in certain documented contexts.
+//
+// Dataset ID:
+// A dataset id's value must never be "".
+// A dataset id's value must match
+// ([a-z\d\-]{1,100}~)?([a-z\d][a-z\d\-\.]{0,99}:)?([a-z\d][a-z\d\-]{0,99}
+message PartitionId {
+  // The dataset ID.
+  optional string dataset_id = 3;
+  // The namespace.
+  optional string namespace = 4;
+}
+
+// A unique identifier for an entity.
+// If a key's partition id or any of its path kinds or names are
+// reserved/read-only, the key is reserved/read-only.
+// A reserved/read-only key is forbidden in certain documented contexts.
+message Key {
+  // Entities are partitioned into subsets, currently identified by a dataset
+  // (usually implicitly specified by the project) and namespace ID.
+  // Queries are scoped to a single partition.
+  optional PartitionId partition_id = 1;
+
+  // A (kind, ID/name) pair used to construct a key path.
+  //
+  // At most one of name or ID may be set.
+  // If either is set, the element is complete.
+  // If neither is set, the element is incomplete.
+  message PathElement {
+    // The kind of the entity.
+    // A kind matching regex "__.*__" is reserved/read-only.
+    // A kind must not contain more than 500 characters.
+    // Cannot be "".
+    required string kind = 1;
+    // The ID of the entity.
+    // Never equal to zero. Values less than zero are discouraged and will not
+    // be supported in the future.
+    optional int64 id = 2;
+    // The name of the entity.
+    // A name matching regex "__.*__" is reserved/read-only.
+    // A name must not be more than 500 characters.
+    // Cannot be "".
+    optional string name = 3;
+  }
+
+  // The entity path.
+  // An entity path consists of one or more elements composed of a kind and a
+  // string or numerical identifier, which identify entities. The first
+  // element identifies a <em>root entity</em>, the second element identifies
+  // a <em>child</em> of the root entity, the third element a child of the
+  // second entity, and so forth. The entities identified by all prefixes of
+  // the path are called the element's <em>ancestors</em>.
+  // An entity path is always fully complete: ALL of the entity's ancestors
+  // are required to be in the path along with the entity identifier itself.
+  // The only exception is that in some documented cases, the identifier in the
+  // last path element (for the entity) itself may be omitted. A path can never
+  // be empty.
+  repeated PathElement path_element = 2;
+} 

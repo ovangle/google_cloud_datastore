@@ -1,0 +1,92 @@
+import "key.proto";
+
+// A message that can hold any of the supported value types and associated
+// metadata.
+//
+// At most one of the <type>Value fields may be set.
+// If none are set the value is "null".
+//
+message Value {
+  // A boolean value.
+  optional bool boolean_value = 1;
+  // An integer value.
+  optional int64 integer_value = 2;
+  // A double value.
+  optional double double_value = 3;
+  // A timestamp value.
+  optional int64 timestamp_microseconds_value = 4;
+  // A key value.
+  optional Key key_value  = 5;
+  // A blob key value.
+  optional string blob_key_value = 16;
+  // A UTF-8 encoded string value.
+  optional string string_value = 17;
+  // A blob value.
+  optional bytes blob_value = 18;
+  // An entity value.
+  // May have no key.
+  // May have a key with an incomplete key path.
+  // May have a reserved/read-only key.
+  optional Entity entity_value = 6;
+  // A list value.
+  // Cannot contain another list value.
+  // Cannot also have a meaning and indexing set.
+  repeated Value list_value = 7;
+
+  // The <code>meaning</code> field is reserved and should not be used.
+  optional int32 meaning = 14;
+
+  // If the value should be indexed.
+  //
+  // The <code>indexed</code> property may be set for a
+  // <code>null</code> value.
+  // When <code>indexed</code> is <code>true</code>, <code>stringValue</code>
+  // is limited to 500 characters and the blob value is limited to 500 bytes.
+  // Exception: If meaning is set to 2, string_value is limited to 2038
+  // characters regardless of indexed.
+  // When indexed is true, meaning 15 and 22 are not allowed, and meaning 16
+  // will be ignored on input (and will never be set on output).
+  // Input values by default have <code>indexed</code> set to
+  // <code>true</code>; however, you can explicitly set <code>indexed</code> to
+  // <code>true</code> if you want. (An output value never has
+  // <code>indexed</code> explicitly set to <code>true</code>.) If a value is
+  // itself an entity, it cannot have <code>indexed</code> set to
+  // <code>true</code>.
+  // Exception: An entity value with meaning 9, 20 or 21 may be indexed.
+  optional bool indexed = 15 [default = true];
+}
+
+// An entity property.
+message Property {
+  // The name of the property.
+  // A property name matching regex "__.*__" is reserved.
+  // A reserved property name is forbidden in certain documented contexts.
+  // The name must not contain more than 500 characters.
+  // Cannot be "".
+  required string name = 1;
+
+  // The value(s) of the property.
+  // Each value can have only one value property populated. For example,
+  // you cannot have a values list of <code>{ value: { integerValue: 22,
+  // stringValue: "a" } }</code>, but you can have <code>{ value: { listValue:
+  // [ { integerValue: 22 }, { stringValue: "a" } ] }</code>.
+  required Value value = 4;
+}
+
+// An entity.
+//
+// An entity is limited to 1 megabyte when stored. That <em>roughly</em>
+// corresponds to a limit of 1 megabyte for the serialized form of this
+// message.
+message Entity {
+  // The entity's key.
+  //
+  // An entity must have a key, unless otherwise documented (for example,
+  // an entity in <code>Value.entityValue</code> may have no key).
+  // An entity's kind is its key's path's last element's kind,
+  // or null if it has no key.
+  optional Key key = 1;
+  // The entity's properties.
+  // Each property's name must be unique for its entity.
+  repeated Property property = 2;
+} 

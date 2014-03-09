@@ -1,0 +1,11 @@
+name: googleclouddatastore
+description: Connect to a google cloud datastore via the protocol buffer api
+dependencies:
+  http: any
+  logging: any
+  protobuf: any
+  quiver: any
+  unittest: any
+dev_dependencies:
+  protoc-plugin:
+    git: https://github.com/dart-lang/dart-protoc-plugin.git
