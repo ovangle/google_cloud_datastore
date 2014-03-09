@@ -5991,3 +5991,33 @@ build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/g
 
 build.dart finished [395 ms]
 
+---
+build.dart --machine --changed=pubspec.yaml
+
+build.dart finished [1048 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [507 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [470 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [433 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [447 ms]
+
+---
+build.dart --machine --changed=lib/src/generated/api.pb.dart --changed=lib/src/generated/entity.pb.dart --chang...
+
+build.dart finished [459 ms]
+
