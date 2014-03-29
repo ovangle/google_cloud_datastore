@@ -72,7 +72,7 @@ void main(List<String> args) {
   //once the transaction returns
   datastore.withTransaction(
       (Transaction transaction) {
-        var key = new Key.topLevel("Trivia", name: "hgtg");
+        var key = new Key("Trivia", name: "hgtg");
         
         return datastore.lookup(key)
             .then((entityResult) {

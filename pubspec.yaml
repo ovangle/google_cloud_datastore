@@ -6,7 +6,7 @@ homepage: http://github.com/ovangle/googleclouddatastore
 dependencies:
   google_oauth2_client:
     git: https://github.com/dart-gde/dart-google-oauth2-library.git
-  http: any
+  http: '>=0.9.0'
   logging: any
   protobuf: any
   quiver: any

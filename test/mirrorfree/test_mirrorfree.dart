@@ -34,7 +34,7 @@ void main() {
     Datastore datastore = new Datastore(mockConnection, [userKind, userDetailsKind]);
     
     test("get/set", () {
-      var userDetailsKey = new Key.topLevel("UserDetails");
+      var userDetailsKey = new Key("UserDetails", name: "gary");
       var userDetails = new Entity(datastore, userDetailsKey);
       userDetails.setProperty("name", "Bob");
       expect(userDetails.getProperty("name"), "Bob", reason: "name");
@@ -46,13 +46,13 @@ void main() {
       expect(userDetails.getProperty("isAdmin"), true, reason: "isAdmin");
       
       var friends = 
-          [ new Key.topLevel("User", name: "ghreuiorew"),
-            new Key.topLevel("User", name: "fdsjkalfdi")
+          [ new Key("User", name: "ghreuiorew"),
+            new Key("User", name: "fdsjkalfdi")
           ];
       userDetails.setProperty("friends", friends);
       expect(userDetails.getProperty("friends"), friends, reason: "friends");
       
-      var userKey = new Key.topLevel("User", name: "dfhasjkue");
+      var userKey = new Key("User", name: "dfhasjkue");
       var user = new Entity(datastore, userKey);
       
       user.setProperty("email", "alice@something.com");
@@ -127,14 +127,14 @@ void main() {
       Datastore datastore = new Datastore(connection, [userKind]);
       
       var keys = 
-                  [ new Key.topLevel("User", name: "asdf"),
-                    new Key.topLevel("User", name: "asdf2"),
-                    new Key.topLevel("User", name: "missing1"),
-                    new Key.topLevel("User", name: "deferred1")
+                  [ new Key("User", name: "asdf"),
+                    new Key("User", name: "asdf2"),
+                    new Key("User", name: "missing1"),
+                    new Key("User", name: "deferred1")
                   ];
       
       test("single", () {
-        return datastore.lookup(new Key.topLevel("User", name: "asdf"))
+        return datastore.lookup(new Key("User", name: "asdf"))
             .then((result) {
               expect(result.hasResult, isTrue);
               expect(result.entity.key, isIn(keys));

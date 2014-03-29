@@ -43,6 +43,20 @@ class property {
 }
 
 /**
+ * An annotation which indicates that the annotated constructor
+ * method should be used instead of the unnamed constructor on the class.
+ * 
+ * The constructor must still accept two arguments, the [:datastore:] and
+ * [:key:] of the created entity and must redirect to the default `Entity`
+ * constructor.
+ */
+const constructKind = const _KindConstructor();
+
+class _KindConstructor {
+  const _KindConstructor();
+}
+
+/**
  * An annotation which marks a final variable on a [:kind:] annotated class as 
  * representing the name of the entity. The variable must be a [String].
  * 

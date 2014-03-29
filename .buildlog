@@ -38798,3 +38798,713 @@ build.dart --machine --changed=lib/src/common/property.dart
 
 build.dart finished [48 ms]
 
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [56 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [46 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [46 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [56 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [46 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=pubspec.yaml
+
+build.dart finished [53 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [54 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [57 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [46 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [56 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [58 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [53 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [54 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [55 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [53 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [56 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [54 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [56 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [54 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [56 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [53 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [54 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [55 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [53 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [53 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --removed=lib/datastore_mirrorfree.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --removed=example/adams_mirrorfree.dart
+
+build.dart finished [57 ms]
+
+---
+build.dart --machine --changed=example/adams.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/annotations.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/annotations.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/annotations.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/annotations.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/annotations.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/annotations.dart
+
+build.dart finished [57 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [62 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [53 ms]
+
+---
+build.dart --machine --changed=lib/src/common/entity.dart
+
+build.dart finished [55 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [54 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [61 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/common.dart
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [46 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [51 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [44 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [46 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [53 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [47 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=lib/src/common/key.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [53 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [47 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [46 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [48 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [49 ms]
+
+---
+build.dart --machine --changed=lib/src/datastore_mirrors/reflection.dart
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=test/mirrorfree/test_mirrorfree.dart
+
+build.dart finished [56 ms]
+
+---
+build.dart --machine --changed=test/mirrorfree/test_mirrorfree.dart
+
+build.dart finished [49 ms]
+

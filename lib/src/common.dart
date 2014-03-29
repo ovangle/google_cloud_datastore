@@ -53,6 +53,23 @@ class Datastore {
   }
   
   /**
+   * Allocate a new unnamed datastore key.
+   */
+  Future<Key> allocateKey(String kind, {Key parentKey}) {
+    var key = (parentKey != null) ? parentKey._toSchemaKey() : new schema.Key();
+    key.pathElement.add(
+        new schema.Key_PathElement()
+        ..kind = kind
+    );
+    schema.AllocateIdsRequest request = new schema.AllocateIdsRequest()
+        ..key.add(key);
+    return connection.allocateIds(request)
+        .then((schema.AllocateIdsResponse response) {
+          return new Key._fromSchemaKey(response.key.first);
+        });
+  }
+  
+  /**
    * Lookup the given [Key] in the datastore and return the associated entity.
    * If the [Key] is not found, the [Future] will complete with a [NoSuchKeyException].
    */

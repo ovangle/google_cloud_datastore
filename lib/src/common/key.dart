@@ -32,20 +32,32 @@ class Key {
   /**
    * Gets a reference to the child of this [Key] with the given [:kind:] and [:name:]
    */
-  Key child(String kind, String name) => new Key._(kind, this, name: name);
+  Key getChild(String kind, {String name}) {
+    if (name == null) {
+      throw new KeyError.incomplete();
+    }
+    return new Key._(kind, this, name: name);
+  }
+  
   
   /**
-   * Creates a new [Key] which points to an entity which exists as an entity at the top level
-   * of the datastore with the given [id] and/or [name].
+   * Create a new key with the provided [:parentKey:] and [:name:].
+   * 
+   * If [:parentKey:] is not provided, the created key is a top level key
+   * in the datastore.
+   * Raises a [KeyError] if [:name:] is not provided.
    */
-  Key.topLevel(String kind, {String name}) : this._(kind, null, name: name);
+  Key(String kind, {Key parentKey, String name}) : this._(kind, parentKey, name: name);
+
+  Key._(String this.kind, Key this.parentKey, {int this.id, String this.name}) {
+    if (id == null && name == null) {
+      throw new KeyError.incomplete();
+    }
+  }
   
   /**
-   * A key of the given [kind], which exists in the datastore as the child of [parentKey]
-   * with the given [id] and/or [name].
+   * Create a new key which refers to the same datastore object as the argument.
    */
-  Key._(String this.kind, Key this.parentKey, {int this.id, String this.name});
-  
   Key.fromKey(Key key) :
     this._(
         key.kind, 
@@ -137,4 +149,14 @@ class Key {
     sbuf.write(")");
     return sbuf.toString();
   }
+}
+
+class KeyError extends Error {
+  final String message;
+  KeyError(String this.message) : super();
+  
+  KeyError.incomplete() :
+    this("Incomplete key. Either a name or id must be provided");
+  
+  toString() => "Invalid key: $message";
 }

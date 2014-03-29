@@ -27,6 +27,8 @@ Kind _kindFromClassMirror(ClassMirror cls) {
   return new Kind(kindName, entityProperties, entityFactory);
 }
 
+final RegExp reservedKey = new RegExp("^__.*__\$");
+
 /**
  * Get the name of the kind represented by a class.
  * The name defaults to the name of the class, but can be overriden
@@ -39,14 +41,36 @@ Kind _kindFromClassMirror(ClassMirror cls) {
  *   static const kindName = "MyKind";
  * }
  */
-String _kindName(kind kind, ClassMirror cls) =>
-    (kind.name != null) ? kind.name : MirrorSystem.getName(cls.simpleName);  
+String _kindName(kind kind, ClassMirror cls) {
+  var name = 
+    (kind.name != null) ? kind.name : MirrorSystem.getName(cls.simpleName);
+  if (name == "")
+    throw new KindError.emptyName(cls);
+  if (name.length >= 500)
+    throw new KindError.nameTooLong(name);
+  if (reservedKey.hasMatch(name))
+    throw new KindError.nameReservedOrReadOnly(name);
+  return name;
+}
 
 /**
- * Returns a method which constructs the class
+ * Returns a method which constructs an instance of the class from the
+ * [Datastore] and [Key] of the class.
  */
 EntityFactory _entityFactory(String kind, ClassMirror cls) {
-  MethodMirror constructor = cls.declarations[cls.simpleName];
+  var constructor;
+  var annotatedConstructors =
+      cls.declarations.values
+      .where((decl) => decl is MethodMirror && decl.isConstructor)
+      .where((decl) => decl.metadata.any((mdata) => mdata.reflectee == constructKind));
+  if (annotatedConstructors.isEmpty) {
+    //Default to the unnamed constructor
+    constructor = cls.declarations[cls.simpleName];
+  } else if (annotatedConstructors.length > 1) {
+    throw new KindError.tooManyConstructors(kind);
+  } else {
+    constructor = annotatedConstructors.first;
+  }
   if (constructor == null) {
     throw new KindError.noValidConstructor(kind);
   }
@@ -132,11 +156,27 @@ class KindError extends Error {
   
   KindError(this.kind, this.message) : super();
   
+  KindError.emptyName(ClassMirror cls):
+    this(MirrorSystem.getName(cls.simpleName), "Name cannot be the empty string");
+  
+  KindError.nameTooLong(String kind) :
+    this(kind, "Datastore names are limited to 500 characters");
+  
+  KindError.nameReservedOrReadOnly(String kind) :
+    this(kind, "Names matching regex __.*__ are reserved/read only on the datastore");
+  
   KindError.noValidConstructor(String kind) :
     this(kind, 
-        "Valid kind must declare an unnamed, generative constructor with "
-        "two mandatory arguments "
-        "which redirects to Entity(Datastore datastore, Key key)");
+        "Valid kind must either declare an unnamed generative constructor "
+        "or a named generative constructor (annotated with @constructKind) "
+        "which accept two mandatory arguments "
+        "and which redirects to Entity(Datastore datastore, Key key)");
+  
+  KindError.tooManyConstructors(String kind) :
+    this(kind, 
+        "Only one constructor can be annotated with the @constructKind"
+        "annotation");
+        
   
   KindError.invalidProperty(String kind, String propertyName) :
     this(kind,
