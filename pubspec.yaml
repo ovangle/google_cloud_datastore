@@ -1,6 +1,11 @@
 name: googleclouddatastore
+version: 0.1.0
+author: Thomas Stephenson
 description: Connect to a google cloud datastore via the protocol buffer api
+homepage: http://github.com/ovangle/googleclouddatastore
 dependencies:
+  google_oauth2_client:
+    git: https://github.com/dart-gde/dart-google-oauth2-library.git
   http: any
   logging: any
   protobuf: any

@@ -1,5 +1,5 @@
-import "entity.proto";
-import "key.proto";
+import "proto/entity.proto";
+import "proto/key.proto";
 
 // The result of fetching an entity from the datastore.
 message EntityResult {

@@ -1,4 +1,4 @@
-import "key.proto";
+import "proto/key.proto";
 
 // A message that can hold any of the supported value types and associated
 // metadata.
