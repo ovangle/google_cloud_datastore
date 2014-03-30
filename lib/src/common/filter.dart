@@ -1,5 +1,39 @@
 part of datastore.common;
 
+
+
+/**
+ * A [Filter] is used in a datastore [Query] to match against persistable properties on a [Kind].
+ */
+abstract class Filter {
+  /**
+   * Returns a filter which compares [:property:] against the given [:value:]
+   * in the datastore.
+   */
+  factory Filter(Property property, Operator operator, dynamic value) =>
+      new _PredicateFilter(property, operator, value);
+  
+  /**
+   * Filters that matches datastore entities who have an ancestor which
+   * matches the specified key.
+   */
+  factory Filter.ancestorIs(Key key) =>
+      new _AncestorFilter(key);
+  
+  /**
+   * Forms a logical conjuction of a collection of filters.
+   */
+  factory Filter.and(Iterable<Filter> filters) =>
+      new _CompositeFilter(filters);
+  
+  schema.Filter _toSchemaFilter(); 
+ 
+  Filter _checkValidFilterForKind(Kind kind);
+}
+
+/**
+ * An operator for use in a predicate filter.
+ */
 class Operator {
   static const EQUAL = 
       const Operator._("==", schema.PropertyFilter_Operator.EQUAL);
@@ -23,18 +57,9 @@ class Operator {
 }
 
 /**
- * A [Filter
+ * Filter entities where the [Property] matches [value]
+ * under one of the operators.
  */
-abstract class Filter {
-  factory Filter(Property property, Operator operator, dynamic value) =>
-      new _PredicateFilter(property, operator, value);
-  
-  factory Filter.and(Iterable<Filter> filters) =>
-      new _CompositeFilter(filters);
-  
-  schema.Filter _toSchemaFilter(); 
-}
-
 class _PredicateFilter implements Filter {
   Property property;
   Operator operator;
@@ -45,6 +70,7 @@ class _PredicateFilter implements Filter {
     this.operator = operator,
     this.value = property.type.checkType(value);
   
+  @override
   schema.Filter _toSchemaFilter() {
     
     schema.Value propValue = new schema.Value();
@@ -57,8 +83,46 @@ class _PredicateFilter implements Filter {
     return new schema.Filter()
       ..propertyFilter = propFilter;
   }
+    
+  @override
+  Filter _checkValidFilterForKind(Kind kind) {
+    if (!kind.hasProperty(property)) {
+      throw new NoSuchPropertyError(kind, property.name);
+    }
+    return this;
+  }
+ 
+  @override
+  String toString() =>
+    "${property.name} $operator $value";
+}
+
+/**
+ * Filters entities who have an ancestor which matches the specified [Key].
+ */
+class _AncestorFilter implements Filter {
+  final Key key;
   
-  String toString() => "${property.name} $operator $value";
+  _AncestorFilter(this.key);
+ 
+  @override
+  Filter _checkValidFilterForKind(Kind kind) => this;
+  
+  @override
+  schema.Filter _toSchemaFilter() {
+    schema.Value propValue = new schema.Value()
+        ..keyValue = key._toSchemaKey();
+    schema.PropertyFilter propFilter = new schema.PropertyFilter()
+      ..property = (new schema.PropertyReference()..name = "__key__")
+      ..operator = schema.PropertyFilter_Operator.HAS_ANCESTOR
+      ..value = propValue;
+    
+    return new schema.Filter()
+      ..propertyFilter = propFilter;
+  }
+  
+  @override
+  String toString() => "ANCESTOR IS ${key}";
 }
 
 class _CompositeFilter implements Filter {
@@ -76,5 +140,10 @@ class _CompositeFilter implements Filter {
   }
   
   String toString() => operands.join(" AND ");
+  
+  Filter _checkValidFilterForKind(Kind kind) { 
+    operands.forEach((operand) => operand._checkValidFilterForKind(kind));
+    return this;
+  }
 }
 

@@ -59,7 +59,7 @@ A `key` is analagous to a file system path and represents a path from the root o
 
 ### Connecting to the datastore ###
 
-The canonical example provided for datastore connections is the `adams` file. As well as providing 
+The canonical example provided for datastore connections is the `example/adams.dar` file.
 
 ### Unmodifiable Properties / Key paths ###
 
@@ -68,10 +68,14 @@ As an example, consider a file that is split up into multiple parts before inser
     @kind
     class File extends Entity {
     	/**
-    	 * Create a new file with the given `fileName` in the datastore.
-    	 * `fileName` is assumed to be unique in the datastore.
+    	 * 
     	 */
-        File(Datastore datastore, String fileName) :
+        static Futuer<File> create(Datastore datastore, io.File file) {
+        	return datastore.allocate("File")
+        		.then((Key fileKey) {
+        			file.open()
+        		});
+        }
         	this(datastore, new Key("File", null, name: fileName));
         
         @constructKind
@@ -79,8 +83,14 @@ As an example, consider a file that is split up into multiple parts before inser
            super(datastore, key);
   	    
   	    //File names are unique in the datastore, so we can use them
-  	    //as the file id.
+  	    //as the file id. This should not be a property, since it is
+  	    //key stored.
         String get fileName => key.name;
+        
+        //A property with automatically inferred type and name
+        @property
+        int get size => getProperty("size");
+        
         
         Future<List<FilePart>> fileParts() {
         	Query query = new Query.ancestorIs(new Key.fromKey(this.key))
@@ -97,16 +107,13 @@ As an example, consider a file that is split up into multiple parts before inser
    		@constructKind
    		FilePart._(Datastore datastore, Key key {Uint8List fileContent}) :
    			super(datastore, key);
-   	
-   		//File parts are unnamed. Ids will be allocated when splitting the file.
-   		int partId => key.id;
    		
    		/**
    		 * The content of the file as a list of bytes.
-   		 * After creation, file content should not be 
+   		 * Property types are usually inferred 
+   		 */ 
    		@property("file_content")
-   		Uint8List get _content => getProperty("file_content")
-   			.unmodifiable();
+   		Uint8List get _content => getProperty("file_content", unmodifiable: true);
    	}
 
     

@@ -39,7 +39,7 @@ class _ListPropertyInstance<T> implements _PropertyInstance<List<T>> {
     this._value = new _ListValue(propertyType.generic, initialValue);
   
   _ListPropertyInstance.fromSchemaProperty(PropertyType this.propertyType, schema.Property schemaProperty) {
-    this._value = propertyType._fromSchemaValue(schemaValue);
+    this._value = propertyType._fromSchemaValue(schemaProperty.value);
   }
   
   @override

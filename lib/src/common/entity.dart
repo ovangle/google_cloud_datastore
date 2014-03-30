@@ -1,9 +1,9 @@
 part of datastore.common;
 
 class Entity {
-  Datastore _datastore;
+  Datastore datastore;
   final Key key;
-  Kind get kind => _datastore.kindByName(key.kind);
+  Kind get kind => datastore.kindByName(key.kind);
   final PropertyMap _properties;
   
   /**
@@ -12,7 +12,7 @@ class Entity {
    * for the entity's properties.
    */
   Entity(Datastore datastore, Key key, [Map<String,dynamic> propertyInits = const {}]) :
-    this._datastore = datastore,
+    this.datastore = datastore,
     this.key = key,
     _properties = new PropertyMap(datastore.kindByName(key.kind), propertyInits);
   
@@ -52,6 +52,9 @@ class Entity {
  * The result of a lookup operation for an [Entity].
  */
 class EntityResult {
+  static const KEY_ONLY = 0;
+  static const ENTITY_PRESENT = 1;
+  
   /**
    * The looked up key
    */
@@ -62,12 +65,29 @@ class EntityResult {
    */
   final Entity entity;
   
-  /**
-   * An entity was found for the provided [Key]
-   */
-  bool get hasResult => entity != null;
+  bool get isKeyOnlyResult => resultType == KEY_ONLY;
   
-  EntityResult._(this.key, this.entity);
+  final resultType;
+  
+  EntityResult._(this.resultType, this.key, this.entity);
+  
+  factory EntityResult._fromSchemaEntityResult(
+      Datastore datastore,
+      schema.EntityResult entityResult, 
+      schema.EntityResult_ResultType resultType) {
+    if (resultType == schema.EntityResult_ResultType.KEY_ONLY) {
+      var key = new Key._fromSchemaKey(entityResult.entity.key);
+      return new EntityResult._(KEY_ONLY, key, null);
+    }
+    if (resultType == schema.EntityResult_ResultType.FULL) {
+      var key = new Key._fromSchemaKey(entityResult.entity.key);
+      var kind = datastore.kindByName(key.kind);
+      var ent = kind._fromSchemaEntity(datastore, key, entityResult.entity);
+      return new EntityResult._(ENTITY_PRESENT, key, ent);
+    }
+    //We don't support projections (yet).
+    assert(false);
+  }
 }
 
 class PropertyMap extends UnmodifiableMapMixin<String,_PropertyInstance> {

@@ -26,6 +26,8 @@ class kind {
  * 
  * [:indexed:] determines whether the datastore property should be indexed (default is `false`)
  * 
+ * if [:type:] is provided, it is used as the schema type of the property. 
+ * 
  * The type of the schema property is inferred from the type of the dart property's return type.
  * Only a limited set of property types are supported by the library, these are:
  * - [dynamic]
@@ -34,12 +36,13 @@ class kind {
  * - [double]/[num] (both interpreted as a schema `double` property)
  * - [String]
  * - [Uint8List] (interpreted as a schema `blob` property)
+ * - [Key]
  * or a [List] of values of any of these types.
  */
 class property {
   final String name;
   final bool indexed;
-  const property({String this.name, bool this.indexed: false});
+  const property({String this.name, PropertyType type, bool this.indexed: false});
 }
 
 /**

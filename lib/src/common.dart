@@ -19,17 +19,13 @@ part 'common/key.dart';
 part 'common/kind.dart';
 part 'common/entity.dart';
 part 'common/filter.dart';
-part 'common/ordering.dart';
 part 'common/property.dart';
 part 'common/property_instance.dart';
 part 'common/query.dart';
 part 'common/transaction.dart';
 
-schema.Value schemaValue;
-
-
 class Datastore {
-  final Map<String, Kind> entityKinds;
+  final Map<String, Kind> _entityKinds;
   final DatastoreConnection connection;
   
   final Logger logger = new Logger("datastore");
@@ -42,10 +38,10 @@ class Datastore {
    * [datasetId] is the name of the dataset to connect to, usally 
    */
   Datastore(DatastoreConnection this.connection, List<Kind> entityKinds) :
-    this.entityKinds = new Map.fromIterable(entityKinds, key: (kind) => kind.name);
+    this._entityKinds = new Map.fromIterable(entityKinds, key: (kind) => kind.name);
     
   Kind kindByName(String name) {
-    var kind = entityKinds[name];
+    var kind = _entityKinds[name];
     if (kind == null) {
       throw new NoSuchKindError(name);
     }
@@ -98,15 +94,21 @@ class Datastore {
     StreamController controller = new StreamController<Entity>();
     connection.lookup(lookupRequest)
         .then((lookupResponse) {
-          for (schema.EntityResult entityResult in lookupResponse.found) {
-            var key = new Key._fromSchemaKey(entityResult.entity.key);
-            var kind = kindByName(key.kind);
-            var found = kind._fromSchemaEntity(this, key, entityResult.entity);
-            controller.add(new EntityResult._(new Key.fromKey(found.key), found));
+          for (var schemaEntityResult in lookupResponse.found) {
+            var entityResult = 
+                new EntityResult._fromSchemaEntityResult(
+                    this, 
+                    schemaEntityResult, 
+                    schema.EntityResult_ResultType.FULL);
+            controller.add(entityResult);
           }
-          for (schema.EntityResult entityResult in lookupResponse.missing) {
-            var key = entityResult.entity.key;
-            controller.add(new EntityResult._(new Key._fromSchemaKey(key), null));
+          for (var schemaEntityResult in lookupResponse.missing) {
+            var entityResult = 
+                new EntityResult._fromSchemaEntityResult(
+                    this, 
+                    schemaEntityResult, 
+                    schema.EntityResult_ResultType.KEY_ONLY);
+            controller.add(entityResult);
           }
           if (lookupResponse.deferred.isEmpty) {
             controller.close();
@@ -120,6 +122,89 @@ class Datastore {
         .catchError(controller.addError);
  
     return controller.stream;
+  }
+  
+  /**
+   * A property expression which is intepreted by the datastore
+   * to mean *return only the entity keys in this query*
+   */
+  static final schema.PropertyExpression _QUERY_PROJECT_KEYS =
+      new schema.PropertyExpression()
+          ..property = (new schema.PropertyReference()..name = '__key__');
+  
+  /**
+   * Run a query against the datastore, fetching all [Key]s which point to an [Entity] which
+   * matches the specified [Query].
+   * 
+   * If [:offset:] is provided, represents the number of results to skip before the first result
+   * of the query is returned.
+   * If [:limit:] is provided and non-negative, represents the maximum number of results to fetch.
+   * A [:limit:] of `-1` is interpreted as a request for all matched results.
+   */
+  Stream<Key> queryKeys(Query query, {int offset: 0, int limit: -1}) {
+    schema.Query schemaQuery = query._toSchemaQuery()
+        ..projection.add(_QUERY_PROJECT_KEYS)
+        ..offset = offset;
+    if (limit >= 0)
+      schemaQuery.limit = limit;
+    return _runSchemaQuery(new schema.RunQueryRequest()..query = schemaQuery)
+        .map((EntityResult result) => result.key);
+  }
+  
+  /**
+   * Run a query against the datastore, fetching all for [Entity]s which match the provided [Query]
+   * 
+   * If [:offset:] is provided, represents the number of results to skip before the first result
+   * of the query is returned
+   * If [:limit:] is provided and non-negative, represents the maximum number of results to fetch.
+   * A [:limit:] of `-1` is interpreted as a request for all matched results.
+   */
+  Stream<EntityResult> query(Query query, {int offset:0, int limit: -1}) {
+    schema.Query schemaQuery = query._toSchemaQuery()
+        ..offset = offset;
+    if (limit >= 0) {
+      schemaQuery.limit = limit;
+    }
+    return _runSchemaQuery(new schema.RunQueryRequest()..query = schemaQuery);
+  }
+  
+  Stream<EntityResult> _runSchemaQuery(schema.RunQueryRequest schemaRequest, [List<int> startCursor]) {
+    StreamController<EntityResult> streamController = new StreamController();
+    
+    if (startCursor != null) {
+      schemaRequest
+        ..query.startCursor = startCursor;
+    } else {
+      schemaRequest
+        ..query.clearStartCursor();
+    }
+    
+    connection.runQuery(schemaRequest)
+      .then((schema.RunQueryResponse response) {
+          schema.QueryResultBatch batch = response.batch;
+          for (var schemaResult in batch) {
+            var result = new EntityResult._fromSchemaEntityResult(
+                this, schemaResult, batch.entityResultType
+            );
+            streamController.add(result);
+          }
+          switch (batch.moreResults) {
+            case schema.QueryResultBatch_MoreResultsType.NOT_FINISHED:
+              streamController
+                  .addStream(_runSchemaQuery(schemaRequest, batch.endCursor))
+                  .then((_) => streamController.close(), onError: streamController.addError);
+              return;
+            case schema.QueryResultBatch_MoreResultsType.MORE_RESULTS_AFTER_LIMIT:
+            case schema.QueryResultBatch_MoreResultsType.NO_MORE_RESULTS:
+              streamController.close();
+              return;
+            default:
+              //Covered all result types
+              assert(false);
+          }
+      })
+      .catchError(streamController.addError);
+    return streamController.stream;
   }
   
   /**

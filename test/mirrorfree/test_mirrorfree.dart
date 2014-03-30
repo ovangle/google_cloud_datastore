@@ -136,7 +136,7 @@ void main() {
       test("single", () {
         return datastore.lookup(new Key("User", name: "asdf"))
             .then((result) {
-              expect(result.hasResult, isTrue);
+              expect(result.isKeyOnlyResult, isFalse);
               expect(result.entity.key, isIn(keys));
             });
       });
@@ -148,7 +148,7 @@ void main() {
               expect(entityResults.map((ent) => ent.key), unorderedEquals(keys));
 
               var foundEntities = entityResults
-                  .where((ent) => ent.hasResult)
+                  .where((result) => !result.isKeyOnlyResult)
                     .map((result) => result.entity);
               expect(foundEntities.map((ent) => ent.getProperty("username")), 
                      unorderedEquals(["nick", "bob", "alice"]));

@@ -5,26 +5,41 @@ part of datastore;
  * with 
  */
 List<Kind> _entityKinds() {
-  return  currentMirrorSystem()
+  Iterable<ClassMirror> annotatedClasses = currentMirrorSystem()
       .libraries.values
       .where((LibraryMirror lib) => lib.uri.scheme != 'dart')
       .expand((lib) => lib.declarations.values.where((cls) => cls is ClassMirror))
       .where((ClassMirror cls) =>
           cls.metadata.any((mdata) => mdata.reflectee is kind)
-      )
-      .map((cls) => _kindFromClassMirror(cls))
-      .toList(growable: false);
+      );
+  Map<String,Kind> foundKinds = new Map<String,Kind>();
+  for (var cls in annotatedClasses) {
+    var kindAnno = _kindAnno(cls);
+    var kindName = _kindName(kindAnno, cls);
+    if (foundKinds.containsKey(kindName))
+      continue;
+    foundKinds[kindName] = _kindFromClassMirror(kindName, cls, foundKinds);
+  }
+  return foundKinds.values.toList(growable: false);
+}
+
+kind _kindAnno(ClassMirror cls) {
+  var kindAnnos = cls.metadata.where((mdata) => mdata.reflectee is kind);
+  if (kindAnnos.isEmpty)
+    throw new KindError.noKindAnnotations(cls);
+  if (kindAnnos.length > 1)
+    throw new KindError.multipleKindAnnotations(cls);
+  return kindAnnos.single.reflectee;
 }
     
-Kind _kindFromClassMirror(ClassMirror cls) {
+Kind _kindFromClassMirror(String kindName, ClassMirror cls, Map<String, Kind> foundKinds) {
   var k = cls.metadata
       .singleWhere((mdata) => mdata.reflectee is kind)
       .reflectee;
-  String kindName = _kindName(k, cls);
-  print("Found kind ($kindName)");
+  Kind extendsKind = _extendsKind(kindName, cls, foundKinds);
   EntityFactory entityFactory = _entityFactory(kindName, cls);
   List<Property> entityProperties = _entityProperties(kindName, cls);
-  return new Kind(kindName, entityProperties, entityFactory);
+  return new Kind(kindName, entityProperties, extendsKind: extendsKind, entityFactory: entityFactory);
 }
 
 final RegExp reservedKey = new RegExp("^__.*__\$");
@@ -91,6 +106,34 @@ EntityFactory _entityFactory(String kind, ClassMirror cls) {
   };
 }
 
+bool _isKind(ClassMirror cls) {
+  var superCls = cls.superclass;
+  if (superCls.reflectedType == Object) {
+    return false;
+  }
+  if (superCls.reflectedType == Entity) {
+    return true;
+  }
+  return _isKind(cls.superclass);
+}
+
+Kind _extendsKind(String kindName, ClassMirror cls, Map<String,Kind> foundKinds) {
+  if (!_isKind(cls))
+    throw new KindError.mustExtendEntity(kindName);
+  var supercls = cls.superclass;
+  
+  if (supercls.reflectedType == reflectClass(Entity))
+    return null;
+  
+  var superKindAnno = _kindAnno(supercls);
+  var superKindName = _kindName(superKindAnno, supercls);
+  
+  var existingKind = foundKinds[superKindName];
+  if (existingKind == null) {
+    foundKinds[superKindName] = _kindFromClassMirror(superKindName, supercls, foundKinds);
+  }
+  return existingKind;
+}
 
 List<Property> _entityProperties(String kind, ClassMirror cls) {
   var annotatedDeclarations = 
@@ -156,6 +199,14 @@ class KindError extends Error {
   
   KindError(this.kind, this.message) : super();
   
+  KindError.noKindAnnotations(ClassMirror cls) :
+    this(MirrorSystem.getName(cls.simpleName), 
+        "No @kind annotation found on class");
+  
+  KindError.multipleKindAnnotations(ClassMirror cls) :
+    this(MirrorSystem.getName(cls.simpleName), 
+        "Multiple @kind annotations on class");
+  
   KindError.emptyName(ClassMirror cls):
     this(MirrorSystem.getName(cls.simpleName), "Name cannot be the empty string");
   
@@ -164,6 +215,14 @@ class KindError extends Error {
   
   KindError.nameReservedOrReadOnly(String kind) :
     this(kind, "Names matching regex __.*__ are reserved/read only on the datastore");
+  
+  KindError.mustExtendEntity(String kind) :
+    this(kind, "A valid kind must extend `Entity`");
+  
+  KindError.superClassNotKind(String kind, ClassMirror superCls) :
+    this(kind, 
+        "The superclass of a kind must either be entity or a valid kind "
+        "(got ${MirrorSystem.getName(superCls.simpleName)}");
   
   KindError.noValidConstructor(String kind) :
     this(kind, 
