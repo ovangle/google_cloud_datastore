@@ -69,15 +69,21 @@ class Datastore {
    * Lookup the given [Key] in the datastore and return the associated entity.
    * If the [Key] is not found, the [Future] will complete with a [NoSuchKeyException].
    */
-  Future<EntityResult> lookup(Key key, [Transaction transaction]) =>
-      _lookupAllSchemaKeys([key._toSchemaKey()], transaction)
-      .first;
+  Future<EntityResult> lookup(Key key, [Transaction transaction]) {
+    logger.info("Submitting lookup request for $key"
+                "${transaction != null ? " (transaction: ${transaction.id}": "" }");
+    return _lookupAllSchemaKeys([key._toSchemaKey()], transaction)
+        .first;
+  }
   
   /**
    * Lookup all the given keys in the datastore, in the context of the given transaction.
    */
-  Stream<EntityResult> lookupAll(Iterable<Key> keys, [Transaction transaction]) =>
-      _lookupAllSchemaKeys(keys.map((k) => k._toSchemaKey()), transaction);
+  Stream<EntityResult> lookupAll(Iterable<Key> keys, [Transaction transaction]) {
+    logger.info("Submitting lookup request for ${keys}"
+                "${transaction != null ? " (transaction: ${transaction.id}" : ""}");
+    return _lookupAllSchemaKeys(keys.map((k) => k._toSchemaKey()), transaction);
+  }
   
   /**
    * Lookup the given schema keys in the datastore, optionally in the context
@@ -100,6 +106,7 @@ class Datastore {
                     this, 
                     schemaEntityResult, 
                     schema.EntityResult_ResultType.FULL);
+            logger.info("Found result for key ${entityResult.key}");
             controller.add(entityResult);
           }
           for (var schemaEntityResult in lookupResponse.missing) {
@@ -108,15 +115,19 @@ class Datastore {
                     this, 
                     schemaEntityResult, 
                     schema.EntityResult_ResultType.KEY_ONLY);
+            logger.info("No result found for key ${entityResult.key}");
             controller.add(entityResult);
           }
           if (lookupResponse.deferred.isEmpty) {
             controller.close();
           } else {
-          controller
-            .addStream(_lookupAllSchemaKeys(lookupResponse.deferred, transaction))
-            .then((_) => controller.close(),
-                  onError: controller.addError);
+            var deferredKeys = lookupResponse.deferred.map((defKey) => new Key._fromSchemaKey(defKey));
+            logger.info("Response contained deferred keys: ${deferredKeys}");
+            logger.info("Submitting lookup request for deferred keys");
+            controller
+                .addStream(_lookupAllSchemaKeys(lookupResponse.deferred, transaction))
+                .then((_) => controller.close(),
+                      onError: controller.addError);
           }
         })
         .catchError(controller.addError);

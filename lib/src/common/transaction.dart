@@ -34,6 +34,8 @@ class Transaction {
    */
   bool get isRolledBack => _isRolledBack;
   
+  Logger get logger => _datastore.logger;
+  
   
   /**
    * A list of entities which will be inserted into the 
@@ -111,13 +113,18 @@ class Transaction {
     return _datastore.connection
         .commit(commitRequest)
         .then((commitResponse) {
+          logger.info("Commit response received");
           _isCommitted = true;
           schema.MutationResult mutationResult = commitResponse.mutationResult;
+          _datastore.logger.info("Transaction committed with ${commitResponse.mutationResult.indexUpdates} index updates");
           _insertedKeys.addAll(
               mutationResult.insertAutoIdKey
                   .map((schemaKey) => new Key._fromSchemaKey(schemaKey))
           );
           return this;
+        })
+        .catchError((err, stackTrace) {
+          logger.severe("Commit request failed", err, stackTrace);
         })
         .whenComplete(() => _runNextTransaction(_datastore));
   }

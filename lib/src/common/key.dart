@@ -22,7 +22,7 @@ class Key {
    */
   final String name;
   
-  List<Key> get path => isTopLevel ? [this] : parentKey.path..add(this);
+  List<Key> get path => isTopLevel ? [this] : (parentKey.path..add(this));
   
   /**
    * Test whether this key is at the top level of the datastore.

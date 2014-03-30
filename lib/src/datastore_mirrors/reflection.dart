@@ -122,7 +122,7 @@ Kind _extendsKind(String kindName, ClassMirror cls, Map<String,Kind> foundKinds)
     throw new KindError.mustExtendEntity(kindName);
   var supercls = cls.superclass;
   
-  if (supercls.reflectedType == reflectClass(Entity))
+  if (supercls.reflectedType == Entity)
     return null;
   
   var superKindAnno = _kindAnno(supercls);

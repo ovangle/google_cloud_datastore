@@ -95,6 +95,16 @@ class DatastoreConnection {
   Future<AllocateIdsResponse> allocateIds(AllocateIdsRequest request) =>
       _call("allocateIds", request, (bytes) => new AllocateIdsResponse.fromBuffer(bytes));
   
+  /**
+   * Send a remote shutdown request to the server.
+   * Will only successfully perform a shutdown on a test server, production
+   * servers will not respond.
+   */
+  Future sendRemoteShutdown() {
+    logger.severe("SUBMITTING REMOTE SHUTDOWN REQUEST");
+    return http.post('$host/_ah/admin/quit');
+  }
+  
   Future<GeneratedMessage> _call(String method, GeneratedMessage message, GeneratedMessage reconstructResponse(List<int> bytes)) {
     var request = new http.Request("POST", Uri.parse("$_url/$method"))
         ..headers['content-type'] = 'application/x-protobuf'
@@ -109,7 +119,7 @@ class DatastoreConnection {
             });
             throw new RPCException(response.statusCode, method, response.reasonPhrase);
           }
-          logger.info("Server returned valid response");
+          logger.info("Server returned valid ($method) response");
           return response.stream
               .first.then(reconstructResponse);
         });
