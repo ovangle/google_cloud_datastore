@@ -168,3 +168,33 @@ build.dart --machine --changed=example/file_storage.dart
 
 build.dart finished [56 ms]
 
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [57 ms]
+
+---
+build.dart --machine --changed=README.md
+
+build.dart finished [50 ms]
+
+---
+build.dart --machine --changed=LICENSE.dart
+
+build.dart finished [58 ms]
+
+---
+build.dart --machine --changed=LICENSE --removed=LICENSE.dart
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=LICENSE
+
+build.dart finished [52 ms]
+
+---
+build.dart --machine --changed=LICENSE
+
+build.dart finished [51 ms]
+

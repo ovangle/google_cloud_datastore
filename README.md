@@ -59,63 +59,11 @@ A `key` is analagous to a file system path and represents a path from the root o
 
 ### Connecting to the datastore ###
 
-The canonical example provided for datastore connections is the `example/adams.dar` file.
+The [canonical example][4] provided for datastore connections is the `example/adams.dart` file.
 
-### Unmodifiable Properties / Key paths ###
+### Filesystem storage ###
 
-As an example, consider a file that is split up into multiple parts before insertion into the datastore (since datastore blob properties have a maximum size of `1MB`).
-
-    @kind
-    class File extends Entity {
-    	/**
-    	 * 
-    	 */
-        static Futuer<File> create(Datastore datastore, io.File file) {
-        	return datastore.allocate("File")
-        		.then((Key fileKey) {
-        			file.open()
-        		});
-        }
-        	this(datastore, new Key("File", null, name: fileName));
-        
-        @constructKind
-        File(Datastore datastore, Key key) : 
-           super(datastore, key);
-  	    
-  	    //File names are unique in the datastore, so we can use them
-  	    //as the file id. This should not be a property, since it is
-  	    //key stored.
-        String get fileName => key.name;
-        
-        //A property with automatically inferred type and name
-        @property
-        int get size => getProperty("size");
-        
-        
-        Future<List<FilePart>> fileParts() {
-        	Query query = new Query.ancestorIs(new Key.fromKey(this.key))
-        		..sortBy('FilePart.__key__');
-        	return datastore.runQuery(query).toList()
-        }
-   	}
-   	
-   	@kind()
-   	class FilePart extends Entity {
-   		FilePart(Datastore datastore, File file, int fileId, Uint8List fileContent) :
-   			this(datastore, file.getChild("FilePart", name: "$fileId"))
-   		
-   		@constructKind
-   		FilePart._(Datastore datastore, Key key {Uint8List fileContent}) :
-   			super(datastore, key);
-   		
-   		/**
-   		 * The content of the file as a list of bytes.
-   		 * Property types are usually inferred 
-   		 */ 
-   		@property("file_content")
-   		Uint8List get _content => getProperty("file_content", unmodifiable: true);
-   	}
-
+An additional example demonstrating how the cloud datastore can be used for storage of file-like objects see 
     
 
        
@@ -127,5 +75,6 @@ A `DatastoreConnection` object can presently only be used for connecting to the 
 Connecting to a remote production datastore instance via a google service account is not yet supported, but is planned for a future release.
 
 [1]: https://developers.google.com/datastore/
-[2]: http://
-[3]: http://gcd.instance
+[2]: https://github.com/dart-lang/dart-protobuf
+[3]: https://developers.google.com/datastore/docs/tools/
+[4]: https://developers.google.com/datastore/docs/getstarted/start_python/
