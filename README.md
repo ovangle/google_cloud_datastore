@@ -40,7 +40,7 @@ eg. The following class declaration a `kind` with no properties which can be per
     
 #### Entity ####
 
-An `Entity` is an instance of a kind. There are two ways of constructing an entity.
+An `entity` represents a persisted instance of a `kind` from the datastore.
 
 
 #### Key ####
@@ -53,7 +53,9 @@ While named entities can be created directly, unnamed
 entities need to be allocated in the datastore before use 
 using the `datastore.allocateKey` method.
 
-A `key` is analagous to a file system path and represents a path from the root of the datastore to the location of the entity. An `entity` can *own* other entities, and queries within this group are guaranteed by the datastore to be strongly consistent. 
+A `key` is analagous to a file system path and represents a path from the root of the datastore 
+to the location of the entity. An `entity` can *own* other entities, and queries within this 
+group are guaranteed by the datastore to be strongly consistent. 
 
 ## Examples ##
 
@@ -63,10 +65,10 @@ The [canonical example][4] provided for datastore connections is the `example/ad
 
 ### Filesystem storage ###
 
-An additional example demonstrating how the cloud datastore can be used for storage of file-like objects see 
-    
+An additional example demonstrating how the cloud datastore can be used for storage of file-like objects see `example/file_storage.dart`.
 
-       
+For a more thorough implementation of file storage using the google cloud datastore, see the
+related package, `cloud_filesystem`.  
 
 ## Limitiations ##
 
