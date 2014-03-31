@@ -7,6 +7,8 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:collection';
 
+import 'package:quiver/async.dart';
+
 import 'package:crypto/crypto.dart' show CryptoUtils;
 import 'package:fixnum/fixnum.dart';
 import 'package:collection/wrappers.dart';
@@ -136,52 +138,30 @@ class Datastore {
   }
   
   /**
-   * A property expression which is intepreted by the datastore
-   * to mean *return only the entity keys in this query*
-   */
-  static final schema.PropertyExpression _QUERY_PROJECT_KEYS =
-      new schema.PropertyExpression()
-          ..property = (new _KeyProperty()._toSchemaPropertyReference());
-  
-  /**
-   * Run a query against the datastore, fetching all [Key]s which point to an [Entity] which
-   * matches the specified [Query].
-   * 
-   * If [:offset:] is provided, represents the number of results to skip before the first result
-   * of the query is returned.
-   * If [:limit:] is provided and non-negative, represents the maximum number of results to fetch.
-   * A [:limit:] of `-1` is interpreted as a request for all matched results.
-   */
-  Stream<Key> queryKeys(Query query, {int offset: 0, int limit: -1}) {
-    schema.Query schemaQuery = query._toSchemaQuery()
-        ..projection.add(_QUERY_PROJECT_KEYS)
-        ..offset = offset;
-    if (limit >= 0)
-      schemaQuery.limit = limit;
-    return _runSchemaQuery(new schema.RunQueryRequest()..query = schemaQuery)
-        .map((EntityResult result) => result.key);
-  }
-  
-  /**
    * Run a query against the datastore, fetching all for [Entity]s which match the provided [Query]
    * 
    * If [:offset:] is provided, represents the number of results to skip before the first result
    * of the query is returned
    * If [:limit:] is provided and non-negative, represents the maximum number of results to fetch.
    * A [:limit:] of `-1` is interpreted as a request for all matched results.
+   * 
+   * NOTE: 
+   * Queries will *not* return results for subkinds of a kind, only objects which
+   * match the kind itself. 
    */
-  Stream<Entity> query(Query query, {int offset:0, int limit: -1}) {
+  Stream<EntityResult> query(Query query, {int offset:0, int limit: -1}) {
     schema.Query schemaQuery = query._toSchemaQuery()
         ..offset = offset;
     if (limit >= 0) {
       schemaQuery.limit = limit;
     }
-    return _runSchemaQuery(new schema.RunQueryRequest()..query = schemaQuery)
-        .map((EntityResult result) => result.entity);
+    return _runSchemaQuery(new schema.RunQueryRequest()..query = schemaQuery);
   }
   
   Stream<EntityResult> _runSchemaQuery(schema.RunQueryRequest schemaRequest, [List<int> startCursor]) {
-    StreamController<EntityResult> streamController = new StreamController();
+    StreamController<EntityResult> streamController;
+    
+    streamController = new StreamController();
     
     if (startCursor != null) {
       schemaRequest
@@ -194,7 +174,7 @@ class Datastore {
     connection.runQuery(schemaRequest)
       .then((schema.RunQueryResponse response) {
           schema.QueryResultBatch batch = response.batch;
-          for (var schemaResult in batch) {
+          for (var schemaResult in batch.entityResult) {
             var result = new EntityResult._fromSchemaEntityResult(
                 this, schemaResult, batch.entityResultType
             );

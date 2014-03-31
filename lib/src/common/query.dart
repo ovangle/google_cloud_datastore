@@ -8,11 +8,12 @@ class Query {
   final Filter filter;
   final List<Property> _groupBy;
   final List<_Ordering> _sortBy;
+  final bool keysOnly;
   
   /**
    * Create a new [Query] which matches against subkinds of the given [Kind]
    */
-  Query(Kind kind, Filter filter) :
+  Query(Kind kind, Filter filter, {bool this.keysOnly: false}) :
     this.kind = kind,
     this.filter = filter._checkValidFilterForKind(kind),
     this._groupBy = new List<Property>(),
@@ -51,25 +52,23 @@ class Query {
     this._sortBy.add(new _Ordering(kind._keyProperty, ascending));
   }
   
-  Iterable<schema.KindExpression> _kindExpr(Datastore datastore) {
-    List<Kind> subKinds = [kind];
-    subKinds.addAll(kind._subKinds(datastore));
-    return subKinds.map((kind) => kind._toSchemaKindExpression());
-  }
-  
-  Iterable<schema.PropertyReference> get _groupByExpr =>
-      _groupBy.map((prop) => prop._toSchemaPropertyReference());
-  
-  Iterable<schema.PropertyOrder> get _orderExpr =>
-      _sortBy.map((ordering) => ordering._toSchemaPropertyOrder());
-  
-  schema.Query _toSchemaQuery(Datastore datastore) {
-    schema.Query schemaQuery = new schema.Query()
-        ..kind.addAll(_kindExpr(datastore))
+  /**
+   * Get a schema query expression from the properties
+   * of this
+   */
+  schema.Query _toSchemaQuery() {
+    var projection = [];
+    if (keysOnly) {
+      var proj = new schema.PropertyExpression()
+          ..property = kind._keyProperty._toSchemaPropertyReference();
+      projection.add(proj);
+    }
+    return new schema.Query()
+        ..kind.add(kind._toSchemaKindExpression())
         ..filter = filter._toSchemaFilter()
-        ..groupBy.addAll(_groupByExpr)
-        ..order.addAll(_orderExpr);
-    return schemaQuery;
+        ..groupBy.addAll(_groupBy.map((prop) => prop._toSchemaPropertyReference()))
+        ..order.addAll(_sortBy.map((order) => order._toSchemaPropertyOrder()))
+        ..projection.addAll(projection);
   }
 }
 

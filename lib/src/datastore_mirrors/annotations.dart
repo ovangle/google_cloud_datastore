@@ -59,15 +59,3 @@ class _KindConstructor {
   const _KindConstructor();
 }
 
-/**
- * An annotation which marks a final variable on a [:kind:] annotated class as 
- * representing the name of the entity. The variable must be a [String].
- * 
- * NOTE: Currently ignored by the library.
- */
-const keyName = const _KeyName();
-//TODO: Implement this.
-class _KeyName {
-  const _KeyName();
-}
-

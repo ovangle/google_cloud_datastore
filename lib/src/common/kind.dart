@@ -53,28 +53,9 @@ class Kind {
   
   Property get _keyProperty => new _KeyProperty();
   
-
-  List<Kind> _cachedSubKinds;
-  Iterable<Kind> _subKinds(Datastore datastore) {
-    if (_cachedSubKinds == null) {
-      _cachedSubKinds = datastore._entityKinds.values
-          .where((kind) => kind._isAssignableTo(this));
-    }
-    return _cachedSubKinds;
-  }
-  
-  bool _isAssignableTo(Kind kind) {
-    if (name == kind.name)
-      return true;
-    if (extendsKind == null)
-      return false;
-    return extendsKind._isAssignableTo(kind);
-  }
-  
   bool hasProperty(Property property) {
     return properties.keys.any((k) => k == property.name);
   }
-  
   
   Entity _fromSchemaEntity(Datastore datastore, Key key, schema.Entity schemaEntity) {
     Entity ent = entityFactory(datastore, key);
