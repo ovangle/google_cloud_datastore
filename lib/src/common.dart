@@ -218,11 +218,21 @@ class Datastore {
     return streamController.stream;
   }
   
+  Future<Transaction> insert(Entity entity) {
+    logger.info("Inserting $entity into datastore");
+    return withTransaction((transaction) => transaction.insert.add(entity))
+        .then((transaction) {
+          logger.info("Insert successful (transaction id: ${transaction.id})");
+          return transaction;
+        });
+    
+  }
+  
   /**
    * Insert the specified entities into the datastore.
    * Returns the committed transaction.
    */
-  Future<Transaction> insertEntities(Iterable<Entity> entities) {
+  Future<Transaction> insertMany(Iterable<Entity> entities) {
     logger.info("Inserting ${entities} into datastore");
     return withTransaction((Transaction transaction) => transaction.insert.addAll(entities))
         .then((transaction) {
