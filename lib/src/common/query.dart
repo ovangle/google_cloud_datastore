@@ -44,7 +44,18 @@ class Query {
     this._sortBy.add(new _Ordering(property, ascending));
   }
   
-  schema.KindExpression get _kindExpr => kind._toSchemaKindExpression();
+  /**
+   * Sort the results of a query by the value of the key. 
+   */
+  void sortByKey({bool ascending: true}) {
+    this._sortBy.add(new _Ordering(kind._keyProperty, ascending));
+  }
+  
+  Iterable<schema.KindExpression> _kindExpr(Datastore datastore) {
+    List<Kind> subKinds = [kind];
+    subKinds.addAll(kind._subKinds(datastore));
+    return subKinds.map((kind) => kind._toSchemaKindExpression());
+  }
   
   Iterable<schema.PropertyReference> get _groupByExpr =>
       _groupBy.map((prop) => prop._toSchemaPropertyReference());
@@ -52,9 +63,9 @@ class Query {
   Iterable<schema.PropertyOrder> get _orderExpr =>
       _sortBy.map((ordering) => ordering._toSchemaPropertyOrder());
   
-  schema.Query _toSchemaQuery() {
+  schema.Query _toSchemaQuery(Datastore datastore) {
     schema.Query schemaQuery = new schema.Query()
-        ..kind.add(_kindExpr)
+        ..kind.addAll(_kindExpr(datastore))
         ..filter = filter._toSchemaFilter()
         ..groupBy.addAll(_groupByExpr)
         ..order.addAll(_orderExpr);
