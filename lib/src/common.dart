@@ -141,7 +141,7 @@ class Datastore {
    */
   static final schema.PropertyExpression _QUERY_PROJECT_KEYS =
       new schema.PropertyExpression()
-          ..property = (new schema.PropertyReference()..name = '__key__');
+          ..property = (new _KeyProperty()._toSchemaPropertyReference());
   
   /**
    * Run a query against the datastore, fetching all [Key]s which point to an [Entity] which
@@ -170,13 +170,14 @@ class Datastore {
    * If [:limit:] is provided and non-negative, represents the maximum number of results to fetch.
    * A [:limit:] of `-1` is interpreted as a request for all matched results.
    */
-  Stream<EntityResult> query(Query query, {int offset:0, int limit: -1}) {
+  Stream<Entity> query(Query query, {int offset:0, int limit: -1}) {
     schema.Query schemaQuery = query._toSchemaQuery()
         ..offset = offset;
     if (limit >= 0) {
       schemaQuery.limit = limit;
     }
-    return _runSchemaQuery(new schema.RunQueryRequest()..query = schemaQuery);
+    return _runSchemaQuery(new schema.RunQueryRequest()..query = schemaQuery)
+        .map((EntityResult result) => result.entity);
   }
   
   Stream<EntityResult> _runSchemaQuery(schema.RunQueryRequest schemaRequest, [List<int> startCursor]) {

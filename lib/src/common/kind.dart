@@ -51,6 +51,7 @@ class Kind {
   Kind(this.name, List<Property> properties, {Kind this.extendsKind, EntityFactory this.entityFactory: _entityFactory}) :
     this._properties = new Map.fromIterable(properties, key: (prop) => prop.name);
   
+  Property get _keyProperty => new _KeyProperty();
   
 
   List<Kind> _cachedSubKinds;

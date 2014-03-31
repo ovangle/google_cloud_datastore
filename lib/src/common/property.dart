@@ -29,6 +29,13 @@ class Property {
       new schema.PropertyReference()..name = name;
 }
 
+/**
+ * A property which represents the key of a kind.
+ */
+class _KeyProperty extends Property {
+  _KeyProperty() : super("__key__", PropertyType.KEY);
+}
+
 class PropertyType<T> {
   /**
    * A [DYNAMIC] property type admits values from any of the valid property types except [LIST].
