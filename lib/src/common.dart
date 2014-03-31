@@ -219,6 +219,106 @@ class Datastore {
   }
   
   /**
+   * Insert the specified entities into the datastore.
+   * Returns the committed transaction.
+   */
+  Future<Transaction> insertEntities(Iterable<Entity> entities) {
+    logger.info("Inserting ${entities} into datastore");
+    return withTransaction((Transaction transaction) => transaction.insert.addAll(entities))
+        .then((transaction) {
+            logger.info("Insert successful (transaction id: ${transaction.id}");
+            return transaction;
+        });
+  }
+  
+  /**
+   * Update the specified entity in the datastore.
+   * Returns the committed transaction.
+   */
+  Future<Transaction> update(Entity entity) {
+    logger.info("Updating $entity in datastore");
+    return withTransaction((transaction) => transaction.update.add(entity))
+        .then((transaction) {
+          logger.info("Update of $entity successful (transaction id: ${transaction.id})");
+          return transaction;
+        });
+  }
+  
+  /**
+   * Update all the specified entities in the datastore.
+   * Returns the committed transaction.
+   */
+  Future<Transaction> updateMany(Iterable<Entity> entities) {
+    logger.info("Updating entities ${entities} in datastore");
+    return withTransaction((Transaction transaction) => transaction.update.addAll(entities))
+        .then((transaction) {
+          logger.info("Update of ${entities} successful (transaction id: ${transaction.id}");
+          return transaction;
+        });
+  }
+  
+  /**
+   * Upsert the given entity into the datastore.
+   * 
+   * An `upsert` operation inserts the entity into the datastore if no matching entity is found
+   * and updates it otherwise.
+   * 
+   * Returns the committed transaction.
+   */
+  Future<Transaction> upsert(Entity entity) {
+    logger.info("Upserting ${entity} in datastore");
+    return withTransaction((transaction) => transaction.upsert.add(entity))
+        .then((transaction) {
+          logger.info("Upsert of $entity successful (transaction id: ${transaction.id}");
+          return transaction;
+        });
+  }
+  
+  /**
+   * Upsert all the given entities in the datastore.
+   * 
+   * An `upsert` operation inserts the entity into the datastore if no matching entity is found
+   * and updates it otherwise.
+   * 
+   * Returns the committed transaction.
+   */
+  Future<Transaction> upsertMany(Iterable<Entity> entities) {
+    logger.info("Upserting entities ${entities} in datastore");
+    return withTransaction((Transaction transaction) => transaction.upsert.addAll(entities))
+        .then((transaction) {
+          logger.info("Upsert of ${entities} successful (transaction is ${transaction.id}");
+          return transaction;
+        });
+  }
+  
+  /**
+   * Delete the entity with the given key from the datastore.
+   * 
+   * Returns the committed transaction.
+   */
+  Future<Transaction> delete(Key key) {
+    logger.info("Deleting ${key} from datastore");
+    return withTransaction((Transaction transaction) => transaction.delete.add(key))
+        .then((transaction) {
+          logger.info("Delete successful");
+        });
+  }
+  
+  /**
+   * Delete the entities with any of the given [:keys:] from the datastore.
+   * 
+   * Returns the committed transaction.
+   */
+  Future<Transaction> deleteMany(Iterable<Key> keys) {
+    logger.info("Deleting keys ${keys} from datastore");
+    return withTransaction((Transaction transaction) => transaction.delete.addAll(keys))
+        .then((transaction) {
+          logger.info("Delete of ${keys} successfull (transaction id: ${transaction.id}");
+          return transaction;
+        });
+  }
+  
+  /**
    * Runs an action in the context of a given transaction and commits
    * the transaction to the datastore.
    * 

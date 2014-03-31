@@ -189,7 +189,6 @@ PropertyType _propertyType(String kind, String propertyName, TypeMirror type, [b
         throw new KindError.unrecognizedPropertyType(kind, propertyName, type);
     }
   }
-  logger.warning("dynamic (${isList ? "List generic" : ""}property type: $kind.$propertyName");
   return PropertyType.DYNAMIC;
 }
 
