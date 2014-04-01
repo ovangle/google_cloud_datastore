@@ -14,15 +14,16 @@ final List<String> protobufferTemplates =
 final Directory protoDir = new Directory('proto');
 
 void main(List<String> args) {
-  /*
   if (args.contains('--clean')) {
     clean().then((_) => exit(0));
     return;
-  } else {
-    generateMessages()
-      .then((exitCode) => exit(exitCode));
   }
-  */
+  if (args.every((arg) => !arg.startsWith('--changed=proto/'))) {
+    //No need to compile protobuffers, nothing has changed
+    return;
+  }
+  generateMessages()
+      .then((exitCode) => exit(exitCode));
 }
 
 /**
