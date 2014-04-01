@@ -43,6 +43,11 @@ class Property {
    * is greater than [:value:]
    */
   Filter filterGreaterThan(var value) => new Filter(this, Operator.GREATER_THAN, value);
+  /**
+   * A filter which matches datastore entities where the property value
+   * is greater than or equal to [:value:]
+   */
+  Filter filterGreaterThanOrEquals(var value) => new Filter(this, Operator.GREATER_THAN_OR_EQUAL, value);
   
   
   String toString() => "Property($type, indexed: $indexed)";

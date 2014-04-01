@@ -43,28 +43,26 @@ class Datastore {
     this._entityKinds = new Map.fromIterable(entityKinds, key: (kind) => kind.name);
     
   /**
-   * Retrieve the kind associated with the name of the kind
+   * Retrieve the kind associated with the name of the kind.
+   * Throws a [NoSuchKindError] if the kind is not known
+   * by the datastore.
    */
   Kind kindByName(String name) {
     var kind = _entityKinds[name];
-    if (kind == null) {
+    if (kind == null)
       throw new NoSuchKindError(name);
-    }
     return kind;
   }
-  
   /**
-   * Retrieve the property given the name of the kind and the name of the property
+   * Retrieve the property associated with the name of the kind.
+   * Throws a [NoSuchPropertyError] if the property is not
+   * found on the kind.
    */
-  Property propByName(String kind, String prop) {
-    var k = kindByName(kind);
-    while (k != null) {
-      var prop = k.properties[prop];
-      if (prop != null)
-        return prop;
-      k = k.extendsKind;
-    }
-    throw new NoSuchPropertyError(kind, prop);
+  Property propByName(String kindName, String propertyName) {
+    var prop = kindByName(kindName).properties[propertyName];
+    if (prop == null)
+      throw new NoSuchPropertyError(kindName, propertyName);
+    return prop;
   }
   
   /**
