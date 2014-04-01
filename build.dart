@@ -18,12 +18,12 @@ void main(List<String> args) {
     clean().then((_) => exit(0));
     return;
   }
-  if (args.every((arg) => !arg.startsWith('--changed=proto/'))) {
-    //No need to compile protobuffers, nothing has changed
-    return;
+  if (args.any((arg) => arg.startsWith('--changed=proto/'))) {
+    //A file in the proto dir was changed.
+    //Regenerated the protobuffers
+    generateMessages()
+        .then((exitCode) => exit(exitCode));
   }
-  generateMessages()
-      .then((exitCode) => exit(exitCode));
 }
 
 /**
