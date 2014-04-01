@@ -42,12 +42,29 @@ class Datastore {
   Datastore(DatastoreConnection this.connection, List<Kind> entityKinds) :
     this._entityKinds = new Map.fromIterable(entityKinds, key: (kind) => kind.name);
     
+  /**
+   * Retrieve the kind associated with the name of the kind
+   */
   Kind kindByName(String name) {
     var kind = _entityKinds[name];
     if (kind == null) {
       throw new NoSuchKindError(name);
     }
     return kind;
+  }
+  
+  /**
+   * Retrieve the property given the name of the kind and the name of the property
+   */
+  Property propByName(String kind, String prop) {
+    var k = kindByName(kind);
+    while (k != null) {
+      var prop = k.properties[prop];
+      if (prop != null)
+        return prop;
+      k = k.extendsKind;
+    }
+    throw new NoSuchPropertyError(kind, prop);
   }
   
   /**
