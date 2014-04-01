@@ -36,7 +36,7 @@ class Key {
     if (name == null) {
       throw new KeyError.incomplete();
     }
-    return new Key._(kind, this, name: name);
+    return new Key(kind, parentKey: this, name: name);
   }
   
   
@@ -47,9 +47,8 @@ class Key {
    * in the datastore.
    * Raises a [KeyError] if [:name:] is not provided.
    */
-  Key(String kind, {Key parentKey, String name}) : this._(kind, parentKey, name: name);
 
-  Key._(String this.kind, Key this.parentKey, {int this.id, String this.name}) {
+  Key(String this.kind, {Key this.parentKey, int this.id, String this.name}) {
     if (id == null && name == null) {
       throw new KeyError.incomplete();
     }
@@ -92,7 +91,7 @@ class Key {
     var parentKey = new Key._fromPath(pathToParent);
     var id   = (pathElement.id == null) ? pathElement.id.toInt() : null;
     var name = (pathElement.name != null) ? pathElement.name : null;
-    return new Key._(kind, parentKey, id: id, name: name);
+    return new Key(kind, parentKey: parentKey, id: id, name: name);
   }
   
   /**

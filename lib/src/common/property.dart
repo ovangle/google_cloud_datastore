@@ -23,6 +23,28 @@ class Property {
   
   const Property(this.name, PropertyType this.type, {this.indexed: false});
   
+  /**
+   * A filter which matches datastore entities where the property value
+   * is equal to [:value:]
+   */
+  Filter filterEquals(var value) => new Filter(this, Operator.EQUAL, value);
+  /**
+   * A filter which matches datastore entities where the property value
+   * is less than [:value:]
+   */
+  Filter filterLessThan(var value) => new Filter(this, Operator.LESS_THAN, value);
+  /**
+   * A filter which matches datastore entities where the property value
+   * is less than or equal to [:value:]
+   */
+  Filter filterLessThanOrEquals(var value) => new Filter(this, Operator.LESS_THAN_OR_EQUAL, value);
+  /**
+   * A filter which matches datastore entities where the property value
+   * is greater than [:value:]
+   */
+  Filter filterGreaterThan(var value) => new Filter(this, Operator.GREATER_THAN, value);
+  
+  
   String toString() => "Property($type, indexed: $indexed)";
   
   schema.PropertyReference _toSchemaPropertyReference() =>
