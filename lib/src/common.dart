@@ -218,7 +218,11 @@ class Datastore {
     logger.info("Inserting $entity into datastore");
     return withTransaction((transaction) => transaction.insert.add(entity))
         .then((transaction) {
-          logger.info("Insert successful (transaction id: ${transaction.id})");
+          if (transaction.isCommitted) { 
+            logger.info("Insert successful (transaction id: ${transaction.id})");
+          } else {
+            logger.warning("Insert failed (transaction id: ${transaction.id})");
+          }
           return transaction;
         });
     

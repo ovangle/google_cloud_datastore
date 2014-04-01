@@ -51,7 +51,7 @@ class Entity {
 /**
  * The result of a lookup operation for an [Entity].
  */
-class EntityResult {
+class EntityResult<T extends Entity> {
   static const KEY_ONLY = 0;
   static const ENTITY_PRESENT = 1;
   
@@ -63,9 +63,11 @@ class EntityResult {
    * The entity found associated with the [:key:] in the datastore,
    * or `null` if no entity corresponding with the given key exists.
    */
-  final Entity entity;
+  final T entity;
   
   bool get isKeyOnlyResult => resultType == KEY_ONLY;
+  
+  bool get isPresent => resultType == ENTITY_PRESENT;
   
   final resultType;
   
