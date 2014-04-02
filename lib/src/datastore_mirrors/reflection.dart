@@ -164,6 +164,8 @@ Property _propertyFromMethod(String kind, MethodMirror method) {
 String _propertyName(property property, DeclarationMirror method) =>
     property.name != null ? property.name : MirrorSystem.getName(method.simpleName);
 
+final _LIST_TYPE = reflectClass(List);
+
 PropertyType _propertyType(String kind, String propertyName, TypeMirror type, [bool isList=false]) {
   if (type is ClassMirror) {
     switch(type.reflectedType) {
@@ -182,11 +184,12 @@ PropertyType _propertyType(String kind, String propertyName, TypeMirror type, [b
         return PropertyType.KEY;
       case DateTime:
         return PropertyType.DATE_TIME;
-      case List:
-        PropertyType genericType = _propertyType(kind, propertyName, type.typeArguments.first, true);
-        return PropertyType.LIST(genericType);
-      default:
-        throw new KindError.unrecognizedPropertyType(kind, propertyName, type);
+    }
+    if (type.originalDeclaration == _LIST_TYPE) {
+      PropertyType genericType = _propertyType(kind, propertyName, type.typeArguments.first, true);
+      return PropertyType.LIST(genericType);
+    } else {
+      throw new KindError.unrecognizedPropertyType(kind, propertyName, type);
     }
   }
   return PropertyType.DYNAMIC;
