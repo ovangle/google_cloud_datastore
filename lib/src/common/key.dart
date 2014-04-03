@@ -89,8 +89,8 @@ class Key {
   factory Key._fromPathElement(Iterable<schema.Key_PathElement> pathToParent, schema.Key_PathElement pathElement) {
     var kind = pathElement.kind;
     var parentKey = new Key._fromPath(pathToParent);
-    var id   = (pathElement.id == null) ? pathElement.id.toInt() : null;
-    var name = (pathElement.name != null) ? pathElement.name : null;
+    var id   = (pathElement.hasId()) ? pathElement.id.toInt() : null;
+    var name = (pathElement.hasName()) ? pathElement.name : null;
     return new Key(kind, parentKey: parentKey, id: id, name: name);
   }
   
@@ -101,7 +101,7 @@ class Key {
     var pathElement = new schema.Key_PathElement()
         ..kind = this.kind;
     if (id != null) {
-      pathElement.id = id;
+      pathElement.id = new Int64(id);
     }
     if (name != null) {
       pathElement.name = name;
