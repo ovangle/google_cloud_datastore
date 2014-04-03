@@ -12,13 +12,68 @@ Two methods for interacting with the datastore are offered by the library. In ad
 Include the datastore library in your `pubspec.yaml` file:
 
     dependencies:
-      googleclouddatastore: '>=0.1.0'
+      googleclouddatastore: '>=0.2.0'
       
-A new connection to the datastore can be created using a `DatastoreConnection` object. The `clientId` should be the 
+The packages exposes two APIs, the `datastore` API, which provides a mechanism for defining persistent objects based on standard dart class definitions and provides utility methods for interacting with the datastore. To use this library, import the `datastore` library from the root of the `package`
 
-    import 
+    import 'package:googleclouddatastore/datastore.dart';
+    
+A minimal library which provides access to the raw protobuffer API (which is generated directly from the [datastore protobuffer API schema][6]) and to the `DatastoreConnection` instance is avialable vial the `datastore.protobuf` library.
+
+    import 'package:googleclouddatastore/datastore_protobuf.dart';
+    
+### Connections ###
+      
+The main connection to the datastore is available via an instance of the `DatastoreConnection` object. In order to access the datastore from a compute engine, it is assumed that you have enabled the `Google Cloud Datastore API` using the [google developer console][5] and either:
+
+- you are connected to a compute engine instance with the `datastore` and `userinfo.email` scopes
+- You have a valid service account and associated private key file with which to connect to the datastore instance.
+- You can make http requests to an instance of the [gcd][3] tool.
+
+#### Connect from compute engine instance ####
+
+If connecting to the datastore from an instance of the compute engine, the `DatastoreConnection` object simply needs to be instantiated using the `datasetId` of the target datastore.
+
+	final DatastoreConnection connection = 
+		new DatastoreConnection(<dataset_id>, projectNumber: <project_number>);
+
+#### Connect using service account ####
+
+If connecting to the datastore using a service acount and key file, these can be passed into the constructor by specifying the service account name (the email of the service account) and a private key file (which is obtained by creating an instance of the service account).
+
+The private key file needs to be in a `.pem` format, which can be obtained from the `.p12` file supplied from google using the command
+    
+    openssl pkcs12 -in <privatekey>.p12 -nocerts \
+         -passin pass:notasecret -nodes -out <rsa_private_key>.pem
+
+If asked for the import password, the password will be `notasecret`.
+
+The datastore can then be instantiated with the details of the service account.
+
+    final DatastoreConnection connection = new DatastoreConnection(
+    	"<dataset_id>",
+    	projectNumber: "project_number",
+    	serviceAccount: "<service_account_email>",
+    	pathToPrivateKey: "<path_to_private_key>");
+    	  
+#### Connect to gcd tool ####
+
+If connecting to a compute engine instance running at a given host, simply provide the datasetId and hostname to the `DatastoreConnection` instance.
+
+    final DatastoreConnection connection = new DatastoreConnection(
+    	<dataset_id>, 		
+    	host:<gcd_host>);
+
     
 ### Key concepts ###
+
+#### Datastore ####
+
+The `Datastore` negotiates communications over a `DatastoreConnection`. Providing utility methods for looking up, querying and mutating entities. Creating a `Datastore` object will automatically scan the local mirror system for `kinds` during construction. 
+
+	final Datastore datastore = new Datastore(connection);
+
+**Note:** It is assumed that only **one** instance of the `Datastore` object is available to the application in it's lifetime.
 
 #### Kind ####
 
@@ -80,3 +135,4 @@ Connecting to a remote production datastore instance via a google service accoun
 [2]: https://github.com/dart-lang/dart-protobuf
 [3]: https://developers.google.com/datastore/docs/tools/
 [4]: https://developers.google.com/datastore/docs/getstarted/start_python/
+[5]: https://console.developers.google.com/

@@ -1,5 +1,5 @@
 name: googleclouddatastore
-version: 0.1.1
+version: 0.2.0
 author: Thomas Stephenson <ovangle@gmail.com>
 description: Connect to a google cloud datastore via the protocol buffer api
 homepage: http://github.com/ovangle/googleclouddatastore

@@ -1,5 +1,6 @@
 library connection;
 
+import 'dart:io';
 import 'dart:async';
 import 'dart:convert' show UTF8;
 
@@ -45,31 +46,48 @@ class DatastoreConnection {
   String get _url => '$host/datastore/$API_VERSION/datasets/$datasetId';
 
   DatastoreConnection._(this.datasetId, this._sendRequest, this.host);
-
+  
   /**
-   * Create a new connection to the [Datastore].
-   * [:clientId:] is the google assigned client ID associated with a service account
-   * authorised to access the dataset.
-   * [:datasetId:] is the name of the dataset to connect to. Usually the same as the projectId
-   * associated with the service account.
-   * [:host:] is the hostname of the google datastore. Defaults to `http://www.googleapis.com`.
+   * Creates a new [DatastoreConnection].
    * 
-   * If connecting to a `gcd` test server (see `https://developers.google.com/datastore/docs/tools/`)
-   * then [:host:] should be set to the gcd server location and [:makeAuthRequests:] should be `false`.
+   * [:projectNumber:] is google assigned project number associated with the 
+   * datastore. 
+   * [:datasetId:] is the id of the dataset to connect to, usually the same
+   * as the google assigned `project ID` associated with the dataset.
+   * 
+   * If connecting to a remote instance of the datastore via a service account, the
+   * following two arguments must both be provided, otherwise they should be `null`.
+   * 
+   * [:serviceAccount:] is a service account email used for 
+   * authenticating with a remote instance of the datastore.
+   * [:pathToPrivateKey:] is the filesystem path to the authentication token 
+   * in the `.pem` format for the service account. 
+   * 
+   * If connecting to an instance of the `gcd` tool at the specified `host`, then
+   * the [:host:] argument should be set to the location of a running instance of
+   * the `gcd` tool.
    */
-  factory DatastoreConnection(String clientId, String datasetId, {bool makeAuthRequests: true, String host:GOOGLE_API_URL}) {
+  factory DatastoreConnection(String projectNumber, String datasetId, {String serviceAccount, String pathToPrivateKey, String host}) {
+    var makeAuthRequests = false;
+    Uri hostUri;
+    if (host == null) {
+      host = GOOGLE_API_URL;
+      makeAuthRequests = true;
+    }
     if (makeAuthRequests) {
-      oauth2.ComputeOAuth2Console computeEngineConsole = new oauth2.ComputeOAuth2Console(clientId);
-      _sendAuthorisedRequest(http.Request request) {
-        return computeEngineConsole
-            .withClient((client) => client.send(request));
-      }
-      return new DatastoreConnection._(datasetId, _sendAuthorisedRequest, host);
+      oauth2.ComputeOAuth2Console console = new oauth2.ComputeOAuth2Console(
+          projectNumber, 
+          iss: serviceAccount,
+          privateKey: pathToPrivateKey,
+          scopes: API_SCOPE.join(" "));
+     
+      _sendAuthorizedRequest(http.Request request) =>
+          console.withClient((client) => client.send(request));
+      return new DatastoreConnection._(datasetId, _sendAuthorizedRequest, host);
     } else {
-      _sendRequest(http.Request request) => request.send();
+      _sendRequest(request) => request.send();
       return new DatastoreConnection._(datasetId, _sendRequest, host);
     }
-    
   }
 
   /**
