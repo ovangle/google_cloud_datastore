@@ -63,17 +63,9 @@ class Transaction {
    */
   List<Key> delete = new List<Key>();
   
-  List<Key> _insertedKeys = new List<Key>();
   /**
-   * The keys which were inserted during the transaction.
-   * Will be empty until the 
+   * Begin a new transaction against the datastore
    */
-  Iterable<Key> get insertedKeys => _insertedKeys;
-  
-  /**
-   * Begin a new transaction against the 
-   */
-  
   static Future<Transaction> begin(Datastore datastore, {dynamic onTimeout()}) {
     Completer<Transaction> pendingTransaction = new Completer<Transaction>();
     _transactionQueue.addLast(pendingTransaction);
@@ -117,14 +109,11 @@ class Transaction {
           _isCommitted = true;
           schema.MutationResult mutationResult = commitResponse.mutationResult;
           _datastore.logger.info("Transaction committed with ${commitResponse.mutationResult.indexUpdates} index updates");
-          _insertedKeys.addAll(
-              mutationResult.insertAutoIdKey
-                  .map((schemaKey) => new Key._fromSchemaKey(schemaKey))
-          );
           return this;
         })
         .catchError((err, stackTrace) {
           logger.severe("Commit request failed", err, stackTrace);
+          throw err;
         })
         .whenComplete(() => _runNextTransaction(_datastore));
   }
@@ -146,11 +135,8 @@ class Transaction {
   }
   
   schema.Mutation _toSchemaMutation() {
-    Iterable insertAutoId = insert.where((ent) => ent.key.name == null);
-    Iterable insertNoAutoId = insert.where((ent) => ent.key.name != null);
     return new schema.Mutation()
-      ..insert.addAll(insertNoAutoId.map((ent) => ent._toSchemaEntity()))
-      ..insertAutoId.addAll(insertAutoId.map((ent) => ent._toSchemaEntity()))
+      ..insert.addAll(insert.map((ent) => ent._toSchemaEntity()))
       ..upsert.addAll(upsert.map((ent) => ent._toSchemaEntity()))
       ..update.addAll(update.map((ent) => ent._toSchemaEntity()))
       ..delete.addAll(delete.map((k) => k._toSchemaKey()));
