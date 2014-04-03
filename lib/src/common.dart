@@ -210,7 +210,10 @@ class Datastore {
               assert(false);
           }
       })
-      .catchError(streamController.addError);
+      .catchError((err, stackTrace) {
+        logger.severe("Query failed with error", err, stackTrace);
+        throw err;
+      });
     return streamController.stream;
   }
   
@@ -311,6 +314,7 @@ class Datastore {
     return withTransaction((Transaction transaction) => transaction.delete.add(key))
         .then((transaction) {
           logger.info("Delete successful");
+          return transaction;
         });
   }
   
