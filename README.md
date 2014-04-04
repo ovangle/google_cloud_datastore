@@ -34,8 +34,8 @@ The main connection to the datastore is available via an instance of the `Datast
 
 If connecting to the datastore from an instance of the compute engine, the `DatastoreConnection` object simply needs to be instantiated using the `datasetId` of the target datastore.
 
-	final DatastoreConnection connection = 
-		new DatastoreConnection(<dataset_id>, projectNumber: <project_number>);
+	Future<DatastoreConnection> connection = 
+		DatastoreConnection.open(<dataset_id>, projectNumber: <project_number>);
 
 #### Connect using service account ####
 
@@ -50,7 +50,7 @@ If asked for the import password, the password will be `notasecret`.
 
 The datastore can then be instantiated with the details of the service account.
 
-    final DatastoreConnection connection = new DatastoreConnection(
+    Future<DatastoreConnection> connection = DatastoreConnection.open(
     	"<dataset_id>",
     	projectNumber: "project_number",
     	serviceAccount: "<service_account_email>",
@@ -60,7 +60,7 @@ The datastore can then be instantiated with the details of the service account.
 
 If connecting to a compute engine instance running at a given host, simply provide the datasetId and hostname to the `DatastoreConnection` instance.
 
-    final DatastoreConnection connection = new DatastoreConnection(
+    Future<DatastoreConnection> connection =  DatastoreConnection.open(
     	<dataset_id>, 		
     	host:<gcd_host>);
 

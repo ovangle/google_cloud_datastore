@@ -7,11 +7,11 @@ class Transaction {
    * The datastore can only handle a single transaction at a time.
    */
   static final Queue<Completer<Transaction>> _transactionQueue = new Queue<Completer<Transaction>>();
-  
+  static String _lastTransactionId;
   /**
-   * The default timeout limit for pending transactions.
+   * The duration to wait before timing out a pending transaction
    */
-  static Duration transactionTimeout = new Duration(milliseconds: 500);
+  static Duration timeoutPendingTransaction = new Duration(seconds: 39);
   
   Datastore _datastore;
   final Uint8List _id;
@@ -71,7 +71,12 @@ class Transaction {
     _transactionQueue.addLast(pendingTransaction);
     _runNextTransaction(datastore);
     return pendingTransaction.future
-        .timeout(transactionTimeout, onTimeout: onTimeout);
+        .timeout(timeoutPendingTransaction, 
+                 onTimeout: () {
+                   datastore.logger.warning(
+                       "Pending transaction timed out after $timeoutPendingTransaction.\n"
+                       "Transaction ($_lastTransactionId) might not have been committed to the datastore");
+                 });
   }
   
   static void _runNextTransaction(Datastore datastore) {
@@ -84,6 +89,7 @@ class Transaction {
           var transactionId = new Uint8List.fromList(response.transaction);          
           var transaction = new Transaction._(datastore, transactionId);
           datastore.logger.info("Running transaction (${transaction.id})");
+          _lastTransactionId = transaction.id;
           pending.complete(transaction);
         });
   }

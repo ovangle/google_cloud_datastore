@@ -24,6 +24,15 @@ const String API_VERSION = 'v1beta2';
 
 typedef Future<http.StreamedResponse> _SendRequest(http.Request request);
 
+/**
+ * Reads the private key file located at [:path:]
+ */
+Future _readPrivateKey(String path) {
+  if (path == null)
+    return new Future.value();
+  return new File(path).readAsString();
+}
+
 class DatastoreConnection {
   final Logger logger = new Logger("datastore.connection");
   
@@ -42,6 +51,12 @@ class DatastoreConnection {
    * and forwards the result onto the datastore.
    */
   final String host;
+  
+  /**
+   * The duration to wait before logging a timeout exception and failing
+   * the request. Defaults to `30` seconds.
+   */
+  Duration timeoutDuration = new Duration(seconds: 30);
   
   String get _url => '$host/datastore/$API_VERSION/datasets/$datasetId';
 
@@ -67,7 +82,8 @@ class DatastoreConnection {
    * the [:host:] argument should be set to the location of a running instance of
    * the `gcd` tool.
    */
-  factory DatastoreConnection(String projectNumber, String datasetId, {String serviceAccount, String pathToPrivateKey, String host}) {
+  static Future<DatastoreConnection> open(String projectNumber, String datasetId, 
+        { String serviceAccount, String pathToPrivateKey, String host}) {
     var makeAuthRequests = false;
     Uri hostUri;
     if (host == null) {
@@ -75,18 +91,19 @@ class DatastoreConnection {
       makeAuthRequests = true;
     }
     if (makeAuthRequests) {
-      oauth2.ComputeOAuth2Console console = new oauth2.ComputeOAuth2Console(
-          projectNumber, 
-          iss: serviceAccount,
-          privateKey: pathToPrivateKey,
-          scopes: API_SCOPE.join(" "));
-     
-      _sendAuthorizedRequest(http.Request request) =>
-          console.withClient((client) => client.send(request));
-      return new DatastoreConnection._(datasetId, _sendAuthorizedRequest, host);
+        return _readPrivateKey(pathToPrivateKey).then((privateKey) {
+          oauth2.ComputeOAuth2Console console = new oauth2.ComputeOAuth2Console(
+              projectNumber, 
+              iss: serviceAccount,
+              privateKey: privateKey,
+              scopes: API_SCOPE.join(" "));
+          _sendAuthorizedRequest(http.Request request) =>
+              console.withClient((client) => client.send(request));
+          return new DatastoreConnection._(datasetId, _sendAuthorizedRequest, host);
+        });
     } else {
       _sendRequest(request) => request.send();
-      return new DatastoreConnection._(datasetId, _sendRequest, host);
+      return new Future.value(new DatastoreConnection._(datasetId, _sendRequest, host));
     }
   }
 
@@ -128,7 +145,13 @@ class DatastoreConnection {
         ..headers['content-type'] = 'application/x-protobuf'
         ..bodyBytes = message.writeToBuffer();
     logger.info("($method) request sent to ${request.url}");
+    
     return _sendRequest(request)
+        .timeout(
+            timeoutDuration,
+            onTimeout: () {
+              logger.severe("Request to $method timed out after $timeoutDuration");
+            })
         .then((http.StreamedResponse response) {
           if (response.statusCode != 200) {
             response.stream.listen((bytes) {
