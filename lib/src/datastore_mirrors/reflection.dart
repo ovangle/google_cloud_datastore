@@ -203,11 +203,11 @@ class KindError extends Error {
   
   KindError.noKindDefintionAnnotations(ClassMirror cls) :
     this(MirrorSystem.getName(cls.simpleName), 
-        "No @kind annotation found on class");
+        "No @Kind annotation found on class");
   
   KindError.multipleKindDefintionAnnotations(ClassMirror cls) :
     this(MirrorSystem.getName(cls.simpleName), 
-        "Multiple @kind annotations on class");
+        "Multiple @Kind annotations on class");
   
   KindError.emptyName(ClassMirror cls):
     this(MirrorSystem.getName(cls.simpleName), "Name cannot be the empty string");
@@ -229,13 +229,13 @@ class KindError extends Error {
   KindError.noValidConstructor(String kind) :
     this(kind, 
         "Valid kind must either declare an unnamed generative constructor "
-        "or a named generative constructor (annotated with @constructKindDefintion) "
+        "or a named generative constructor (annotated with @constructKind) "
         "which accept two mandatory arguments "
         "and which redirects to Entity(Datastore datastore, Key key)");
   
   KindError.tooManyConstructors(String kind) :
     this(kind, 
-        "Only one constructor can be annotated with the @constructKindDefintion"
+        "Only one constructor can be annotated with the @constructKind"
         "annotation");
         
   
@@ -260,5 +260,5 @@ Supported schema property must be one of:
 or a List of one of the above types
 """);
   
-  String toString() => "Malformed KindDefintion ($kind): $message";
+  String toString() => "Malformed kind ($kind): $message";
 }
