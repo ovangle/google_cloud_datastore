@@ -9,21 +9,21 @@ import '../../lib/src/common.dart';
 import '../../lib/src/schema_v1_pb2.dart' as schema;
 import '../mock_connection.dart';
 
-final Kind userKind =
-  new Kind("User",
-      [ new Property("username", PropertyType.STRING, indexed: true), 
-        new Property("email", PropertyType.STRING, indexed: true),
-        new Property("password", PropertyType.BLOB),
-        new Property("details", PropertyType.KEY),
-        new Property("date_joined", PropertyType.DATE_TIME)
+final KindDefinition userKind =
+  new KindDefinition("User",
+      [ new PropertyDefinition("username", PropertyType.STRING, indexed: true), 
+        new PropertyDefinition("email", PropertyType.STRING, indexed: true),
+        new PropertyDefinition("password", PropertyType.BLOB),
+        new PropertyDefinition("details", PropertyType.KEY),
+        new PropertyDefinition("date_joined", PropertyType.DATE_TIME)
       ]);
 
-final Kind userDetailsKind =
-  new Kind("UserDetails",
-      [ new Property("name", PropertyType.STRING),
-        new Property("age", PropertyType.INTEGER),
-        new Property("isAdmin", PropertyType.BOOLEAN),
-        new Property("friends", PropertyType.LIST(PropertyType.KEY))
+final KindDefinition userDetailsKind =
+  new KindDefinition("UserDetails",
+      [ new PropertyDefinition("name", PropertyType.STRING),
+        new PropertyDefinition("age", PropertyType.INTEGER),
+        new PropertyDefinition("isAdmin", PropertyType.BOOLEAN),
+        new PropertyDefinition("friends", PropertyType.LIST(PropertyType.KEY))
       ]);
 
 final NOW = new DateTime.now();

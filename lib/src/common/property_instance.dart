@@ -15,7 +15,7 @@ class _PropertyInstance<T> {
     this.value = propertyType._fromSchemaValue(schemaProperty.value);
   }
   
-  schema.Property _toSchemaProperty(Property definition) {
+  schema.Property _toSchemaProperty(PropertyDefinition definition) {
     schema.Value schemaValue = propertyType._toSchemaValue(new schema.Value(), _value)
       ..indexed = definition.indexed;
     return new schema.Property()
@@ -43,7 +43,7 @@ class _ListPropertyInstance<T> implements _PropertyInstance<List<T>> {
   }
   
   @override
-  schema.Property _toSchemaProperty(Property definition) {
+  schema.Property _toSchemaProperty(PropertyDefinition definition) {
     var schemaValue = propertyType._toSchemaValue(_value)
         ..indexed = definition.indexed;
     return new schema.Property()

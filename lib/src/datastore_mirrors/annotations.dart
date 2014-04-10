@@ -9,9 +9,16 @@ part of datastore;
  * It is an error if a `kind` annotated class does not define an unnamed, two-argument constructor which
  * redirects to `Entity(Datastore datastore, Key key)`.
  */
-class kind {
+
+
+class Kind {
   final String name;
-  const kind({String this.name});
+  const Kind({String this.name});
+}
+
+@deprecated
+class kind extends Kind {
+  const kind({String name}) : super(name: name);
 }
 
 /**
@@ -39,11 +46,21 @@ class kind {
  * - [Key]
  * or a [List] of values of any of these types.
  */
-class property {
+class Property {
   final String name;
+  final PropertyType type;
   final bool indexed;
-  const property({String this.name, PropertyType type, bool this.indexed: false});
+  
+  const Property({this.name, PropertyType this.type, bool this.indexed});
 }
+
+@deprecated
+class property extends Property {
+  const property({String name, PropertyType type, bool indexed: false}) :
+    super(name: name, type: type, indexed: indexed);
+}
+
+
 
 /**
  * An annotation which indicates that the annotated constructor

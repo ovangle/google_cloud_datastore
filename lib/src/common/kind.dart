@@ -5,7 +5,7 @@ typedef Entity EntityFactory(Datastore datastore, Key key);
 /**
  * Represents a static definition of an [Entity].
  */
-class Kind {
+class KindDefinition {
   
   static Entity _entityFactory(Datastore datastore, Key key) => 
       new Entity(datastore, key);
@@ -18,20 +18,20 @@ class Kind {
   /**
    * The name of the kind extended by `this`, or `null` if this kind directly extends from [Entity].
    */
-  final Kind extendsKind;
+  final KindDefinition extendsKind;
 
   /**
    * The properties directly declared on the entity
    */
-  final Map<String,Property> _properties;
+  final Map<String,PropertyDefinition> _properties;
   
   /**
    * The properties declared on the entity or any of it's extended entities.
    */
-  Map<String,Property> _allProperties;
+  Map<String,PropertyDefinition> _allProperties;
   
   
-  UnmodifiableMapView<String,Property> get properties {
+  UnmodifiableMapView<String,PropertyDefinition> get properties {
     if (_allProperties == null) {
       _allProperties = new Map.from(_properties);
       if (extendsKind != null) {
@@ -45,15 +45,15 @@ class Kind {
   final EntityFactory entityFactory;
   
   /**
-   * Create a new [Kind] with the given [:name:] and [:properties:]. 
+   * Create a new [KindDefinition] with the given [:name:] and [:properties:]. 
    * The [:entityFactory:] argument should *never* be provided by user code.
    */
-  Kind(this.name, List<Property> properties, {Kind this.extendsKind, EntityFactory this.entityFactory: _entityFactory}) :
+  KindDefinition(this.name, List<PropertyDefinition> properties, {KindDefinition this.extendsKind, EntityFactory this.entityFactory: _entityFactory}) :
     this._properties = new Map.fromIterable(properties, key: (prop) => prop.name);
   
-  Property get _keyProperty => new _KeyProperty();
+  PropertyDefinition get _keyProperty => new _KeyProperty();
   
-  bool hasProperty(Property property) {
+  bool hasProperty(PropertyDefinition property) {
     return properties.keys.any((k) => k == property.name);
   }
   

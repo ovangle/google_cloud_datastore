@@ -3,14 +3,14 @@ part of datastore.common;
 
 
 /**
- * A [Filter] is used in a datastore [Query] to match against persistable properties on a [Kind].
+ * A [Filter] is used in a datastore [Query] to match against persistable properties on a [KindDefinition].
  */
 abstract class Filter {
   /**
    * Returns a filter which compares [:property:] against the given [:value:]
    * in the datastore.
    */
-  factory Filter(Property property, Operator operator, dynamic value) =>
+  factory Filter(PropertyDefinition property, Operator operator, dynamic value) =>
       new _PredicateFilter(property, operator, value);
   
   /**
@@ -28,7 +28,7 @@ abstract class Filter {
   
   schema.Filter _toSchemaFilter(); 
  
-  Filter _checkValidFilterForKind(Kind kind);
+  Filter _checkValidFilterForKind(KindDefinition kind);
 }
 
 /**
@@ -57,15 +57,15 @@ class Operator {
 }
 
 /**
- * Filter entities where the [Property] matches [value]
+ * Filter entities where the [PropertyDefinition] matches [value]
  * under one of the operators.
  */
 class _PredicateFilter implements Filter {
-  Property property;
+  PropertyDefinition property;
   Operator operator;
   dynamic value;
   
-  _PredicateFilter(Property property, Operator operator, var value) :
+  _PredicateFilter(PropertyDefinition property, Operator operator, var value) :
     this.property = property,
     this.operator = operator,
     this.value = property.type.checkType(value);
@@ -85,7 +85,7 @@ class _PredicateFilter implements Filter {
   }
     
   @override
-  Filter _checkValidFilterForKind(Kind kind) {
+  Filter _checkValidFilterForKind(KindDefinition kind) {
     if (!kind.hasProperty(property)) {
       throw new NoSuchPropertyError(kind, property.name);
     }
@@ -106,7 +106,7 @@ class _AncestorFilter implements Filter {
   _AncestorFilter(this.key);
  
   @override
-  Filter _checkValidFilterForKind(Kind kind) => this;
+  Filter _checkValidFilterForKind(KindDefinition kind) => this;
   
   @override
   schema.Filter _toSchemaFilter() {
@@ -141,7 +141,7 @@ class _CompositeFilter implements Filter {
   
   String toString() => operands.join(" AND ");
   
-  Filter _checkValidFilterForKind(Kind kind) { 
+  Filter _checkValidFilterForKind(KindDefinition kind) { 
     operands.forEach((operand) => operand._checkValidFilterForKind(kind));
     return this;
   }

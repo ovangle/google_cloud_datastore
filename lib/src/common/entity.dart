@@ -3,7 +3,7 @@ part of datastore.common;
 class Entity {
   Datastore datastore;
   final Key key;
-  Kind get kind => datastore.kindByName(key.kind);
+  KindDefinition get kind => datastore.kindByName(key.kind);
   final PropertyMap _properties;
   
   /**
@@ -93,15 +93,15 @@ class EntityResult<T extends Entity> {
 }
 
 class PropertyMap extends UnmodifiableMapMixin<String,_PropertyInstance> {
-  final Kind kind;
+  final KindDefinition kind;
   Map<String,_PropertyInstance> _entityProperties;
   
-  PropertyMap(Kind kind, Map<String,dynamic> propertyInits) :
+  PropertyMap(KindDefinition kind, Map<String,dynamic> propertyInits) :
     this.kind = kind,
     _entityProperties = new Map.fromIterable(
         kind.properties.values,
         key: (prop) => prop.name,
-        value: (Property prop) => prop.type.create(initialValue: propertyInits[prop.name])
+        value: (PropertyDefinition prop) => prop.type.create(initialValue: propertyInits[prop.name])
     );
   
   @override

@@ -21,7 +21,7 @@ import 'package:googleclouddatastore/datastore.dart';
 //TODO: Remove DATASET_ID;
 String DATASET_ID = "protobuf-api-test";
 
-@kind()
+@Kind()
 class Trivia extends Entity {
   
   //Kinds must declare a two argument constructor which
@@ -32,13 +32,13 @@ class Trivia extends Entity {
   Trivia(datastore, key, { question, answer }) : 
     super(datastore, key, { "question" : question, "answer" : answer});
   
-  // A string type property 
-  @property()
+  // A string type property
+  @Property()
   String get question => getProperty("question");
   void set question(String value) => setProperty("question", value);
   
   //An integer type property
-  @property()
+  @Property()
   int get answer => getProperty("answer");
   void set answer(int value) => setProperty("answer", value);
 }
@@ -54,57 +54,56 @@ void main(List<String> args) {
   String datasetId = DATASET_ID;
   
   //TODO: Needs to be changed to a compute engine connection
-  DatastoreConnection connection =
-      new DatastoreConnection(
-          null,
-          datasetId,
-          makeAuthRequests: false,
-          host: "http://127.0.0.1:6060");
+  DatastoreConnection.open(
+      null, 
+      datasetId, 
+      host: 'http://127.0.0.1:6060')..then((connection) {
   
-  Datastore datastore = new Datastore(connection);
-  
-  datastore.logger.onRecord.listen(print);
-  
-  Completer<Trivia> triviaCompleter = new Completer<Trivia>();
-  
-  //Run an insert action in a transaction context.
-  //The transaction will automatically be committed
-  //once the transaction returns
-  datastore.withTransaction(
-      (Transaction transaction) {
-        var key = new Key("Trivia", name: "hgtg");
-        
-        return datastore.lookup(key)
-            .then((entityResult) {
-              if (entityResult.hasResult) {
-                triviaCompleter.complete(entityResult.entity);
-                return;
-              }
-              Trivia trivia = new Trivia(datastore, key,
-                  question: "Meaning of life?",
-                  answer: 42);
-              
-              // Add the enitity to the list of entities
-              // to insert when the transaction is committed.
-              transaction.insert.add(trivia);
-              triviaCompleter.complete(trivia);
-            });
-      })
-      .catchError(triviaCompleter.completeError);
-  
-  triviaCompleter.future.then((Trivia trivia) {
-    print(trivia.getProperty("question"));
-    stdout.write("> ");
-    stdin.listen((bytes) {
-      var input = UTF8.decode(bytes);
-      var answer = input.trim().toLowerCase();
-      if (answer == trivia.answer.toString()) {
-        print("Don't panic!");
-      } else {
-        print( 'fascinating, extraordinary and, '
-               'when you think hard about it, completely obvious.');
-      }
+    Datastore datastore = new Datastore(connection);
+    
+    datastore.logger.onRecord.listen(print);
+    
+    Completer<Trivia> triviaCompleter = new Completer<Trivia>();
+    
+    //Run an insert action in a transaction context.
+    //The transaction will automatically be committed
+    //once the transaction returns
+    datastore.withTransaction(
+        (Transaction transaction) {
+          var key = new Key("Trivia", name: "hgtg");
+          
+          return datastore.lookup(key)
+              .then((entityResult) {
+                if (entityResult.isPresent) {
+                  triviaCompleter.complete(entityResult.entity);
+                  return;
+                }
+                Trivia trivia = new Trivia(datastore, key,
+                    question: "Meaning of life?",
+                    answer: 42);
+                
+                // Add the enitity to the list of entities
+                // to insert when the transaction is committed.
+                transaction.insert.add(trivia);
+                triviaCompleter.complete(trivia);
+              });
+        })
+        .catchError(triviaCompleter.completeError);
+    
+    triviaCompleter.future.then((Trivia trivia) {
+      print(trivia.getProperty("question"));
       stdout.write("> ");
+      stdin.listen((bytes) {
+        var input = UTF8.decode(bytes);
+        var answer = input.trim().toLowerCase();
+        if (answer == trivia.answer.toString()) {
+          print("Don't panic!");
+        } else {
+          print( 'fascinating, extraordinary and, '
+                 'when you think hard about it, completely obvious.');
+        }
+        stdout.write("> ");
+      });
     });
   });
   

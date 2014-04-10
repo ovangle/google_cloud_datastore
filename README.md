@@ -77,21 +77,23 @@ The `Datastore` negotiates communications over a `DatastoreConnection`. Providin
 
 #### Kind ####
 
-A `kind` is a static definition of a datastore persistable object. 
+A `Kind` is a static definition of a datastore persistable object. 
 
-A `kind` must directly extend `Entity` and be annotated with the `@kind` annotation. The datastore name of the kind can either be provided via the annotation or will be inferred from the name of the class.
+A `Kind` must directly extend `Entity` and be annotated with the `@Kind` annotation. The datastore name of the kind can either be provided via the annotation or will be inferred from the name of the class.
 
-A `kind` must also provide a generative constructor which forwards to `Entity(Datastore datastore, Key key, [Map<String,dynamic> propertyInits])`
+A `Kind` must also provide a generative constructor which forwards to `Entity(Datastore datastore, Key key, [Map<String,dynamic> propertyInits])`
 
-eg. The following class declaration a `kind` with no properties which can be persisted as a `EmptyKind` object in the datastore.
+eg. The following class declaration a `Kind` with no properties which can be persisted as a `EmptyKind` object in the datastore.
 
-    @kind()
+    @Kind()
     class EmptyKind extends Entity {
     
     	@constructKind
     	EmptyKind._(Datastore datastore, Key key):
     	    super(datastore, key);
     }
+    
+The `Entity` constructor also accepts an (optional) map of property names to values, which can be used to provide initial values for entities during object construction.
     
 #### Entity ####
 
@@ -110,7 +112,52 @@ using the `datastore.allocateKey` method.
 
 A `key` is analagous to a file system path and represents a path from the root of the datastore 
 to the location of the entity. An `entity` can *own* other entities, and queries within this 
-group are guaranteed by the datastore to be strongly consistent. 
+group are guaranteed by the datastore to be strongly consistent.
+
+#### Property ####
+
+Every `Entity` is built from multiple `Property`s, which represent the data stored on the `Entity`. Properties can be any of the following dart types:
+
+ - `int`
+ - `double`
+ - `num` 
+ 	- *`num` types are stored as a `doubleValue` in  the datastore* 
+ - `String`
+ - `DateTime`
+ - `Key`
+ - `Uint8List` 
+   -  *stored as a `blobValue` on the datastore entity. Note that a property typed as `List<int>` is to be a `List` of `intValue`, whereas `Uint8List` is stored as a `blobValue`.*
+ - `dynamic`
+   - *A value of any of the above types.*
+   
+Or a `List` of any of the above types.
+
+eg.
+
+	@Kind()
+	class MyKind extends Entity {
+	  /**
+	   * Get a new instance of `MyKind` with `propertyOne`
+	   * initialised to the provided value
+	   */
+	  MyKind(Datastore datastore, Key key, {propertyOne: "hello"}): 
+	    super(datastore, key, {"propertyOne" : propertyOne});
+		
+	  /**
+	   * A `final` String property with name `"propertyOne"` which is stored as a `String` value
+	   */
+	  @Property()
+	  String get propertyOne => getProperty("propertyOne");
+		
+	  /**
+	   * A mutable `int` property with name `"property_two"` which is stored
+	   */
+	  @Property(name: "property_two", type: PropertyType.INTEGER)
+	  dynamic get propertyTwo => get_property("property_two");
+      set propertyTwo(dynamic value) => set_property("property_two");
+	}
+
+
 
 ## Examples ##
 

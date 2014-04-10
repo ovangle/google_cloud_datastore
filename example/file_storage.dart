@@ -20,7 +20,7 @@ const int MAX_PART_SIZE = 1024 * 1024;
  * An implementation of a simple file type object implementing storage of arbitrary sized blobs
  * of data in the datastore.
  */
-@kind()
+@Kind()
 class File extends Entity {
   /**
    * Adds all the file parts to the datastore, and returns a 
@@ -98,11 +98,11 @@ class File extends Entity {
   File._(Datastore datastore, Key key, {String fileDescriptor, int sizeInBytes}) : 
     super(datastore, key, {"descriptor" : fileDescriptor, "sizeInBytes" : sizeInBytes});
   
-  @property(indexed: true)
+  @Property(indexed: true)
   String get path => getProperty("descriptor");
   void set path(String value) => setProperty("descriptor", value);
   
-  @property()
+  @Property()
   int get sizeInBytes => getProperty("sizeInBytes");
   
   Stream<FilePart> getParts() {
@@ -132,7 +132,7 @@ class File extends Entity {
   }
 }
 
-@kind()
+@Kind()
 class FilePart extends Entity implements Comparable<FilePart>{
   
   FilePart(Datastore datastore, Key fileKey, int partId, Uint8List content) :
@@ -149,7 +149,7 @@ class FilePart extends Entity implements Comparable<FilePart>{
   int get filePos => int.parse(key.name);
   
   //Override the property type as 
-  @property(name: 'file_content')
+  @Property(name: 'file_content')
   Uint8List get content => getProperty('file_content');
       
   int compareTo(FilePart other) => filePos.compareTo(other.filePos);

@@ -92,11 +92,14 @@ class DatastoreConnection {
     }
     if (makeAuthRequests) {
         return _readPrivateKey(pathToPrivateKey).then((privateKey) {
+          //Stupid behavious of compute client -- scopes must be null if 
+          //not providing a service account
+          var scopes = (serviceAccount == null && pathToPrivateKey == null) ? null : API_SCOPE.join(" ");
           oauth2.ComputeOAuth2Console console = new oauth2.ComputeOAuth2Console(
               projectNumber, 
               iss: serviceAccount,
               privateKey: privateKey,
-              scopes: API_SCOPE.join(" "));
+              scopes: scopes);
           _sendAuthorizedRequest(http.Request request) =>
               console.withClient((client) => client.send(request));
           return new DatastoreConnection._(datasetId, _sendAuthorizedRequest, host);

@@ -4,25 +4,25 @@ class Query {
   /**
    * A kind or list of kinds to query
    */
-  final Kind kind;
+  final KindDefinition kind;
   final Filter filter;
-  final List<Property> _groupBy;
+  final List<PropertyDefinition> _groupBy;
   final List<_Ordering> _sortBy;
   final bool keysOnly;
   
   /**
-   * Create a new [Query] which matches against subkinds of the given [Kind]
+   * Create a new [Query] which matches against subkinds of the given [KindDefinition]
    */
-  Query(Kind kind, Filter filter, {bool this.keysOnly: false}) :
+  Query(KindDefinition kind, Filter filter, {bool this.keysOnly: false}) :
     this.kind = kind,
     this.filter = filter._checkValidFilterForKind(kind),
-    this._groupBy = new List<Property>(),
+    this._groupBy = new List<PropertyDefinition>(),
     this._sortBy = new List<_Ordering>();
   
   /**
    * Group the results of a query by the value of the specified property.
    */
-  void groupBy(Property property) {
+  void groupBy(PropertyDefinition property) {
     if (!kind.properties.keys.contains(property.name)) {
       throw new NoSuchPropertyError(kind, property.name);
     }
@@ -38,7 +38,7 @@ class Query {
    * If `sortBy` has already been called with a value of another proeprty, the results will be sorted with respect
    * to that proeprty first, and subsequently by the value of the current property.
    */
-  void sortBy(Property property, {bool ascending: true}) {
+  void sortBy(PropertyDefinition property, {bool ascending: true}) {
     if (!kind.properties.keys.contains(property.name)) {
       throw new NoSuchPropertyError(kind, property.name);
     }
@@ -73,10 +73,10 @@ class Query {
 }
 
 class _Ordering {
-  final Property property;
+  final PropertyDefinition property;
   final bool isAscending;
   
-  _Ordering(Property this.property, bool this.isAscending);
+  _Ordering(PropertyDefinition this.property, bool this.isAscending);
   
   schema.PropertyOrder _toSchemaPropertyOrder() =>
       new schema.PropertyOrder()

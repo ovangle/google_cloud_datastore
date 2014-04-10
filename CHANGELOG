@@ -1,0 +1,3 @@
+Version 0.2.2
+- Deprecated @kind and @property annotations, in deference to dart conventions.
+

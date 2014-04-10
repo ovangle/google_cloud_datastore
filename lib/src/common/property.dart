@@ -6,9 +6,9 @@ typedef T _FromSchemaValue<T>(schema.Value value);
 /**
  * A persistent value stored on an [Entity].
  */
-class Property {
+class PropertyDefinition {
   /**
-   * The name of the [Property].
+   * The name of the [PropertyDefinition].
    */
   final String name;
   /**
@@ -21,7 +21,7 @@ class Property {
    */
   final PropertyType type;
   
-  const Property(this.name, PropertyType this.type, {this.indexed: false});
+  const PropertyDefinition(this.name, PropertyType this.type, {this.indexed: false});
   
   /**
    * A filter which matches datastore entities where the property value
@@ -59,7 +59,7 @@ class Property {
 /**
  * A property which represents the key of a kind.
  */
-class _KeyProperty extends Property {
+class _KeyProperty extends PropertyDefinition {
   _KeyProperty() : super("__key__", PropertyType.KEY);
 }
 

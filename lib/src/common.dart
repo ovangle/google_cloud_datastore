@@ -27,7 +27,7 @@ part 'common/query.dart';
 part 'common/transaction.dart';
 
 class Datastore {
-  final Map<String, Kind> _entityKinds;
+  final Map<String, KindDefinition> _entityKinds;
   final DatastoreConnection connection;
   
   final Logger logger = new Logger("datastore");
@@ -39,7 +39,7 @@ class Datastore {
    * authorised to access the datastore.
    * [datasetId] is the name of the dataset to connect to, usally 
    */
-  Datastore(DatastoreConnection this.connection, List<Kind> entityKinds) :
+  Datastore(DatastoreConnection this.connection, List<KindDefinition> entityKinds) :
     this._entityKinds = new Map.fromIterable(entityKinds, key: (kind) => kind.name);
     
   /**
@@ -47,7 +47,7 @@ class Datastore {
    * Throws a [NoSuchKindError] if the kind is not known
    * by the datastore.
    */
-  Kind kindByName(String name) {
+  KindDefinition kindByName(String name) {
     var kind = _entityKinds[name];
     if (kind == null)
       throw new NoSuchKindError(name);
@@ -58,7 +58,7 @@ class Datastore {
    * Throws a [NoSuchPropertyError] if the property is not
    * found on the kind.
    */
-  Property propByName(String kindName, String propertyName) {
+  PropertyDefinition propByName(String kindName, String propertyName) {
     var prop = kindByName(kindName).properties[propertyName];
     if (prop == null)
       throw new NoSuchPropertyError(kindName, propertyName);
