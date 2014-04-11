@@ -51,7 +51,7 @@ class Property {
   final PropertyType type;
   final bool indexed;
   
-  const Property({this.name, PropertyType this.type, bool this.indexed});
+  const Property({this.name, PropertyType this.type, bool this.indexed: false});
 }
 
 @deprecated
