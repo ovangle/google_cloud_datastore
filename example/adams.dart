@@ -8,7 +8,7 @@
  * which demonstrates how to connect from inside a compute engine instance, see the 
  * `adams.dart` file.
  * 
- * [1][https://developers.google.com/datastore/docs/getstarted/start_python/]
+ * [1]: https://developers.google.com/datastore/docs/getstarted/start_python/
  */
 library adams;
 
@@ -57,7 +57,7 @@ void main(List<String> args) {
   DatastoreConnection.open(
       null, 
       datasetId, 
-      host: 'http://127.0.0.1:6060')..then((connection) {
+      host: 'http://127.0.0.1:6060').then((connection) {
   
     Datastore datastore = new Datastore(connection);
     
@@ -91,7 +91,7 @@ void main(List<String> args) {
         .catchError(triviaCompleter.completeError);
     
     triviaCompleter.future.then((Trivia trivia) {
-      print(trivia.getProperty("question"));
+      print(trivia.question);
       stdout.write("> ");
       stdin.listen((bytes) {
         var input = UTF8.decode(bytes);
