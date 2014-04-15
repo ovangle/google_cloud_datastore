@@ -18,9 +18,6 @@ import 'dart:io';
 
 import 'package:googleclouddatastore/datastore.dart';
 
-//TODO: Remove DATASET_ID;
-String DATASET_ID = "protobuf-api-test";
-
 @Kind()
 class Trivia extends Entity {
   
@@ -44,14 +41,12 @@ class Trivia extends Entity {
 }
 
 void main(List<String> args) {
-  /*
   if (args.length < 1) {
     print("Usage: adams.dart <DATASET_ID>");
   }
   
   String datasetId = args[0];
-  */
-  String datasetId = DATASET_ID;
+
   
   //TODO: Needs to be changed to a compute engine connection
   DatastoreConnection.open(

@@ -17,10 +17,7 @@ import 'dart:convert' show UTF8;
 import 'package:fixnum/fixnum.dart';
 import 'package:googleclouddatastore/datastore_protobuf.dart';
 
-String DATASET_ID = "protobuf-api-test";
-
 void main(List<String> args) {
-  /*
   if (args.length < 1) {
     print("Usage: adams_protobuf.dart <DATASET_ID>");
     exit(1);
@@ -28,9 +25,6 @@ void main(List<String> args) {
   }
   
   String datasetId = args[0];
-  */
-  
-  String datasetId = DATASET_ID;
   
   DatastoreConnection.open(
       null, 

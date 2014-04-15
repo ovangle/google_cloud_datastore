@@ -29,19 +29,19 @@ part 'common/transaction.dart';
 class Datastore {
   final Map<String, KindDefinition> _entityKinds;
   final DatastoreConnection connection;
-  
+
   final Logger logger = new Logger("datastore");
-  
+
   /**
    * Create a new instance of the [Datastore].
-   * 
+   *
    * [clientId] is the google assigned `Client ID` associated with a service account
    * authorised to access the datastore.
-   * [datasetId] is the name of the dataset to connect to, usally 
+   * [datasetId] is the name of the dataset to connect to, usally
    */
   Datastore(DatastoreConnection this.connection, List<KindDefinition> entityKinds) :
     this._entityKinds = new Map.fromIterable(entityKinds, key: (kind) => kind.name);
-    
+
   /**
    * Retrieve the kind associated with the name of the kind.
    * Throws a [NoSuchKindError] if the kind is not known
@@ -64,7 +64,7 @@ class Datastore {
       throw new NoSuchPropertyError(kindName, propertyName);
     return prop;
   }
-  
+
   /**
    * Allocate a new unnamed datastore key.
    */
@@ -81,7 +81,7 @@ class Datastore {
           return new Key._fromSchemaKey(response.key.first);
         });
   }
-  
+
   /**
    * Lookup the given [Key] in the datastore and return the associated entity.
    * If the [Key] is not found, the [Future] will complete with a [NoSuchKeyException].
@@ -92,7 +92,7 @@ class Datastore {
     return _lookupAllSchemaKeys([key._toSchemaKey()], transaction)
         .first;
   }
-  
+
   /**
    * Lookup all the given keys in the datastore, in the context of the given transaction.
    */
@@ -101,7 +101,7 @@ class Datastore {
                 "${transaction != null ? " (transaction: ${transaction.id}" : ""}");
     return _lookupAllSchemaKeys(keys.map((k) => k._toSchemaKey()), transaction);
   }
-  
+
   /**
    * Lookup the given schema keys in the datastore, optionally in the context
    * of the given transaction.
@@ -113,56 +113,59 @@ class Datastore {
       lookupRequest.readOptions = new schema.ReadOptions()
           ..transaction.addAll(transaction._id);
     }
-    
-    StreamController controller = new StreamController<Entity>();
+
+    StreamController controller = new StreamController<EntityResult>();
     connection.lookup(lookupRequest)
         .then((lookupResponse) {
           for (var schemaEntityResult in lookupResponse.found) {
-            var entityResult = 
+            var entityResult =
                 new EntityResult._fromSchemaEntityResult(
-                    this, 
-                    schemaEntityResult, 
+                    this,
+                    schemaEntityResult,
                     schema.EntityResult_ResultType.FULL);
             logger.info("Found result for key ${entityResult.key}");
-            controller.add(entityResult);
+            if (!controller.isClosed)
+              controller.add(entityResult);
           }
           for (var schemaEntityResult in lookupResponse.missing) {
-            var entityResult = 
+            var entityResult =
                 new EntityResult._fromSchemaEntityResult(
-                    this, 
-                    schemaEntityResult, 
+                    this,
+                    schemaEntityResult,
                     schema.EntityResult_ResultType.KEY_ONLY);
             logger.info("No result found for key ${entityResult.key}");
-            controller.add(entityResult);
+            if (!controller.isClosed)
+              controller.add(entityResult);
           }
           if (lookupResponse.deferred.isEmpty) {
-            controller.close();
+            if (!controller.isClosed)
+              controller.close();
           } else {
             var deferredKeys = lookupResponse.deferred.map((defKey) => new Key._fromSchemaKey(defKey));
             logger.info("Response contained deferred keys: ${deferredKeys}");
             logger.info("Submitting lookup request for deferred keys");
-            controller
-                .addStream(_lookupAllSchemaKeys(lookupResponse.deferred, transaction))
-                .then((_) => controller.close(),
-                      onError: controller.addError);
+            if (!controller.isClosed)
+              controller
+                  .addStream(_lookupAllSchemaKeys(lookupResponse.deferred, transaction))
+                  .then((_) => controller.close(), onError: controller.addError);
           }
         })
         .catchError(controller.addError);
- 
+
     return controller.stream;
   }
-  
+
   /**
    * Run a query against the datastore, fetching all for [Entity]s which match the provided [Query]
-   * 
+   *
    * If [:offset:] is provided, represents the number of results to skip before the first result
    * of the query is returned
    * If [:limit:] is provided and non-negative, represents the maximum number of results to fetch.
    * A [:limit:] of `-1` is interpreted as a request for all matched results.
-   * 
-   * NOTE: 
+   *
+   * NOTE:
    * Queries will *not* return results for subkinds of a kind, only objects which
-   * match the kind itself. 
+   * match the kind itself.
    */
   Stream<EntityResult> query(Query query, {int offset:0, int limit: -1}) {
     schema.Query schemaQuery = query._toSchemaQuery()
@@ -172,12 +175,12 @@ class Datastore {
     }
     return _runSchemaQuery(new schema.RunQueryRequest()..query = schemaQuery);
   }
-  
+
   Stream<EntityResult> _runSchemaQuery(schema.RunQueryRequest schemaRequest, [List<int> startCursor]) {
     StreamController<EntityResult> streamController;
-    
+
     streamController = new StreamController();
-    
+
     if (startCursor != null) {
       schemaRequest
         ..query.startCursor = startCursor;
@@ -185,25 +188,31 @@ class Datastore {
       schemaRequest
         ..query.clearStartCursor();
     }
-    
+
     connection.runQuery(schemaRequest)
       .then((schema.RunQueryResponse response) {
+          if (streamController.isClosed)
+            return;
           schema.QueryResultBatch batch = response.batch;
           for (var schemaResult in batch.entityResult) {
             var result = new EntityResult._fromSchemaEntityResult(
                 this, schemaResult, batch.entityResultType
             );
-            streamController.add(result);
+            if (!streamController.isClosed)
+              streamController.add(result);
           }
           switch (batch.moreResults) {
             case schema.QueryResultBatch_MoreResultsType.NOT_FINISHED:
-              streamController
-                  .addStream(_runSchemaQuery(schemaRequest, batch.endCursor))
-                  .then((_) => streamController.close(), onError: streamController.addError);
+              if (!streamController.isClosed) {
+                streamController
+                    .addStream(_runSchemaQuery(schemaRequest, batch.endCursor))
+                    .then((_) => streamController.close(), onError: streamController.addError);
+              }
               return;
             case schema.QueryResultBatch_MoreResultsType.MORE_RESULTS_AFTER_LIMIT:
             case schema.QueryResultBatch_MoreResultsType.NO_MORE_RESULTS:
-              streamController.close();
+              if (!streamController.isClosed)
+                streamController.close();
               return;
             default:
               //Covered all result types
@@ -212,25 +221,26 @@ class Datastore {
       })
       .catchError((err, stackTrace) {
         logger.severe("Query failed with error", err, stackTrace);
-        throw err;
+        if (!streamController.isClosed)
+          streamController.addError(err, stackTrace);
       });
     return streamController.stream;
   }
-  
+
   Future<Transaction> insert(Entity entity) {
     logger.info("Inserting $entity into datastore");
     return withTransaction((transaction) => transaction.insert.add(entity))
         .then((transaction) {
-          if (transaction.isCommitted) { 
+          if (transaction.isCommitted) {
             logger.info("Insert successful (transaction id: ${transaction.id})");
           } else {
             logger.warning("Insert failed (transaction id: ${transaction.id})");
           }
           return transaction;
         });
-    
+
   }
-  
+
   /**
    * Insert the specified entities into the datastore.
    * Returns the committed transaction.
@@ -243,7 +253,7 @@ class Datastore {
             return transaction;
         });
   }
-  
+
   /**
    * Update the specified entity in the datastore.
    * Returns the committed transaction.
@@ -256,7 +266,7 @@ class Datastore {
           return transaction;
         });
   }
-  
+
   /**
    * Update all the specified entities in the datastore.
    * Returns the committed transaction.
@@ -269,13 +279,13 @@ class Datastore {
           return transaction;
         });
   }
-  
+
   /**
    * Upsert the given entity into the datastore.
-   * 
+   *
    * An `upsert` operation inserts the entity into the datastore if no matching entity is found
    * and updates it otherwise.
-   * 
+   *
    * Returns the committed transaction.
    */
   Future<Transaction> upsert(Entity entity) {
@@ -286,13 +296,13 @@ class Datastore {
           return transaction;
         });
   }
-  
+
   /**
    * Upsert all the given entities in the datastore.
-   * 
+   *
    * An `upsert` operation inserts the entity into the datastore if no matching entity is found
    * and updates it otherwise.
-   * 
+   *
    * Returns the committed transaction.
    */
   Future<Transaction> upsertMany(Iterable<Entity> entities) {
@@ -303,10 +313,10 @@ class Datastore {
           return transaction;
         });
   }
-  
+
   /**
    * Delete the entity with the given key from the datastore.
-   * 
+   *
    * Returns the committed transaction.
    */
   Future<Transaction> delete(Key key) {
@@ -317,10 +327,10 @@ class Datastore {
           return transaction;
         });
   }
-  
+
   /**
    * Delete the entities with any of the given [:keys:] from the datastore.
-   * 
+   *
    * Returns the committed transaction.
    */
   Future<Transaction> deleteMany(Iterable<Key> keys) {
@@ -331,21 +341,21 @@ class Datastore {
           return transaction;
         });
   }
-  
+
   /**
    * Runs an action in the context of a given transaction and commits
    * the transaction to the datastore.
-   * 
+   *
    * If the action returns a [Future], the transaction will be committed
    * if it hasn't already been committed by the action.
-   * 
+   *
    * The return/completion value of the action is ignored.
-   * 
+   *
    * Returns the committed transaction.
    */
   Future<Transaction> withTransaction(dynamic action(Transaction transaction)) {
     Completer<Transaction> completer = new Completer<Transaction>();
-    
+
     Transaction.begin(this)
       .then((transaction) {
       //Check whether the transaction has already been committed and if not
@@ -355,7 +365,7 @@ class Datastore {
           completer.complete(transaction);
         } else {
           transaction.commit().then(
-              (_) => completer.complete(transaction), 
+              (_) => completer.complete(transaction),
               onError: completer.completeError);
         }
       }
@@ -368,7 +378,7 @@ class Datastore {
         commitIfOpenTransaction();
       }
     });
-    
+
     return completer.future;
   }
 }
@@ -376,7 +386,7 @@ class Datastore {
 class NoSuchKindError extends Error {
   final String kind;
   NoSuchKindError(String this.kind);
-  
+
   toString() => "Unknown kind: $kind";
 }
 
@@ -384,7 +394,7 @@ class NoSuchPropertyError extends Error {
   final receiver;
   final String property;
   NoSuchPropertyError(/* Kind | Entity */ this.receiver, String this.property);
-  
-  toString() => 
+
+  toString() =>
       "Property $property not found on $receiver";
 }

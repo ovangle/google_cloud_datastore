@@ -1,3 +1,6 @@
+version 0.2.3
+- Query and lookup could add elements to an empty stream
+
 Version 0.2.2
 - Deprecated @kind and @property annotations, in deference to dart conventions.
-
+- Added example which demonstrates the use of the protobuf api.
