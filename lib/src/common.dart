@@ -7,7 +7,7 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:collection';
 
-import 'package:quiver/async.dart';
+import 'package:quiver/core.dart' as qcore;
 
 import 'package:crypto/crypto.dart' show CryptoUtils;
 import 'package:fixnum/fixnum.dart';

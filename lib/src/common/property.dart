@@ -20,9 +20,9 @@ class PropertyDefinition {
    * The type of the property.
    */
   final PropertyType type;
-  
+
   const PropertyDefinition(this.name, PropertyType this.type, {this.indexed: false});
-  
+
   /**
    * A filter which matches datastore entities where the property value
    * is equal to [:value:]
@@ -48,10 +48,18 @@ class PropertyDefinition {
    * is greater than or equal to [:value:]
    */
   Filter filterGreaterThanOrEquals(var value) => new Filter(this, Operator.GREATER_THAN_OR_EQUAL, value);
-  
-  
+
+
   String toString() => "Property($type, indexed: $indexed)";
-  
+
+  bool operator ==(Object other) =>
+    other is PropertyDefinition &&
+    other.name == name &&
+    other.type == type &&
+    other.indexed == indexed;
+
+  int get hashCode => qcore.hash3(name, type, indexed);
+
   schema.PropertyReference _toSchemaPropertyReference() =>
       new schema.PropertyReference()..name = name;
 }
@@ -84,14 +92,14 @@ class PropertyType<T> {
   static const PropertyType DOUBLE = const PropertyType<double>("double", _doubleToSchemaValue, _doubleFromSchemaValue);
   /**
    * A [STRING] character accepts any valid dart string.
-   * According to google datastore specifications, indexed [STRING] properties have a maximum length of `500` 
+   * According to google datastore specifications, indexed [STRING] properties have a maximum length of `500`
    * unicode characters. Unindexed strings have a maximum length of `1MB` of unicode characters.
    */
   static const PropertyType STRING = const PropertyType<String>("string", _stringToSchemaValue, _stringFromSchemaValue);
   /**
    * A [BLOB] property type admits byte lists. Lists of [int]s are not supported as the value
    * of a [BLOB] property, instead the client is expected to use the `dart:typed_data` library.
-   * 
+   *
    * According to google datastore specifications, indexed [BLOB] property have a maximum length of `500` bytes.
    * Unindexed [BLOB] properties have a maximum length of `1MB`.
    */
@@ -104,33 +112,33 @@ class PropertyType<T> {
    * A property which stores a fully specified [Key] of a datastore entity.
    */
   static const PropertyType KEY = const PropertyType<Key>("key", _keyToSchemaValue, _keyFromSchemaValue);
-  
+
   /**
    * A [LIST] property is a multi valued property. The list generic can be any of
    * [DYNAMIC], [BOOLEAN], [INTEGER], [DOUBLE], [STRING], [BLOB], [DATE_TIME] or [KEY].
    */
   static PropertyType LIST([PropertyType genericType = DYNAMIC]) => new PropertyType.list(genericType);
-  
+
   //The string representation of the type
   final String _repr;
-  //Converts values from the underlying dart type to the 
+  //Converts values from the underlying dart type to the
   //corresponding datastore schema value
   final _ToSchemaValue<T> _toSchemaValue;
   //Converts values from a datastore schema value to the corresponding
   //dart value.
   final _FromSchemaValue<T> _fromSchemaValue;
-  
+
   const PropertyType(this._repr, this._toSchemaValue, this._fromSchemaValue);
-  
+
   factory PropertyType.list(PropertyType<T> generic) {
     return new _ListPropertyType<T>(generic);
   }
-  
+
   T checkType(var value) {
     assert(value == null || value is T);
     return value;
   }
-  
+
   _PropertyInstance create({T initialValue}) => new _PropertyInstance(this, initialValue: initialValue);
 
   static _boolToSchemaValue(schema.Value value, bool b) {
@@ -153,28 +161,28 @@ class PropertyType<T> {
     return value;
   }
   static _doubleFromSchemaValue(schema.Value s) => s.doubleValue;
-  
+
   static _stringToSchemaValue(schema.Value value, String s) {
     if (s != null)
       value.stringValue = s;
     return value;
   }
   static _stringFromSchemaValue(schema.Value s) => s.stringValue;
-  
+
   static _blobToSchemaValue(schema.Value value, Uint8List blob) {
-    if (blob != null) 
+    if (blob != null)
       value.blobValue..clear()..addAll(blob);
     return value;
   }
   static _blobFromSchemaValue(schema.Value s) => new Uint8List.fromList(s.blobValue);
-  
+
   static _keyToSchemaValue(schema.Value value, Key k) {
     if (k != null)
       value.keyValue = k._toSchemaKey();
     return value;
   }
   static _keyFromSchemaValue(schema.Value s) => new Key._fromSchemaKey(s.keyValue);
-  
+
   static _dateTimeToSchemaValue(schema.Value value, DateTime d) {
     if (d != null)
         value.timestampMicrosecondsValue = new Int64(d.toUtc().millisecondsSinceEpoch * 1000);
@@ -182,7 +190,7 @@ class PropertyType<T> {
   }
   static _dateTimeFromSchemaValue(schema.Value s) {
     return new DateTime.fromMillisecondsSinceEpoch(
-        s.timestampMicrosecondsValue.toInt() ~/ 1000, 
+        s.timestampMicrosecondsValue.toInt() ~/ 1000,
         isUtc: true);
   }
 
@@ -205,7 +213,7 @@ class PropertyType<T> {
     }
     throw new PropertyException("Invalid value for dynamic property: $value");
   }
-  
+
   static _dynamicFromSchemaValue(schema.Value value) {
     if (value.hasBooleanValue())
       return _boolFromSchemaValue(value);
@@ -223,16 +231,19 @@ class PropertyType<T> {
     //to be interpreted as `null`.
     return null;
   }
-  
+
   String toString() => _repr;
+
+
+
 }
 
 class _ListPropertyType<T> implements PropertyType<List<T>> {
-  
+
   final PropertyType generic;
   //Unused.
   String _repr;
-  
+
   _ToSchemaValue get _toSchemaValue {
     return (schema.Value value, _ListValue<T> listValue) {
       value.listValue.addAll(
@@ -241,7 +252,7 @@ class _ListPropertyType<T> implements PropertyType<List<T>> {
       return value;
     };
   }
-  
+
   _FromSchemaValue get _fromSchemaValue {
     return (schema.Value schemaValue) {
       _ListValue<T> list = new _ListValue<T>(generic)
@@ -249,30 +260,30 @@ class _ListPropertyType<T> implements PropertyType<List<T>> {
       return list;
     };
   }
-  
+
   _ListPropertyType(PropertyType this.generic) {
     if (generic is _ListPropertyType) {
       throw new PropertyException("Invalid property type (nested list)");
     }
   }
-  
-  _PropertyInstance create({List<T> initialValue}) => 
+
+  _PropertyInstance create({List<T> initialValue}) =>
       new _ListPropertyInstance(this, initialValue: initialValue);
-  
+
   T checkType(var value) {
     if (value is List<T>) {
       return value;
     }
     throw new PropertyException("Invalid value for $this ($value)");
   }
-  
+
   toString() => "list<${generic._repr}>";
 }
 
 class PropertyException implements Exception {
   final String message;
   PropertyException(this.message);
-  
+
   String toString() => "Invalid Property: $message";
-  
+
 }

@@ -6,15 +6,15 @@ typedef Entity EntityFactory(Datastore datastore, Key key);
  * Represents a static definition of an [Entity].
  */
 class KindDefinition {
-  
-  static Entity _entityFactory(Datastore datastore, Key key) => 
+
+  static Entity _entityFactory(Datastore datastore, Key key) =>
       new Entity(datastore, key);
-  
+
   /**
    * The datastore name of the kind.
    */
   final String name;
-  
+
   /**
    * The name of the kind extended by `this`, or `null` if this kind directly extends from [Entity].
    */
@@ -24,13 +24,13 @@ class KindDefinition {
    * The properties directly declared on the entity
    */
   final Map<String,PropertyDefinition> _properties;
-  
+
   /**
    * The properties declared on the entity or any of it's extended entities.
    */
   Map<String,PropertyDefinition> _allProperties;
-  
-  
+
+
   UnmodifiableMapView<String,PropertyDefinition> get properties {
     if (_allProperties == null) {
       _allProperties = new Map.from(_properties);
@@ -38,41 +38,45 @@ class KindDefinition {
         _allProperties.addAll(extendsKind.properties);
       }
     }
-    return new UnmodifiableMapView(_allProperties); 
+    return new UnmodifiableMapView(_allProperties);
   }
-          
-  
+
+
   final EntityFactory entityFactory;
-  
+
   /**
-   * Create a new [KindDefinition] with the given [:name:] and [:properties:]. 
+   * Create a new [KindDefinition] with the given [:name:] and [:properties:].
    * The [:entityFactory:] argument should *never* be provided by user code.
    */
   KindDefinition(this.name, List<PropertyDefinition> properties, {KindDefinition this.extendsKind, EntityFactory this.entityFactory: _entityFactory}) :
     this._properties = new Map.fromIterable(properties, key: (prop) => prop.name);
-  
+
   PropertyDefinition get _keyProperty => new _KeyProperty();
-  
+
   bool hasProperty(PropertyDefinition property) {
     return properties.keys.any((k) => k == property.name);
   }
-  
+
   Entity _fromSchemaEntity(Datastore datastore, Key key, schema.Entity schemaEntity) {
     Entity ent = entityFactory(datastore, key);
-    
+
     for (schema.Property schemaProp in schemaEntity.property) {
       var kindProp = properties[schemaProp.name];
       if (kindProp == null)
         throw new NoSuchPropertyError(this, schemaProp.name);
-      ent._properties[schemaProp.name].value = 
+      ent._properties[schemaProp.name].value =
           kindProp.type._fromSchemaValue(schemaProp.value);
     }
     return ent;
   }
-  
-  
+
+
   schema.KindExpression _toSchemaKindExpression() {
     return new schema.KindExpression()
         ..name = this.name;
   }
+
+  String toString() => "@Kind(name: $name)";
+
+  bool operator ==(Object other) => other is KindDefinition && other.name == name;
 }
