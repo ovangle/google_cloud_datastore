@@ -79,4 +79,6 @@ class KindDefinition {
   String toString() => "@Kind(name: $name)";
 
   bool operator ==(Object other) => other is KindDefinition && other.name == name;
+
+  int get hashCode => 37 * name.hashCode;
 }
