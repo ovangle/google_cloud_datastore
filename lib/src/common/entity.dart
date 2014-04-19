@@ -1,6 +1,17 @@
 part of datastore.common;
 
 class Entity {
+  /**
+   * A property definition which can be used in filters which can be
+   * used to specify filters which match on an entity's [:key:].
+   *
+   * The dastore ordering on keys (when filtering for inequality) is:
+   * 1. Ancestor Path
+   * 2. Entity Kind
+   * 3. Identifier (key name or numeric id)
+   */
+  static const PropertyDefinition KEY_PROPERTY = const _KeyProperty();
+
   final Key key;
   KindDefinition get kind => Datastore.kindByName(key.kind);
   final PropertyMap _properties;
