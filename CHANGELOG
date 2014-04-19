@@ -1,6 +1,12 @@
 version 0.3.0
 Breaking changes
-  - Entity constructor only takes single argument
+- Entity constructor only takes single argument
+
+Enhancements
+- Query and filter improvements
+  - Query arguments type checks relaxed so either a String or KindDefinition can specify a query
+  - Filter argument type checks relaxed so either a String or PropertyDefinition can be used to specify a filter
+  - Query can only filter a single property for inequality
 
 version 0.2.3
 - Query and lookup could add elements to an empty stream

@@ -70,4 +70,21 @@ void defineTests(DatastoreConnection connection) {
 
   });
 
+  group("query tests", () {
+    test("should only be able to filter for inequality on one property", () {
+      var filter1 = new Filter.and([new Filter("age", Operator.LESS_THAN_OR_EQUAL, 4),
+                                   new Filter("age", Operator.GREATER_THAN_OR_EQUAL, 16) ]);
+      expect(new Query("User", filter1).filter, same(filter1));
+
+      var filter2 = new Filter.and([new Filter("age", Operator.LESS_THAN_OR_EQUAL, 4),
+                                   new Filter("name", Operator.GREATER_THAN_OR_EQUAL, "hello")]);
+      expect(() => new Query("User", filter2), throwsA(new isInstanceOf<InvalidQueryException>()));
+    });
+
+    test("should throw a `NoSuchProperty` error when trying to filter for a query which is not on the kind", () {
+      expect(() => new Query("User", new Filter("whosit", Operator.EQUAL, 4)),
+          throwsA(new isInstanceOf<NoSuchPropertyError>()));
+    });
+  });
+
 }

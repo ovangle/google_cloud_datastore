@@ -9,49 +9,66 @@ class Query {
   final List<PropertyDefinition> _groupBy;
   final List<_Ordering> _sortBy;
   final bool keysOnly;
-  
+
+  factory Query(/* String | KindDefinition */ kind, Filter filter, {bool keysOnly: false}) {
+    if (kind is String) {
+      kind = Datastore.kindByName(kind);
+    } else {
+      assert(kind is KindDefinition);
+    }
+    filter._checkValidFilter(kind);
+    return new Query._(kind, filter, keysOnly: keysOnly);
+  }
+
   /**
    * Create a new [Query] which matches against subkinds of the given [KindDefinition]
    */
-  Query(KindDefinition kind, Filter filter, {bool this.keysOnly: false}) :
-    this.kind = kind,
-    this.filter = filter._checkValidFilterForKind(kind),
+  Query._(KindDefinition this.kind, Filter this.filter, {bool this.keysOnly: false}) :
     this._groupBy = new List<PropertyDefinition>(),
     this._sortBy = new List<_Ordering>();
-  
+
   /**
    * Group the results of a query by the value of the specified property.
+   *
+   * [:property:] can either be a [String] or a [PropertyDefinition].
    */
-  void groupBy(PropertyDefinition property) {
-    if (!kind.properties.keys.contains(property.name)) {
+  void groupBy(/* String | PropertyDefinition */ property) {
+    if (property is String)
+      property = Datastore.propByName(kind.name, property);
+    if (!kind.hasProperty(property)) {
       throw new NoSuchPropertyError(kind, property.name);
     }
     _groupBy.add(property);
   }
-  
+
   /**
    * Sort the results of a query by the value of a specified property.
-   * 
+   *
+   * [:property:] can be either a [String] or a [PropertyDefinition].
+   *
    * If [:ascending:] is `true`, the results will be ordered in the direction of increasing value of the property.
    * Otherwise, the results will be ordered in the direction of decreasing value.
-   * 
+   *
    * If `sortBy` has already been called with a value of another proeprty, the results will be sorted with respect
    * to that proeprty first, and subsequently by the value of the current property.
    */
-  void sortBy(PropertyDefinition property, {bool ascending: true}) {
+  void sortBy(/*String | PropertyDefinition */ property, {bool ascending: true}) {
+    if (property is String) {
+      property = Datastore.propByName(kind.name, property);
+    }
     if (!kind.properties.keys.contains(property.name)) {
       throw new NoSuchPropertyError(kind, property.name);
     }
     this._sortBy.add(new _Ordering(property, ascending));
   }
-  
+
   /**
-   * Sort the results of a query by the value of the key. 
+   * Sort the results of a query by the value of the key.
    */
   void sortByKey({bool ascending: true}) {
     this._sortBy.add(new _Ordering(kind._keyProperty, ascending));
   }
-  
+
   /**
    * Get a schema query expression from the properties
    * of this
@@ -75,20 +92,28 @@ class Query {
 class _Ordering {
   final PropertyDefinition property;
   final bool isAscending;
-  
+
   _Ordering(PropertyDefinition this.property, bool this.isAscending);
-  
+
   schema.PropertyOrder _toSchemaPropertyOrder() =>
       new schema.PropertyOrder()
           ..property = property._toSchemaPropertyReference()
           ..direction = (
-              isAscending 
-                  ? schema.PropertyOrder_Direction.ASCENDING 
+              isAscending
+                  ? schema.PropertyOrder_Direction.ASCENDING
                   : schema.PropertyOrder_Direction.DESCENDING
           );
-  
-  bool operator ==(Object other) => 
+
+  bool operator ==(Object other) =>
       other is _Ordering && other.property == property;
-  
+
   int get hashCode => property.hashCode;
+}
+
+class InvalidQueryException implements Exception {
+  final String message;
+
+  InvalidQueryException(this.message);
+
+  toString() => "Invalid query: $message";
 }
