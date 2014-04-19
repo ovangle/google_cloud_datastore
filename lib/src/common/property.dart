@@ -70,7 +70,7 @@ class PropertyDefinition {
  * includes the key in the returned entity.
  */
 class _KeyProperty extends PropertyDefinition {
-  const _KeyProperty() : super("__key__", PropertyType.KEY);
+  const _KeyProperty() : super("__key__", PropertyType.KEY, indexed: true);
 }
 
 class PropertyType<T> {
