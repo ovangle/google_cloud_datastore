@@ -1,3 +1,7 @@
+version 0.3.0
+Breaking changes
+  - Entity constructor only takes single argument
+
 version 0.2.3
 - Query and lookup could add elements to an empty stream
 
