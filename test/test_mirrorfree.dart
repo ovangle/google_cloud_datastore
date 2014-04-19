@@ -13,7 +13,7 @@ final KindDefinition userKind =
         new PropertyDefinition("password", PropertyType.BLOB),
         new PropertyDefinition("user_details", PropertyType.KEY),
         new PropertyDefinition("date_joined", PropertyType.DATE_TIME),
-        new PropertyDefinition("age", PropertyType.INTEGER),
+        new PropertyDefinition("age", PropertyType.INTEGER, indexed: true),
         new PropertyDefinition("isAdmin", PropertyType.BOOLEAN),
         new PropertyDefinition("friends", PropertyType.LIST(PropertyType.KEY))
       ]);
@@ -79,6 +79,11 @@ void defineTests(DatastoreConnection connection) {
       var filter2 = new Filter.and([new Filter("age", Operator.LESS_THAN_OR_EQUAL, 4),
                                    new Filter("name", Operator.GREATER_THAN_OR_EQUAL, "hello")]);
       expect(() => new Query("User", filter2), throwsA(new isInstanceOf<InvalidQueryException>()));
+    });
+
+    test("cannot filter on unindexed property", () {
+      var filter = new Filter("password", Operator.EQUAL, [1,2,3,4,5]);
+      expect(() => new Query("User", filter), throwsA(new isInstanceOf<InvalidQueryException>()));
     });
 
     test("A property which has been filtered for inequality must be sorted first", () {

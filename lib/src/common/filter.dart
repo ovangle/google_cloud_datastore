@@ -100,9 +100,9 @@ class _PredicateFilter implements Filter {
     }
     value = (property as PropertyDefinition).type.coerceType(value);
     if (!property.indexed) {
-      Logger logger = new Logger("datastore.query");
-      logger.warning("Filter on unindexed property (${property.name})"
-                     "Unindexed properties return no results");
+      throw new InvalidQueryException(
+          "Cannot filter on unindexed property (${property.name}). "
+          "Filters on unindexed properties return no results");
     }
   }
 

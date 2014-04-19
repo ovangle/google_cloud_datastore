@@ -65,6 +65,11 @@ class Query {
       }
     }
 
+    if (!property.indexed) {
+      throw new InvalidQueryException(
+          "Cannot sort by unindexed property ${property.name}.");
+    }
+
     if (!kind.hasProperty(property)) {
       throw new NoSuchPropertyError(kind, property.name);
     }
