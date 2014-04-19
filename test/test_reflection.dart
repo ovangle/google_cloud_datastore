@@ -11,7 +11,7 @@ import 'test_mirrorfree.dart' as mirrorfree;
 
 @Kind()
 class User extends Entity {
-  User(Datastore datastore, Key key): super(datastore, key);
+  User(Key key): super(key);
 
   @Property(indexed: true)
   String get name => getProperty("name");
@@ -36,7 +36,7 @@ class User extends Entity {
 void defineTests(MockConnection connection) {
   var datastore = new Datastore(connection);
   test("reflected user kind should be identical to mirrorfree kind", () {
-    var userKind = datastore.kindByName("User");
+    var userKind = Datastore.kindByName("User");
     expect(userKind, mirrorfree.userKind);
     expect(userKind.properties, mirrorfree.userKind.properties);
   });

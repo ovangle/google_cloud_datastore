@@ -2,7 +2,6 @@ library datastore.mirrorfree.test;
 
 import 'dart:typed_data';
 
-import 'package:fixnum/fixnum.dart';
 import 'package:unittest/unittest.dart';
 
 import '../lib/src/common.dart';
@@ -20,11 +19,7 @@ final KindDefinition userKind =
       ]);
 
 final KindDefinition userDetailsKind =
-  new KindDefinition("UserDetails",
-      [ new PropertyDefinition("age", PropertyType.INTEGER),
-        new PropertyDefinition("isAdmin", PropertyType.BOOLEAN),
-        new PropertyDefinition("friends", PropertyType.LIST(PropertyType.KEY))
-      ]);
+  new KindDefinition("UserDetails", []);
 
 final NOW = new DateTime.now();
 
@@ -32,7 +27,7 @@ void defineTests(DatastoreConnection connection) {
   group("properties", () {
     Datastore datastore = new Datastore(connection, [userKind, userDetailsKind]);
 
-    Entity user = new Entity(datastore, new Key("User", id: 0));
+    Entity user = new Entity(new Key("User", id: 0));
     test("should be able to create an entity with a specific key", () {
       expect(user.key, new Key("User", id: 0));
     });
@@ -40,11 +35,14 @@ void defineTests(DatastoreConnection connection) {
     test("should be able to get and set the name property of user", () {
       user.setProperty("name", "bob");
       expect(user.getProperty("name"), "bob");
+      expect(() => user.setProperty("name", 4), throws, reason: "Invalid property type");
     });
 
     test("should be able to get and set the password property of user", () {
       user.setProperty("password", new Uint8List.fromList([1,2,3,4,5]));
       expect(user.getProperty("password"), [1,2,3,4,5]);
+      user.setProperty("password", [5,4,3,2,1]);
+      expect(user.getProperty("password"), [5,4,3,2,1], reason: "List<int> is assignable to Uint8List");
     });
 
     test("should be able to get and set the user_details property of user", () {
@@ -56,14 +54,16 @@ void defineTests(DatastoreConnection connection) {
       user.setProperty("date_joined", new DateTime.fromMillisecondsSinceEpoch(0));
       expect(user.getProperty("date_joined"), new DateTime.fromMillisecondsSinceEpoch(0));
     });
-    test("should be able to get and set the key property of an entity", () {
 
+    test("should be able to get and set the friends property of an entity", () {
+      var friends = [new Key("User", id: 4), new Key("User", id: 5)];
+      user.setProperty("friends", friends);
+      expect(user.getProperty("friends"), friends);
     });
 
+    test("should not be able to set a non-existent entity property", () {
 
-
-
-
+    });
   });
 
   group("lookup tests", () {
