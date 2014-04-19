@@ -66,6 +66,8 @@ class PropertyDefinition {
 
 /**
  * A property which represents the key of a kind.
+ * Used while querying the datastore for a projection which only
+ * includes the key in the returned entity.
  */
 class _KeyProperty extends PropertyDefinition {
   _KeyProperty() : super("__key__", PropertyType.KEY);
@@ -278,6 +280,12 @@ class _ListPropertyType<T> implements PropertyType<List<T>> {
   }
 
   toString() => "list<${generic._repr}>";
+
+  //TODO: Remove this if statics are ever const-able
+  bool operator ==(Object other) =>
+      other is _ListPropertyType && other.generic == generic;
+
+  int get hashCode => 37 * generic.hashCode;
 }
 
 class PropertyException implements Exception {

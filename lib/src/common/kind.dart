@@ -76,7 +76,7 @@ class KindDefinition {
         ..name = this.name;
   }
 
-  String toString() => "@Kind(name: $name)";
+  String toString() => name;
 
   bool operator ==(Object other) => other is KindDefinition && other.name == name;
 
