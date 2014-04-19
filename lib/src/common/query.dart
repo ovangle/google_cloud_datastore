@@ -53,10 +53,19 @@ class Query {
    * to that proeprty first, and subsequently by the value of the current property.
    */
   void sortBy(/*String | PropertyDefinition */ property, {bool ascending: true}) {
-    if (property is String) {
+    if (property is String)
       property = Datastore.propByName(kind.name, property);
+    var inequalityProps = filter._inequalityProperties;
+    if (inequalityProps.isNotEmpty) {
+      var inequalityProp = inequalityProps.single;
+      if (_sortBy.isNotEmpty && property == inequalityProp) {
+        throw new InvalidQueryException(
+            "A property used in an equality filter (${property.name}) "
+            "must be sorted first");
+      }
     }
-    if (!kind.properties.keys.contains(property.name)) {
+
+    if (!kind.hasProperty(property)) {
       throw new NoSuchPropertyError(kind, property.name);
     }
     this._sortBy.add(new _Ordering(property, ascending));

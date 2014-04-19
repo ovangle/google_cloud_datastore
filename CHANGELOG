@@ -1,4 +1,6 @@
 version 0.3.0
+=============
+
 Breaking changes
 - Entity constructor only takes single argument
 
@@ -7,10 +9,17 @@ Enhancements
   - Query arguments type checks relaxed so either a String or KindDefinition can specify a query
   - Filter argument type checks relaxed so either a String or PropertyDefinition can be used to specify a filter
   - Query can only filter a single property for inequality
+  - Query must sort a property used in an inequality filter first.
 
 version 0.2.3
+=============
+
+Bugfixes
 - Query and lookup could add elements to an empty stream
 
 Version 0.2.2
+=============
+
+Enhancements
 - Deprecated @kind and @property annotations, in deference to dart conventions.
 - Added example which demonstrates the use of the protobuf api.
