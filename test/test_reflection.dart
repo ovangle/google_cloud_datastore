@@ -40,4 +40,10 @@ void defineTests(MockConnection connection) {
     expect(userKind, mirrorfree.userKind);
     expect(userKind.properties, mirrorfree.userKind.properties);
   });
+
+  test("reconstructing the datastore should not overwrite existing kinds", () {
+    var userKind = Datastore.kindByName("User");
+    var datastore2 = new Datastore(connection);
+    expect(Datastore.kindByName("User"), same(userKind));
+  });
 }

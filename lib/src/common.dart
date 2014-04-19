@@ -41,9 +41,9 @@ class Datastore {
    * [datasetId] is the name of the dataset to connect to, usally
    */
   Datastore(DatastoreConnection this.connection, List<KindDefinition> entityKinds) {
-    for (var kindDefinition in entityKinds) {
-      _entityKinds[kindDefinition.name] = kindDefinition;
-    }
+    entityKinds.forEach((kind) {
+      _entityKinds.putIfAbsent(kind.name, () => kind);
+    });
   }
 
   /**
