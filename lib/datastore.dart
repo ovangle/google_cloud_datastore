@@ -1,7 +1,7 @@
 
 /**
- * A set of extensions to the datastore framework which allow
- * using the
+ * A set of extensions to the datastore framework which allow 
+ * using the 
  */
 library datastore;
 
@@ -19,8 +19,6 @@ part 'src/datastore_mirrors/annotations.dart';
 part 'src/datastore_mirrors/reflection.dart';
 
 class Datastore extends base.Datastore {
-  static KindDefinition kindByName(String name) => base.Datastore.kindByName(name);
-  static PropertyDefinition propByName(String kind, String name) => base.Datastore.propByName(kind, name);
-  Datastore(DatastoreConnection connection) :
+  Datastore(DatastoreConnection connection) : 
     super(connection, _entityKinds());
 }
