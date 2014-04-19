@@ -72,16 +72,14 @@ If connecting to a compute engine instance running at a given host, simply provi
 The `Datastore` negotiates communications over a `DatastoreConnection`. Providing utility methods for looking up, querying and mutating entities. Creating a `Datastore` object will automatically scan the local mirror system for `kinds` during construction. 
 
 	final Datastore datastore = new Datastore(connection);
-
-**Note:** It is assumed that only **one** instance of the `Datastore` object is available to the application in it's lifetime.
-
+	
 #### Kind ####
 
 A `Kind` is a static definition of a datastore persistable object. 
 
 A `Kind` must directly extend `Entity` and be annotated with the `@Kind` annotation. The datastore name of the kind can either be provided via the annotation or will be inferred from the name of the class.
 
-A `Kind` must also provide a generative constructor which forwards to `Entity(Datastore datastore, Key key, [Map<String,dynamic> propertyInits])`
+A `Kind` must also provide a generative constructor which forwards to `Entity(Key key, [Map<String,dynamic> propertyInits])`
 
 eg. The following class declaration a `Kind` with no properties which can be persisted as a `EmptyKind` object in the datastore.
 
@@ -89,8 +87,7 @@ eg. The following class declaration a `Kind` with no properties which can be per
     class EmptyKind extends Entity {
     
     	@constructKind
-    	EmptyKind._(Datastore datastore, Key key):
-    	    super(datastore, key);
+    	EmptyKind._(Key key): super(key);
     }
     
 The `Entity` constructor also accepts an (optional) map of property names to values, which can be used to provide initial values for entities during object construction.
@@ -106,8 +103,9 @@ A `key` is a unique identifier of an entity in the datastore. A key is always bo
 and may be `named` (in which case the unique identifier
 is a user provided `String`), or `unnamed` (in which case the identifier is a database assigned `int`).
 
+**NOTE:**
 While named entities can be created directly, unnamed
-entities need to be allocated in the datastore before use 
+entities (those with an `id`) need to be allocated in the datastore before use 
 using the `datastore.allocateKey` method.
 
 A `key` is analagous to a file system path and represents a path from the root of the datastore 
@@ -165,12 +163,11 @@ eg.
 
 The [canonical example][4] provided for datastore connections is the `example/adams.dart` file.
 
+A similar example demonstrating usage of the `protobuf` API is available as `example/adams_protobuf.dart`.
+
 ### Filesystem storage ###
 
-An additional example demonstrating how the cloud datastore can be used for storage of file-like objects see `example/file_storage.dart`.
-
-For a more thorough implementation of file storage using the google cloud datastore, see the
-related package, `cloud_filesystem`.  
+An additional example demonstrating how to define kinds which could (possibly) be used for storage of file-like objects see `example/file_storage.dart`.
 
 ## Limitiations ##
 
