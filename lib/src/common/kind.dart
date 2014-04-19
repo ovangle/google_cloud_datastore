@@ -1,14 +1,14 @@
 part of datastore.common;
 
-typedef Entity EntityFactory(Datastore datastore, Key key);
+typedef Entity EntityFactory(Key key);
 
 /**
  * Represents a static definition of an [Entity].
  */
 class KindDefinition {
 
-  static Entity _entityFactory(Datastore datastore, Key key) =>
-      new Entity(datastore, key);
+  static Entity _entityFactory(Key key) =>
+      new Entity(key);
 
   /**
    * The datastore name of the kind.

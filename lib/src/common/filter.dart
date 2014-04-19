@@ -68,7 +68,7 @@ class _PredicateFilter implements Filter {
   _PredicateFilter(PropertyDefinition property, Operator operator, var value) :
     this.property = property,
     this.operator = operator,
-    this.value = property.type.checkType(value);
+    this.value = property.type.coerceType(value);
   
   @override
   schema.Filter _toSchemaFilter() {

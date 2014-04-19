@@ -136,8 +136,11 @@ class PropertyType<T> {
     return new _ListPropertyType<T>(generic);
   }
 
-  T checkType(var value) {
-    assert(value == null || value is T);
+  T coerceType(var value) {
+    if (this == BLOB && value is List<int>) {
+      value = new Uint8List.fromList(value);
+    }
+    assert(() => value == null || value is T);
     return value;
   }
 
@@ -272,7 +275,7 @@ class _ListPropertyType<T> implements PropertyType<List<T>> {
   _PropertyInstance create({List<T> initialValue}) =>
       new _ListPropertyInstance(this, initialValue: initialValue);
 
-  T checkType(var value) {
+  T coerceType(var value) {
     if (value is List<T>) {
       return value;
     }

@@ -1,9 +1,8 @@
 part of datastore.common;
 
 class Entity {
-  Datastore datastore;
   final Key key;
-  KindDefinition get kind => datastore.kindByName(key.kind);
+  KindDefinition get kind => Datastore.kindByName(key.kind);
   final PropertyMap _properties;
 
   /**
@@ -11,10 +10,9 @@ class Entity {
    * with the given [key] and, optionally, initial values
    * for the entity's properties.
    */
-  Entity(Datastore datastore, Key key, [Map<String,dynamic> propertyInits = const {}]) :
-    this.datastore = datastore,
+  Entity(Key key, [Map<String,dynamic> propertyInits = const {}]) :
     this.key = key,
-    _properties = new PropertyMap(datastore.kindByName(key.kind), propertyInits);
+    _properties = new PropertyMap(Datastore.kindByName(key.kind), propertyInits);
 
   dynamic getProperty(String propertyName) {
     var prop = _properties[propertyName];
@@ -77,7 +75,7 @@ class EntityResult<T extends Entity> {
     }
     if (resultType == schema.EntityResult_ResultType.FULL) {
       var key = new Key._fromSchemaKey(entityResult.entity.key);
-      var kind = datastore.kindByName(key.kind);
+      var kind = Datastore.kindByName(key.kind);
       var ent = kind._fromSchemaEntity(datastore, key, entityResult.entity);
       return new EntityResult._(ENTITY_PRESENT, key, ent);
     }

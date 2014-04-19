@@ -6,6 +6,7 @@ library  datastore.common;
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:collection';
+import 'dart:mirrors' show reflectClass;
 
 import 'package:quiver/core.dart' as qcore;
 
@@ -27,7 +28,7 @@ part 'common/query.dart';
 part 'common/transaction.dart';
 
 class Datastore {
-  final Map<String, KindDefinition> _entityKinds;
+  static final Map<String, KindDefinition> _entityKinds = new Map();
   final DatastoreConnection connection;
 
   final Logger logger = new Logger("datastore");
@@ -39,15 +40,18 @@ class Datastore {
    * authorised to access the datastore.
    * [datasetId] is the name of the dataset to connect to, usally
    */
-  Datastore(DatastoreConnection this.connection, List<KindDefinition> entityKinds) :
-    this._entityKinds = new Map.fromIterable(entityKinds, key: (kind) => kind.name);
+  Datastore(DatastoreConnection this.connection, List<KindDefinition> entityKinds) {
+    for (var kindDefinition in entityKinds) {
+      _entityKinds[kindDefinition.name] = kindDefinition;
+    }
+  }
 
   /**
    * Retrieve the kind associated with the name of the kind.
    * Throws a [NoSuchKindError] if the kind is not known
    * by the datastore.
    */
-  KindDefinition kindByName(String name) {
+  static KindDefinition kindByName(String name) {
     var kind = _entityKinds[name];
     if (kind == null)
       throw new NoSuchKindError(name);
@@ -58,7 +62,7 @@ class Datastore {
    * Throws a [NoSuchPropertyError] if the property is not
    * found on the kind.
    */
-  PropertyDefinition propByName(String kindName, String propertyName) {
+  static PropertyDefinition propByName(String kindName, String propertyName) {
     var prop = kindByName(kindName).properties[propertyName];
     if (prop == null)
       throw new NoSuchPropertyError(kindName, propertyName);

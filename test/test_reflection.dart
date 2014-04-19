@@ -25,12 +25,6 @@ class User extends Entity {
   @Property(name: "date_joined")
   DateTime get dateJoined => getProperty("date_joined");
 
-}
-
-@Kind()
-class UserDetails extends Entity {
-  UserDetails(Datastore datastore, Key key):super(datastore, key);
-
   @Property()
   int get age => getProperty("age");
   @Property()
@@ -46,10 +40,4 @@ void defineTests(MockConnection connection) {
     expect(userKind, mirrorfree.userKind);
     expect(userKind.properties, mirrorfree.userKind.properties);
   });
-  test("reflected user details kind should be identical to mirrorfree kind", () {
-    var userDetailsKind = datastore.kindByName("UserDetails");
-    expect(userDetailsKind, mirrorfree.userDetailsKind);
-    expect(userDetailsKind.properties, mirrorfree.userDetailsKind.properties);
-  });
-
 }

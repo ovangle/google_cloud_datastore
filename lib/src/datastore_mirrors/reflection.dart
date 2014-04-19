@@ -2,7 +2,7 @@ part of datastore;
 
 /**
  * Analyse the current mirror system and return all [KindDefintionDefinition] objects associated
- * with 
+ * with
  */
 List<KindDefinition> _entityKinds() {
   Iterable<ClassMirror> annotatedClasses = currentMirrorSystem()
@@ -31,7 +31,7 @@ Kind _kindAnno(ClassMirror cls) {
     throw new KindError.multipleKindDefintionAnnotations(cls);
   return kindAnnos.single.reflectee;
 }
-    
+
 KindDefinition _kindFromClassMirror(String kindName, ClassMirror cls, Map<String, KindDefinition> foundKindDefintions) {
   var k = cls.metadata
       .singleWhere((mdata) => mdata.reflectee is Kind)
@@ -48,16 +48,16 @@ final RegExp reservedKey = new RegExp("^__.*__\$");
  * Get the name of the kind represented by a class.
  * The name defaults to the name of the class, but can be overriden
  * by declaring a static property or variable with the name of the kind.
- * 
- * eg. 
- * 
+ *
+ * eg.
+ *
  * @kind
  * class KindDefintion {
  *   static const kindName = "MyKindDefintion";
  * }
  */
 String _kindName(Kind kind, ClassMirror cls) {
-  var name = 
+  var name =
     (kind.name != null) ? kind.name : MirrorSystem.getName(cls.simpleName);
   if (name == "")
     throw new KindError.emptyName(cls);
@@ -94,16 +94,12 @@ EntityFactory _entityFactory(String kind, ClassMirror cls) {
     throw new KindError.noValidConstructor(kind);
   }
   var mandatoryParams = constructor.parameters.where((param) => !param.isOptional);
-  if (mandatoryParams.length != 2) {
+  if (mandatoryParams.length != 1) {
     throw new KindError.noValidConstructor(kind);
   }
-  
-  return (Datastore datastore, Key key) {
-    return cls.newInstance(
-        constructor.constructorName, 
-        [datastore, key]
-    ).reflectee;
-  };
+
+  return (Key key) =>
+      cls.newInstance(constructor.constructorName,[key]).reflectee;
 }
 
 bool _isKindDefintion(ClassMirror cls) {
@@ -121,13 +117,13 @@ KindDefinition _extendsKindDefintion(String kindName, ClassMirror cls, Map<Strin
   if (!_isKindDefintion(cls))
     throw new KindError.mustExtendEntity(kindName);
   var supercls = cls.superclass;
-  
+
   if (supercls.reflectedType == Entity)
     return null;
-  
+
   var superKindDefintionAnno = _kindAnno(supercls);
   var superKindDefintionName = _kindName(superKindDefintionAnno, supercls);
-  
+
   var existingKindDefintion = foundKindDefintions[superKindDefintionName];
   if (existingKindDefintion == null) {
     foundKindDefintions[superKindDefintionName] = _kindFromClassMirror(superKindDefintionName, supercls, foundKindDefintions);
@@ -136,7 +132,7 @@ KindDefinition _extendsKindDefintion(String kindName, ClassMirror cls, Map<Strin
 }
 
 List<PropertyDefinition> _entityProperties(String kind, ClassMirror cls) {
-  var annotatedDeclarations = 
+  var annotatedDeclarations =
       cls.declarations.values
           .where((decl) => decl.metadata.any((mdata) => mdata.reflectee is Property));
   List<PropertyDefinition> properties = new List<PropertyDefinition>();
@@ -198,53 +194,53 @@ PropertyType _propertyType(String kind, String propertyName, TypeMirror type, [b
 class KindError extends Error {
   final kind;
   final message;
-  
+
   KindError(this.kind, this.message) : super();
-  
+
   KindError.noKindDefintionAnnotations(ClassMirror cls) :
-    this(MirrorSystem.getName(cls.simpleName), 
+    this(MirrorSystem.getName(cls.simpleName),
         "No @Kind annotation found on class");
-  
+
   KindError.multipleKindDefintionAnnotations(ClassMirror cls) :
-    this(MirrorSystem.getName(cls.simpleName), 
+    this(MirrorSystem.getName(cls.simpleName),
         "Multiple @Kind annotations on class");
-  
+
   KindError.emptyName(ClassMirror cls):
     this(MirrorSystem.getName(cls.simpleName), "Name cannot be the empty string");
-  
+
   KindError.nameTooLong(String kind) :
     this(kind, "Datastore names are limited to 500 characters");
-  
+
   KindError.nameReservedOrReadOnly(String kind) :
     this(kind, "Names matching regex __.*__ are reserved/read only on the datastore");
-  
+
   KindError.mustExtendEntity(String kind) :
     this(kind, "A valid kind must extend `Entity`");
-  
+
   KindError.superClassNotKindDefintion(String kind, ClassMirror superCls) :
-    this(kind, 
+    this(kind,
         "The superclass of a kind must either be entity or a valid kind "
         "(got ${MirrorSystem.getName(superCls.simpleName)}");
-  
+
   KindError.noValidConstructor(String kind) :
-    this(kind, 
+    this(kind,
         "Valid kind must either declare an unnamed generative constructor "
         "or a named generative constructor (annotated with @constructKind) "
         "which accept two mandatory arguments "
         "and which redirects to Entity(Datastore datastore, Key key)");
-  
+
   KindError.tooManyConstructors(String kind) :
-    this(kind, 
+    this(kind,
         "Only one constructor can be annotated with the @constructKind"
         "annotation");
-        
-  
+
+
   KindError.invalidProperty(String kind, String propertyName) :
     this(kind,
         "Property ($propertyName) must be an (non-static) getter on the kind");
-  
+
   KindError.unrecognizedPropertyType(String kind, String propertyName, ClassMirror type) :
-    this(kind, 
+    this(kind,
         """
 Property ($propertyName) has an unrecognised property type.
 Supported schema property must be one of:
@@ -259,6 +255,6 @@ Supported schema property must be one of:
   -dynamic
 or a List of one of the above types
 """);
-  
+
   String toString() => "Malformed kind ($kind): $message";
 }
