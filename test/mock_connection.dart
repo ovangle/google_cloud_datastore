@@ -2,8 +2,14 @@ library mock_connection;
 
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:collection/equality.dart';
+
 import '../lib/src/schema_v1_pb2.dart';
 import '../lib/src/connection.dart';
+
+import 'connection_test_data.dart';
+
+final _list_eq = new ListEquality();
 
 class MockConnection implements DatastoreConnection {
 
@@ -14,10 +20,20 @@ class MockConnection implements DatastoreConnection {
   // TODO: implement host
   @override
   String get host => null;
-  
+
   get logger => null;
-  
-  MockConnection();
+
+  final List<Entity> testUserData;
+  final List<Entity> testUserDetailsData;
+
+  static Future<MockConnection> create() =>
+      testUsers()
+      .then((users) {
+        return testUserDetails().then((userDetails) =>
+            new MockConnection(users, userDetails));
+      });
+
+  MockConnection(this.testUserData, this.testUserDetailsData);
 
   @override
   Future<AllocateIdsResponse> allocateIds(AllocateIdsRequest request) {
@@ -33,7 +49,7 @@ class MockConnection implements DatastoreConnection {
       ..transaction.addAll([0,0,0,0,0]);
     return new Future.value(transactionResponse);
   }
-  
+
   //Set the number of index updates to include in the commit response
   int commitResponseMutationResultIndexUpdates;
   //Set the number of inserted ids to include in the commit response.
@@ -48,27 +64,27 @@ class MockConnection implements DatastoreConnection {
         ..mutationResult = mutationResult;
     return new Future.value(mutationResult);
   }
-  
-  List<EntityResult> lookupResponseFound = new List();
-  List<EntityResult> lookupResponseMissing = new List();
-  Iterable<Key> get lookupDeferredKeys => lookupDeferredFound.map((ent) => ent.entity.key);
-  List<EntityResult> lookupDeferredFound = new List();
 
-  bool _lookupDeferred = false;
 
   @override
   Future<LookupResponse> lookup(LookupRequest request) {
-    var lookupResponse = new LookupResponse();
-    if (_lookupDeferred) {
-      lookupResponse.found.addAll(lookupDeferredFound);
-      _lookupDeferred = false;
-    } else {
-      _lookupDeferred = true;
-      lookupResponse.found.addAll(lookupResponseFound);
-      lookupResponse.missing.addAll(lookupResponseMissing);
-      lookupResponse.deferred.addAll(lookupDeferredKeys);
+    bool keyEquals(Key key1, Key key2) {
+      return _list_eq.equals(key1.pathElement, key2.pathElement);
     }
-    return new Future.value(lookupResponse);
+
+    var keys = request.key;
+    //TODO: foundDetailsEnts?
+    var foundEnts = testUserData.where((data) => keys.any((k) => keyEquals(k, data.key)));
+
+    var missingEnts = keys.where((k) => !foundEnts.map((ent) => ent.key).any((dataKey) => keyEquals(k, dataKey)))
+        .map((k) => new Entity()..key = k)
+        .map((ent)=> new EntityResult()..entity = ent);
+
+    var response = new LookupResponse()
+      ..found.addAll(foundEnts.take(10).map((ent) => new EntityResult()..entity = ent))
+      ..deferred.addAll(foundEnts.skip(10).map((ent) => ent.key))
+      ..missing.addAll(missingEnts);
+    return new Future.value(response);
   }
 
   @override
@@ -76,21 +92,22 @@ class MockConnection implements DatastoreConnection {
     return new Future.value(new RollbackResponse());
   }
 
+  //TODO: This needs to be reconciled with the new way of collecting test data
   EntityResult_ResultType queryResultType;
-  
+
   /**
    * The query result batch that starts at cursor 0, ends at cursor 25
    * and has more elements
    */
   List<EntityResult> entityResultsAt0;
-  
+
   /**
    * The query result batch that starts at cursor 25, ends at cursor 50
    * and has no more elements
    */
   List<EntityResult> entityResultsAt1;
-  
-  
+
+
   @override
   Future<RunQueryResponse> runQuery(RunQueryRequest request) {
     if (!request.query.hasStartCursor()) {
@@ -112,6 +129,13 @@ class MockConnection implements DatastoreConnection {
         new RunQueryResponse()
         ..batch = resultBatch);
 
-    
+
   }
+
+  @override
+  Future sendRemoteShutdown() {
+    throw new UnimplementedError();
+  }
+
+  var timeoutDuration = new Duration(seconds: 30);
 }
