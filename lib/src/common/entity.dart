@@ -87,7 +87,7 @@ class EntityResult<T extends Entity> {
     if (resultType == schema.EntityResult_ResultType.FULL) {
       var key = new Key._fromSchemaKey(entityResult.entity.key);
       var kind = Datastore.kindByName(key.kind);
-      var ent = kind._fromSchemaEntity(datastore, key, entityResult.entity);
+      var ent = kind._fromSchemaEntity(key, entityResult.entity);
       return new EntityResult._(ENTITY_PRESENT, key, ent);
     }
     //We don't support projections (yet).
