@@ -57,8 +57,8 @@ class KindDefinition {
     return properties.keys.any((k) => k == property.name);
   }
 
-  Entity _fromSchemaEntity(Datastore datastore, Key key, schema.Entity schemaEntity) {
-    Entity ent = entityFactory(datastore, key);
+  Entity _fromSchemaEntity(Key key, schema.Entity schemaEntity) {
+    Entity ent = entityFactory(key);
 
     for (schema.Property schemaProp in schemaEntity.property) {
       var kindProp = properties[schemaProp.name];
