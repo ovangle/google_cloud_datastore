@@ -3,6 +3,7 @@ library mock_connection;
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:collection/equality.dart';
+import 'package:fixnum/fixnum.dart';
 
 import '../lib/src/schema_v1_pb2.dart';
 import '../lib/src/connection.dart';
@@ -24,45 +25,117 @@ class MockConnection implements DatastoreConnection {
   get logger => null;
 
   final List<Entity> testUserData;
-  final List<Entity> testUserDetailsData;
 
   static Future<MockConnection> create() =>
       testUsers()
-      .then((users) {
-        return testUserDetails().then((userDetails) =>
-            new MockConnection(users, userDetails));
-      });
+      .then((users) => new MockConnection(users));
 
-  MockConnection(this.testUserData, this.testUserDetailsData);
+  MockConnection(this.testUserData);
+
+  Int64 maxEntityId = Int64.ZERO;
+  List<Int64> allocatedIds = [];
 
   @override
   Future<AllocateIdsResponse> allocateIds(AllocateIdsRequest request) {
-    return new Future.value(
-        new AllocateIdsResponse()
-        ..key.addAll(request.key)
-    );
+    return new Future.sync(() {
+      var ids = testUserData.map((user) => user.key.pathElement.last.id);
+      while (ids.contains(maxEntityId++));
+      var allocatedKeys = [];
+      for (var key in request.key) {
+        var allocatedId = ++maxEntityId;
+        allocatedIds.add(allocatedId);
+        allocatedKeys.add(
+            key.clone()
+            ..pathElement.last.id = allocatedId);
+      }
+      return new AllocateIdsResponse()
+          ..key.addAll(allocatedKeys);
+    });
+  }
+
+  Int64 transactionId = Int64.ZERO;
+
+  var openTransactions = [];
+  var committedTransactions = [];
+
+  Int64 _bytesToInt64(List<int> bytes) {
+    var bdata = new ByteData.view(new Uint8List.fromList(bytes).buffer);
+    return bdata.getInt64(0);
   }
 
   @override
   Future<BeginTransactionResponse> beginTransaction(BeginTransactionRequest request) {
-    BeginTransactionResponse transactionResponse = new BeginTransactionResponse()
-      ..transaction.addAll([0,0,0,0,0]);
-    return new Future.value(transactionResponse);
+    return new Future.sync(() {
+      var nextTransaction = ++transactionId;
+      openTransactions.add(nextTransaction);
+      var response = new BeginTransactionResponse()
+        ..transaction = transactionId.toBytes();
+      return response;
+    });
   }
 
-  //Set the number of index updates to include in the commit response
-  int commitResponseMutationResultIndexUpdates;
-  //Set the number of inserted ids to include in the commit response.
-  List<Key> commitResponsemutationResultAutoInsertKeys = new List<Key>();
+  bool isFullySpecified(Key key) =>
+      key.pathElement
+          .every((pathElement) => pathElement.hasId() && pathElement.hasName());
 
+  void insertEntity(Entity ent) {
+    if (testUserData.any((k) => ent.key == k)) {
+      throw 'Entity already exists: ${ent.key}';
+    }
+    if (!isFullySpecified(ent.key))
+      throw 'Must be a fully specified key: ${ent.key}';
+
+    testUserData.add(ent.clone());
+  }
+
+  void updateEntity(Entity ent) {
+    if (!isFullySpecified(ent.key))
+      throw 'Must be a fully specified key: ${ent.key}';
+    var toUpdate = testUserData.firstWhere((e) => e.key == ent.key, orElse: () => null);
+    if (toUpdate == null)
+      throw 'Cannot update non-existent entity: ${ent.key}';
+    for (var prop in ent.property) {
+      var updateProp = toUpdate.property.firstWhere((p) => p.name == prop.name, orElse: () => null);
+      if (updateProp == null) {
+        toUpdate.property.add(new Property()..name = prop.name..value = prop.value.clone());
+        continue;
+      }
+      updateProp.value = prop.value.clone();
+    }
+  }
+
+  void upsertEntity(Entity ent) {
+    if (!isFullySpecified(ent.key))
+      throw 'Must be a fully specified key: ${ent.key}';
+    var existing = testUserData.firstWhere((e) => e.key == ent.key, orElse: () => null);
+    if (existing == null) {
+      insertEntity(ent);
+    } else {
+      updateEntity(ent);
+    }
+  }
+
+  void deleteEntity(Key key) {
+    if (!isFullySpecified(key))
+      throw 'Must be a fully specified key: ${key}';
+    var toDelete = testUserData.firstWhere((ent) => ent.key == key);
+  }
   @override
   Future<CommitResponse> commit(CommitRequest request) {
-    MutationResult mutationResult = new MutationResult()
-        ..indexUpdates = this.commitResponseMutationResultIndexUpdates
-        ..insertAutoIdKey.addAll(this.commitResponsemutationResultAutoInsertKeys);
-    CommitResponse commitResponse = new CommitResponse()
-        ..mutationResult = mutationResult;
-    return new Future.value(mutationResult);
+    return new Future.sync(() {
+      var transactionId = _bytesToInt64(request.transaction);
+      if (!openTransactions.contains(transactionId)) {
+        throw 'Not an open transaction: ${transactionId}';
+      }
+      if (committedTransactions.contains(transactionId))
+        throw 'Transaction $transactionId already committed';
+      var mutation = request.mutation;
+      mutation.insert.forEach(insertEntity);
+      mutation.update.forEach(updateEntity);
+      mutation.upsert.forEach(upsertEntity);
+      mutation.delete.forEach(deleteEntity);
+      return new CommitResponse();
+    });
   }
 
 
