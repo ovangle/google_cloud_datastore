@@ -134,6 +134,8 @@ class MockConnection implements DatastoreConnection {
       mutation.update.forEach(updateEntity);
       mutation.upsert.forEach(upsertEntity);
       mutation.delete.forEach(deleteEntity);
+      openTransactions.remove(transactionId);
+      committedTransactions.add(transactionId);
       return new CommitResponse();
     });
   }
@@ -141,67 +143,127 @@ class MockConnection implements DatastoreConnection {
 
   @override
   Future<LookupResponse> lookup(LookupRequest request) {
-    bool keyEquals(Key key1, Key key2) {
-      return _list_eq.equals(key1.pathElement, key2.pathElement);
-    }
 
-    var keys = request.key;
-    //TODO: foundDetailsEnts?
-    var foundEnts = testUserData.where((data) => keys.any((k) => keyEquals(k, data.key)));
+    return new Future.sync(() {
+      var keys = request.key;
+      var foundEnts = testUserData.where((data) => keys.any((k) => k == data.key));
 
-    var missingEnts = keys.where((k) => !foundEnts.map((ent) => ent.key).any((dataKey) => keyEquals(k, dataKey)))
-        .map((k) => new Entity()..key = k)
-        .map((ent)=> new EntityResult()..entity = ent);
+      var missingEnts = keys.where((k) => !foundEnts.map((ent) => ent.key).contains(k))
+          .map((k) => new Entity()..key = k)
+          .map((ent)=> new EntityResult()..entity = ent);
 
-    var response = new LookupResponse()
-      ..found.addAll(foundEnts.take(10).map((ent) => new EntityResult()..entity = ent))
-      ..deferred.addAll(foundEnts.skip(10).map((ent) => ent.key))
-      ..missing.addAll(missingEnts);
-    return new Future.value(response);
+      var response = new LookupResponse()
+        ..found.addAll(foundEnts.take(10).map((ent) => new EntityResult()..entity = ent))
+        ..deferred.addAll(foundEnts.skip(10).map((ent) => ent.key))
+        ..missing.addAll(missingEnts);
+      return response;
+    });
   }
 
   @override
   Future<RollbackResponse> rollback(RollbackRequest request) {
-    return new Future.value(new RollbackResponse());
+    return new Future.sync(() {
+      var transactionId = _bytesToInt64(request.transaction);
+      if (openTransactions.contains(transactionId))
+        throw 'Transaction $transactionId not committed';
+      if (!committedTransactions.contains(transactionId))
+        throw 'Unknown transaction: ${transactionId}';
+      //Don't actually undo the transaction.This is just a mock.
+      return new RollbackResponse();
+    });
   }
 
-  //TODO: This needs to be reconciled with the new way of collecting test data
-  EntityResult_ResultType queryResultType;
+  Iterable<Entity> applyPropertyFilter(PropertyFilter filter, Iterable<Entity> entities) {
+    getPropValue(Entity ent) {
+      if (filter.property.name == "__key__")
+        return new Value()..keyValue = ent.key;
+      return ent.property.firstWhere((prop) => prop.name == filter.property.name).value;
+    }
+    return entities
+        .where((ent) {
+          var value = getPropValue(ent);
+          switch(filter.operator) {
+            case PropertyFilter_Operator.EQUAL:
+              return value == filter.value || filter.value.listValue.any((v) => value == v);
+            case PropertyFilter_Operator.LESS_THAN:
+              return _compareValues(value, filter.value) < 0;
+            case PropertyFilter_Operator.LESS_THAN_OR_EQUAL:
+              return _compareValues(value, filter.value) <= 0;
+            case PropertyFilter_Operator.GREATER_THAN:
+              return _compareValues(value, filter.value) > 0;
+            case PropertyFilter_Operator.GREATER_THAN_OR_EQUAL:
+              return _compareValues(value, filter.value) >= 0;
+            case PropertyFilter_Operator.HAS_ANCESTOR:
+              throw new UnimplementedError("Ancestor query");
+          }
+        });
+  }
 
-  /**
-   * The query result batch that starts at cursor 0, ends at cursor 25
-   * and has more elements
-   */
-  List<EntityResult> entityResultsAt0;
+  //Compare values is only mocked for integer values.
+  int _compareValues(Value a, Value b) {
+    if (a.hasIntegerValue() && b.hasIntegerValue())
+      return a.integerValue.compareTo(b.integerValue);
+    throw new UnimplementedError("_compareValues only implemented for integer values");
+  }
 
-  /**
-   * The query result batch that starts at cursor 25, ends at cursor 50
-   * and has no more elements
-   */
-  List<EntityResult> entityResultsAt1;
+  Iterable<Entity> applyCompositeFilter(CompositeFilter filter, Iterable<Entity> entities) {
+    for (var f in filter.filter)
+      entities = applyFilter(f, entities);
+    return entities;
+  }
 
+  Iterable<Entity> applyFilter(Filter f, Iterable<Entity> entities) {
+    if (f.hasCompositeFilter())
+      return applyCompositeFilter(f.compositeFilter, entities);
+    if (f.hasPropertyFilter())
+      return applyPropertyFilter(f.propertyFilter, entities);
+    throw new StateError("Invalid filter: $f");
+  }
+
+  Int64 batchCursor = Int64.ZERO;
+
+  Map<Int64, QueryResultBatch> queryBatches = {};
 
   @override
   Future<RunQueryResponse> runQuery(RunQueryRequest request) {
-    if (!request.query.hasStartCursor()) {
-      QueryResultBatch resultBatch = new QueryResultBatch()
-        ..endCursor.addAll(new Uint8List.fromList([25]))
-        ..moreResults = QueryResultBatch_MoreResultsType.NOT_FINISHED
-        ..entityResult.addAll(entityResultsAt0)
-        ..entityResultType = queryResultType;
-      return new Future.value(
-          new RunQueryResponse()
-          ..batch = resultBatch);
-    }
-    QueryResultBatch resultBatch = new QueryResultBatch()
-        ..endCursor.addAll(new Uint8List.fromList([50]))
-        ..moreResults = QueryResultBatch_MoreResultsType.NO_MORE_RESULTS
-        ..entityResult.addAll(entityResultsAt1)
-        ..entityResultType = queryResultType;
-    return new Future.value(
-        new RunQueryResponse()
-        ..batch = resultBatch);
-
+    return new Future.sync(() {
+      if (request.hasGqlQuery())
+        throw 'Gql query not supported';
+      var query = request.query;
+      if (query.hasStartCursor()) {
+        var startCursor = _bytesToInt64(query.startCursor);
+        if (queryBatches[startCursor] == null)
+          throw 'Invalid start cursor $startCursor';
+        return new RunQueryResponse()
+            ..batch = queryBatches[startCursor];
+      }
+      var testData = applyFilter(query.filter, testUserData);
+      //Don't bother sorting or grouping the data.
+      var lastCursor, initBatch;
+      while (testData.isNotEmpty) {
+        var cursor = ++batchCursor;
+        var resultBatch = new QueryResultBatch()
+            ..endCursor = cursor
+            ..entityResultType = EntityResult_ResultType.FULL;
+        if (initBatch == null) {
+          initBatch = resultBatch;
+        } else {
+          queryBatches[lastCursor] = resultBatch;
+        }
+        lastCursor = cursor;
+        if (testData.length < 5) {
+          resultBatch.moreResults = QueryResultBatch_MoreResultsType.NO_MORE_RESULTS;
+          resultBatch.entityResult.addAll(testData.map((ent) => new EntityResult()..entity = ent.clone()));
+          testData = [];
+        } else {
+          resultBatch.moreResults = QueryResultBatch_MoreResultsType.NOT_FINISHED;
+          resultBatch.entityResult.addAll(testData.take(5).map((ent) => new EntityResult()..entity = ent.clone()));
+          testData = testData.skip(5);
+        }
+      }
+      return new RunQueryResponse()
+          ..batch = initBatch;
+    });
 
   }
 
