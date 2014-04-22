@@ -62,7 +62,7 @@ void defineTests(DatastoreConnection connection) {
     });
 
     test("should not be able to set a non-existent entity property", () {
-
+      expect(() => user.setProperty("non-existent", 4), throwsA(new isInstanceOf<NoSuchPropertyError>()));
     });
   });
 

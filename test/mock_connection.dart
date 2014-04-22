@@ -40,6 +40,7 @@ class MockConnection implements DatastoreConnection {
     return new Future.sync(() {
       var ids = testUserData.map((user) => user.key.pathElement.last.id);
       while (ids.contains(maxEntityId++));
+      while (allocatedIds.contains(maxEntityId++));
       var allocatedKeys = [];
       for (var key in request.key) {
         var allocatedId = ++maxEntityId;
@@ -60,7 +61,7 @@ class MockConnection implements DatastoreConnection {
 
   Int64 _bytesToInt64(List<int> bytes) {
     var bdata = new ByteData.view(new Uint8List.fromList(bytes).buffer);
-    return bdata.getInt64(0);
+    return new Int64(bdata.getInt64(0, Endianness.LITTLE_ENDIAN));
   }
 
   @override
@@ -76,7 +77,7 @@ class MockConnection implements DatastoreConnection {
 
   bool isFullySpecified(Key key) =>
       key.pathElement
-          .every((pathElement) => pathElement.hasId() && pathElement.hasName());
+          .every((pathElement) => pathElement.hasId() || pathElement.hasName());
 
   void insertEntity(Entity ent) {
     if (testUserData.any((k) => ent.key == k)) {
@@ -118,7 +119,7 @@ class MockConnection implements DatastoreConnection {
   void deleteEntity(Key key) {
     if (!isFullySpecified(key))
       throw 'Must be a fully specified key: ${key}';
-    var toDelete = testUserData.firstWhere((ent) => ent.key == key);
+    testUserData.removeWhere((ent) => ent.key == key);
   }
   @override
   Future<CommitResponse> commit(CommitRequest request) {
@@ -177,14 +178,17 @@ class MockConnection implements DatastoreConnection {
     getPropValue(Entity ent) {
       if (filter.property.name == "__key__")
         return new Value()..keyValue = ent.key;
-      return ent.property.firstWhere((prop) => prop.name == filter.property.name).value;
+      var prop = ent.property.firstWhere((prop) => prop.name == filter.property.name);
+      if (prop == null) return null;
+      return prop.value;
     }
     return entities
         .where((ent) {
           var value = getPropValue(ent);
+          if (value == null) return false;
           switch(filter.operator) {
             case PropertyFilter_Operator.EQUAL:
-              return value == filter.value || filter.value.listValue.any((v) => value == v);
+              return value == filter.value || value.listValue.any((v) => v == filter.value);
             case PropertyFilter_Operator.LESS_THAN:
               return _compareValues(value, filter.value) < 0;
             case PropertyFilter_Operator.LESS_THAN_OR_EQUAL:
@@ -224,6 +228,8 @@ class MockConnection implements DatastoreConnection {
 
   Map<Int64, QueryResultBatch> queryBatches = {};
 
+  static const int BATCH_SIZE = 15;
+
   @override
   Future<RunQueryResponse> runQuery(RunQueryRequest request) {
     return new Future.sync(() {
@@ -243,7 +249,7 @@ class MockConnection implements DatastoreConnection {
       while (testData.isNotEmpty) {
         var cursor = ++batchCursor;
         var resultBatch = new QueryResultBatch()
-            ..endCursor = cursor
+            ..endCursor = cursor.toBytes()
             ..entityResultType = EntityResult_ResultType.FULL;
         if (initBatch == null) {
           initBatch = resultBatch;
@@ -251,14 +257,14 @@ class MockConnection implements DatastoreConnection {
           queryBatches[lastCursor] = resultBatch;
         }
         lastCursor = cursor;
-        if (testData.length < 5) {
+        if (testData.length < BATCH_SIZE) {
           resultBatch.moreResults = QueryResultBatch_MoreResultsType.NO_MORE_RESULTS;
           resultBatch.entityResult.addAll(testData.map((ent) => new EntityResult()..entity = ent.clone()));
           testData = [];
         } else {
           resultBatch.moreResults = QueryResultBatch_MoreResultsType.NOT_FINISHED;
-          resultBatch.entityResult.addAll(testData.take(5).map((ent) => new EntityResult()..entity = ent.clone()));
-          testData = testData.skip(5);
+          resultBatch.entityResult.addAll(testData.take(BATCH_SIZE).map((ent) => new EntityResult()..entity = ent.clone()));
+          testData = testData.skip(BATCH_SIZE);
         }
       }
       return new RunQueryResponse()
