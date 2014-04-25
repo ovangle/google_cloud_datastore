@@ -17,8 +17,7 @@ import 'schema_v1_pb2.dart';
  */
 const List<String> API_SCOPE =
     const ['https://www.googleapis.com/auth/datastore',
-           'https://www.googleapis.com/auth/userinfo.email',
-           'https://www.googleapis.com/auth/devstorage.read_only'];
+           'https://www.googleapis.com/auth/userinfo.email'];
 
 const String GOOGLE_API_URL = 'https://www.googleapis.com';
 const String API_VERSION = 'v1beta2';
