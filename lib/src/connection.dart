@@ -17,7 +17,7 @@ import 'schema_v1_pb2.dart';
  */
 const List<String> API_SCOPE =
     const ['https://www.googleapis.com/auth/datastore',
-           'https://www.googleapis.com/auth/userinfo.email' ];
+           'https://www.googleapis.com/auth/userinfo.email'];
 
 const String GOOGLE_API_URL = 'https://www.googleapis.com';
 const String API_VERSION = 'v1beta2';
@@ -35,7 +35,7 @@ Future _readPrivateKey(String path) {
 
 class DatastoreConnection {
   final Logger logger = new Logger("datastore.connection");
-  
+
   /**
    * The dataset to connect to. Same as the project ID
    */
@@ -51,38 +51,38 @@ class DatastoreConnection {
    * and forwards the result onto the datastore.
    */
   final String host;
-  
+
   /**
    * The duration to wait before logging a timeout exception and failing
    * the request. Defaults to `30` seconds.
    */
   Duration timeoutDuration = new Duration(seconds: 30);
-  
+
   String get _url => '$host/datastore/$API_VERSION/datasets/$datasetId';
 
   DatastoreConnection._(this.datasetId, this._sendRequest, this.host);
-  
+
   /**
    * Creates a new [DatastoreConnection].
-   * 
-   * [:projectNumber:] is google assigned project number associated with the 
-   * datastore. 
+   *
+   * [:projectNumber:] is google assigned project number associated with the
+   * datastore.
    * [:datasetId:] is the id of the dataset to connect to, usually the same
    * as the google assigned `project ID` associated with the dataset.
-   * 
+   *
    * If connecting to a remote instance of the datastore via a service account, the
    * following two arguments must both be provided, otherwise they should be `null`.
-   * 
-   * [:serviceAccount:] is a service account email used for 
+   *
+   * [:serviceAccount:] is a service account email used for
    * authenticating with a remote instance of the datastore.
-   * [:pathToPrivateKey:] is the filesystem path to the authentication token 
-   * in the `.pem` format for the service account. 
-   * 
+   * [:pathToPrivateKey:] is the filesystem path to the authentication token
+   * in the `.pem` format for the service account.
+   *
    * If connecting to an instance of the `gcd` tool at the specified `host`, then
    * the [:host:] argument should be set to the location of a running instance of
    * the `gcd` tool.
    */
-  static Future<DatastoreConnection> open(String projectNumber, String datasetId, 
+  static Future<DatastoreConnection> open(String projectNumber, String datasetId,
         { String serviceAccount, String pathToPrivateKey, String host}) {
     var makeAuthRequests = false;
     Uri hostUri;
@@ -92,11 +92,11 @@ class DatastoreConnection {
     }
     if (makeAuthRequests) {
         return _readPrivateKey(pathToPrivateKey).then((privateKey) {
-          //Stupid behavious of compute client -- scopes must be null if 
+          //Stupid behavious of compute client -- scopes must be null if
           //not providing a service account
           var scopes = (serviceAccount == null && pathToPrivateKey == null) ? null : API_SCOPE.join(" ");
           oauth2.ComputeOAuth2Console console = new oauth2.ComputeOAuth2Console(
-              projectNumber, 
+              projectNumber,
               iss: serviceAccount,
               privateKey: privateKey,
               scopes: scopes);
@@ -112,7 +112,7 @@ class DatastoreConnection {
 
   /**
    * Submits a lookup request to the datastore.
-   * 
+   *
    * Throws an [RPCException] if the server responds with an invalid status
    */
   Future<LookupResponse> lookup(LookupRequest request) =>
@@ -132,7 +132,7 @@ class DatastoreConnection {
 
   Future<AllocateIdsResponse> allocateIds(AllocateIdsRequest request) =>
       _call("allocateIds", request, (bytes) => new AllocateIdsResponse.fromBuffer(bytes));
-  
+
   /**
    * Send a remote shutdown request to the server.
    * Will only successfully perform a shutdown on a test server, production
@@ -142,30 +142,28 @@ class DatastoreConnection {
     logger.severe("SUBMITTING REMOTE SHUTDOWN REQUEST");
     return http.post('$host/_ah/admin/quit');
   }
-  
+
   Future<GeneratedMessage> _call(String method, GeneratedMessage message, GeneratedMessage reconstructResponse(List<int> bytes)) {
     var request = new http.Request("POST", Uri.parse("$_url/$method"))
         ..headers['content-type'] = 'application/x-protobuf'
         ..bodyBytes = message.writeToBuffer();
     logger.info("($method) request sent to ${request.url}");
-    
+
     return _sendRequest(request)
         .timeout(
             timeoutDuration,
             onTimeout: () {
               logger.severe("Request to $method timed out after $timeoutDuration");
             })
-        .then((http.StreamedResponse response) {
+        .then(http.Response.fromStream)
+        .then((http.Response response) {
           if (response.statusCode != 200) {
-            response.stream.listen((bytes) {
-              logger.severe("Request to $method failed with status ${response.statusCode}");
-              logger.severe(UTF8.decode(bytes));
-            });
+            logger.severe("Request to $method failed with status ${response.statusCode}");
+            logger.severe(response.body);
             throw new RPCException(response.statusCode, method, response.reasonPhrase);
           }
           logger.info("Server returned valid ($method) response");
-          return response.stream
-              .first.then(reconstructResponse);
+          return reconstructResponse(response.bodyBytes);
         });
   }
 }
