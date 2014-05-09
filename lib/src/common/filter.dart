@@ -98,7 +98,8 @@ class _PredicateFilter implements Filter {
     } else if (!kind.hasProperty(property)) {
       throw new NoSuchPropertyError(kind, property.name);
     }
-    value = (property as PropertyDefinition).type.coerceType(value);
+    value = (property as PropertyDefinition).type.checkType(value);
+
     if (!property.indexed) {
       throw new InvalidQueryException(
           "Cannot filter on unindexed property (${property.name}). "
