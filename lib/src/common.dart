@@ -231,9 +231,21 @@ class Datastore {
     return streamController.stream;
   }
 
+  /**
+   * Insert the entity into the datastore.
+   * If the entity already exists, nothing is inserted.
+   */
   Future<Transaction> insert(Entity entity) {
     logger.info("Inserting $entity into datastore");
-    return withTransaction((transaction) => transaction.insert.add(entity))
+    return withTransaction((transaction) {
+          return lookup(entity.key, transaction)
+          .then((entityResult) {
+            if (entityResult.isPresent) {
+              return;
+            }
+            transaction.insert.add(entity);
+          });
+        })
         .then((transaction) {
           if (transaction.isCommitted) {
             logger.info("Insert successful (transaction id: ${transaction.id})");
@@ -248,10 +260,26 @@ class Datastore {
   /**
    * Insert the specified entities into the datastore.
    * Returns the committed transaction.
+   *
+   * Only entities that do not exist in the datastore at the beginning of
+   * the transaction are inserted.
    */
   Future<Transaction> insertMany(Iterable<Entity> entities) {
     logger.info("Inserting ${entities} into datastore");
-    return withTransaction((Transaction transaction) => transaction.insert.addAll(entities))
+    return withTransaction((Transaction transaction) {
+          return lookupAll(entities.map((ent) => ent.key), transaction).toList().then((results) {
+            var missingKeys = results.where((r) => !r.isPresent);
+            //Shortcut if none of the keys have been added previously.
+            if (missingKeys.length == entities.length) {
+              transaction.insert.addAll(entities);
+            } else {
+              //Missing keys should be empty.
+              transaction.insert.addAll(
+                  missingKeys.map((k) => entities.firstWhere((ent) => ent.key == k))
+              );
+            }
+          });
+        })
         .then((transaction) {
             logger.info("Insert successful (transaction id: ${transaction.id}");
             return transaction;
@@ -261,7 +289,14 @@ class Datastore {
   /**
    * Update the specified entity in the datastore.
    * Returns the committed transaction.
+   *
+   * *NOTE*: This method is not idempotent, which is a recommended property
+   * for safe datastore transactions (see [0]). Updates should ideally be performed
+   * manually via [:withTransaction:]
+   *
+   * [0]: https://developers.google.com/appengine/articles/handling_datastore_errors
    */
+  @deprecated
   Future<Transaction> update(Entity entity) {
     logger.info("Updating $entity in datastore");
     return withTransaction((transaction) => transaction.update.add(entity))
@@ -274,7 +309,13 @@ class Datastore {
   /**
    * Update all the specified entities in the datastore.
    * Returns the committed transaction.
+   *
+   * *NOTE*: This method is not idempotent and will be removed in a future release,
+   * See [0] for more information.
+   *
+   * [0]: https://developers.google.com/appengine/articles/handling_datastore_errors
    */
+  @deprecated
   Future<Transaction> updateMany(Iterable<Entity> entities) {
     logger.info("Updating entities ${entities} in datastore");
     return withTransaction((Transaction transaction) => transaction.update.addAll(entities))
@@ -291,7 +332,13 @@ class Datastore {
    * and updates it otherwise.
    *
    * Returns the committed transaction.
+   *
+   * *NOTE*: This method is not idempotent and will be removed in a future release,
+   * See [0] for more information.
+   *
+   * [0]: https://developers.google.com/appengine/articles/handling_datastore_errors
    */
+  @deprecated
   Future<Transaction> upsert(Entity entity) {
     logger.info("Upserting ${entity} in datastore");
     return withTransaction((transaction) => transaction.upsert.add(entity))
@@ -308,7 +355,13 @@ class Datastore {
    * and updates it otherwise.
    *
    * Returns the committed transaction.
+   *
+   * *NOTE*: This method is not idempotent and will be removed in a future release,
+   * See [0] for more information.
+   *
+   * [0]: https://developers.google.com/appengine/articles/handling_datastore_errors
    */
+  @deprecated
   Future<Transaction> upsertMany(Iterable<Entity> entities) {
     logger.info("Upserting entities ${entities} in datastore");
     return withTransaction((Transaction transaction) => transaction.upsert.addAll(entities))
@@ -321,11 +374,19 @@ class Datastore {
   /**
    * Delete the entity with the given key from the datastore.
    *
+   * If the key is not found in the datastore at the beginning of the transaction,
+   * the transaction is committed with no update to the datastore.
+   *
    * Returns the committed transaction.
    */
   Future<Transaction> delete(Key key) {
     logger.info("Deleting ${key} from datastore");
-    return withTransaction((Transaction transaction) => transaction.delete.add(key))
+    return withTransaction((Transaction transaction) {
+          lookup(key).then((result) {
+            if (result.isPresent) return;
+            transaction.delete.add(key);
+          });
+        })
         .then((transaction) {
           logger.info("Delete successful");
           return transaction;
@@ -335,11 +396,20 @@ class Datastore {
   /**
    * Delete the entities with any of the given [:keys:] from the datastore.
    *
+   * If any of the given keys are not found in the datastore at the beginning of the transaction,
+   * the transaction is committed with no update to the datastore.
+   *
    * Returns the committed transaction.
    */
   Future<Transaction> deleteMany(Iterable<Key> keys) {
     logger.info("Deleting keys ${keys} from datastore");
-    return withTransaction((Transaction transaction) => transaction.delete.addAll(keys))
+    return withTransaction((Transaction transaction) {
+          return lookupAll(keys, transaction).toList().then((results) {
+            transaction.delete.addAll(
+                results.where((r) => r.isPresent).map((r) => r.key)
+            );
+          });
+        })
         .then((transaction) {
           logger.info("Delete of ${keys} successfull (transaction id: ${transaction.id}");
           return transaction;
