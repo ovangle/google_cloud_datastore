@@ -1,3 +1,18 @@
+version 0.3.1
+=============
+
+Enhancements
+- insert, insertMany, delete, deleteMany are now idempotent transactions
+- deprecated update, updateMany, upsert, upsertMany to encourage idempotence using
+  `datastore.withTransaction`
+
+Bugfixes
+- Weakened kind checks when retrieving entities from datastore
+- Improved error handling on property type checks
+  
+Other changes
+- Removed deprecated annotations
+
 version 0.3.0
 =============
 
