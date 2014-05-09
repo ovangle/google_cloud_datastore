@@ -27,11 +27,29 @@ part 'common/property_instance.dart';
 part 'common/query.dart';
 part 'common/transaction.dart';
 
+/**
+ * The top level logger for all datastore logs.
+ * By default, log records are written to the top level 'datastore'
+ * logger.
+ */
+Logger datastoreLogger = new Logger("datastore");
+
 class Datastore {
   static final Map<String, KindDefinition> _entityKinds = new Map();
   final DatastoreConnection connection;
 
-  final Logger logger = new Logger("datastore");
+  /**
+   * The logger associated with the datastore.
+   * By default, log records are written to the logger with name 'datastore'.
+   *
+   * Changing the logger here will also rename the connection logger, so that
+   * it logs to the 'connection' child of this logger.
+   */
+  Logger get logger => datastoreLogger;
+  set logger(Logger logger) {
+    datastoreLogger = logger;
+    connection.logger = new Logger('${datastoreLogger.fullName}.connection');
+  }
 
   /**
    * Create a new instance of the [Datastore].
@@ -41,6 +59,7 @@ class Datastore {
    * [datasetId] is the name of the dataset to connect to, usally
    */
   Datastore(DatastoreConnection this.connection, List<KindDefinition> entityKinds) {
+    connection.logger = new Logger('${datastoreLogger.fullName}.connection');
     entityKinds.forEach((kind) {
       _entityKinds.putIfAbsent(kind.name, () => kind);
     });

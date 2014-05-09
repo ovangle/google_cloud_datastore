@@ -1,11 +1,14 @@
 library datastore.mirrorfree.test;
 
 import 'dart:typed_data';
+import 'package:fixnum/fixnum.dart';
 
 import 'package:unittest/unittest.dart';
+import 'mock_connection.dart';
 
 import '../lib/src/common.dart';
 import '../lib/src/connection.dart';
+import '../lib/src/schema_v1_pb2.dart' as schema;
 
 final KindDefinition userKind =
   new KindDefinition("User",
@@ -24,8 +27,9 @@ final KindDefinition userDetailsKind =
 final NOW = new DateTime.now();
 
 void defineTests(DatastoreConnection connection) {
+  Datastore datastore = new Datastore(connection, [userKind]);
+
   group("properties", () {
-    Datastore datastore = new Datastore(connection, [userKind, userDetailsKind]);
 
     Entity user = new Entity(new Key("User", id: 0));
     test("should be able to create an entity with a specific key", () {
@@ -62,11 +66,29 @@ void defineTests(DatastoreConnection connection) {
     });
 
     test("should not be able to set a non-existent entity property", () {
-
+      expect(() => user.setProperty("non-existent", 4), throwsA(new isInstanceOf<NoSuchPropertyError>()));
     });
   });
 
   group("lookup tests", () {
+    test("should ot throw when datastore contains a nonexistent property", () {
+      if (connection is MockConnection) {
+        var invalidUser = new schema.Entity()
+            ..key = (new schema.Key()..pathElement.add(new schema.Key_PathElement()..kind = "User"..id=new Int64(140)))
+            ..property.add(new schema.Property()
+                ..name="non-existent"
+                ..value = (new schema.Value()..stringValue = "hello"));
+        connection.testUserData.add(invalidUser);
+        var key = new Key("User", id: 140);
+        //lookup would throw if the version was wrong but the connection was valid.
+        return datastore.lookup(key)
+            .then((entityResult) {
+              expect(entityResult.isPresent, isTrue);
+            })
+            .whenComplete(() => datastore.delete(key));
+      }
+      expect(true, anything, reason: "Not running against mocked datastore");
+    });
 
   });
 

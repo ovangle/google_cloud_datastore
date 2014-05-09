@@ -62,10 +62,14 @@ class KindDefinition {
 
     for (schema.Property schemaProp in schemaEntity.property) {
       var kindProp = properties[schemaProp.name];
-      if (kindProp == null)
-        throw new NoSuchPropertyError(this, schemaProp.name);
-      ent._properties[schemaProp.name].value =
+      if (kindProp == null) {
+        datastoreLogger.warning(
+            "No property found on datastore entity ${this} corresponding\n"
+            "to schema property ${schemaProp.name}");
+      } else {
+        ent._properties[schemaProp.name].value =
           kindProp.type._fromSchemaValue(schemaProp.value);
+      }
     }
     return ent;
   }
