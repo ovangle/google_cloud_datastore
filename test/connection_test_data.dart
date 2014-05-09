@@ -16,11 +16,7 @@ void main() {
     for (Entity user in users) {
       //print(user);
     }
-  }).then((_) => testUserDetails().then((userDetails){
-    for (Entity userDetails in userDetails) {
-      print(userDetails);
-    }
-  }));
+  });
 }
 
 //A list of users of encoded entities
@@ -37,6 +33,12 @@ void main() {
 //   DateTime get dateJoined => getProperty("date_joined");
 //   @property(name: "user_details")
 //   Key get userDetails => getProperty("user_details");
+//   @property(name: "age")
+//   int get age => getProperty("age");
+//   @property(name: "isAdmin")
+//   bool get isAdmin => getProperty("isAdmin");
+//   @property(name: "friends")
+//   List<Key> get friends => getProperty("friends");
 // }
 Future<List<Entity>> testUsers() {
   List<Entity> ents = new List();
@@ -55,28 +57,7 @@ Future<List<Entity>> testUsers() {
   return completer.future;
 }
 
-// A list of user details objects. User details are mainly to tests
-// Keys and lists of keys.
-// @Kind()
-// class UserDetails extends Entity {
-//   UserDetails(datastore, int id): super(datastor, new Key("UserDetails, id: id));
-//
-//   @property(name: "age")
-//   int get age => getProperty("age");
-//   @property(name: "isAdmin")
-//   bool get isAdmin => getProperty("isAdmin");
-//   @property(name: "friends")
-//   List<Key> get friends => getProperty("friends");
-// }
-Future<List<Entity>> testUserDetails() {
-  var ents = [];
-  for (var i=0;i<100;i++) {
-    ents.add(new Entity()
-        ..key = userDetailsKeys[i]
-        ..property.addAll(_userDetailsProperties(i)));
-  }
-  return new Future.value(ents);
-}
+
 List<Key> get userKeys {
   List<Key> keys = [];
   for (var i=0;i<100;i++) {
@@ -143,6 +124,9 @@ Property _getUserDetailsProp(int i) {
 Future<List<Property>> _userProperties(int i) {
   var props = [];
   props.add(_getDateJoined(i));
+  props.add(_ageProperty(i));
+  props.add(_isAdminProperty(i));
+  props.add(_friendsProperty(i));
   props.add(_getUserDetailsProp(i));
   return _getName(i).then((name) {
     props.add(name);
@@ -171,11 +155,5 @@ Property _friendsProperty(int i) {
   return new Property()
     ..name = "friends"
     ..value = (new Value()..listValue.addAll(friendsValues));
-}
-
-List<Property> _userDetailsProperties(int i) {
-  return [ _ageProperty(i),
-           _isAdminProperty(i),
-           _friendsProperty(i) ];
 }
 
