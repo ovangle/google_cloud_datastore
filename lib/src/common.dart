@@ -402,3 +402,13 @@ class NoSuchPropertyError extends Error {
   toString() =>
       "Property $property not found on $receiver";
 }
+
+class PropertyTypeError extends Error {
+  final PropertyType propertyType;
+  final value;
+
+  PropertyTypeError(this.propertyType, this.value);
+
+  toString() =>
+      "TypeError: Invalid value for ${propertyType} property";
+}

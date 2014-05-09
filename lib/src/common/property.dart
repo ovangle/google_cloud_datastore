@@ -136,11 +136,22 @@ class PropertyType<T> {
     return new _ListPropertyType<T>(generic);
   }
 
-  T coerceType(var value) {
+  /**
+   * Check that the given value is valid for the property type and return the value.
+   *
+   * The following coersions are implicitly performed by the method.
+   * If this is a [PropertyType.BLOB] property, [List<int>]s are automatically converted
+   * to Uint8List via the [:Uint8List.fromList:]  constructor.
+   */
+  T checkType(var value) {
     if (this == BLOB && value is List<int>) {
       value = new Uint8List.fromList(value);
     }
-    assert(() => value == null || value is T);
+    try {
+      assert(value == null || value is T);
+    } on AssertionError {
+      throw new PropertyTypeError(this, value);
+    }
     return value;
   }
 
@@ -275,11 +286,11 @@ class _ListPropertyType<T> implements PropertyType<List<T>> {
   _PropertyInstance create({List<T> initialValue}) =>
       new _ListPropertyInstance(this, initialValue: initialValue);
 
-  T coerceType(var value) {
+  T checkType(var value) {
     if (value is List<T>) {
       return value;
     }
-    throw new PropertyException("Invalid value for $this ($value)");
+    throw new PropertyTypeError(this, value);
   }
 
   toString() => "list<${generic._repr}>";

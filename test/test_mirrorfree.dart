@@ -71,6 +71,10 @@ void defineTests(DatastoreConnection connection) {
   });
 
   group("query", () {
+    test("should throw a PropertyTypeError when trying to get a filter with the wrong value type", () {
+      var filter = new Filter("age", Operator.EQUAL, "hello");
+      expect(() => new Query("User", filter), throwsA(new isInstanceOf<PropertyTypeError>()));
+    });
     test("should only be able to filter for inequality on one property", () {
       var filter1 = new Filter.and([new Filter("age", Operator.LESS_THAN_OR_EQUAL, 4),
                                    new Filter("age", Operator.GREATER_THAN_OR_EQUAL, 16) ]);

@@ -4,12 +4,12 @@ class _PropertyInstance<T> {
   final PropertyType<T> propertyType;
   T _value;
 
-  T get value => propertyType.coerceType(_value);
-    set value(T value) => _value = propertyType.coerceType(value);
+  T get value => propertyType.checkType(_value);
+    set value(T value) => _value = propertyType.checkType(value);
 
   _PropertyInstance(PropertyType<T> propertyType, {T initialValue}) :
     this.propertyType = propertyType,
-    this._value = propertyType.coerceType(initialValue);
+    this._value = propertyType.checkType(initialValue);
 
   _PropertyInstance.fromSchemaProperty(PropertyType this.propertyType, schema.Property schemaProperty) {
     this.value = propertyType._fromSchemaValue(schemaProperty.value);
