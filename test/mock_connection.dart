@@ -22,6 +22,7 @@ class MockConnection implements DatastoreConnection {
   String get host => null;
 
   get logger => null;
+  set logger(var logger) => null;
 
   final List<Entity> testUserData;
   final List<Entity> testUserDetailsData;
@@ -58,11 +59,10 @@ class MockConnection implements DatastoreConnection {
   @override
   Future<CommitResponse> commit(CommitRequest request) {
     MutationResult mutationResult = new MutationResult()
-        ..indexUpdates = this.commitResponseMutationResultIndexUpdates
-        ..insertAutoIdKey.addAll(this.commitResponsemutationResultAutoInsertKeys);
+        ..indexUpdates = 0;
     CommitResponse commitResponse = new CommitResponse()
         ..mutationResult = mutationResult;
-    return new Future.value(mutationResult);
+    return new Future.value(new CommitResponse()..mutationResult = mutationResult);
   }
 
 
