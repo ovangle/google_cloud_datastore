@@ -124,12 +124,6 @@ class MockConnection implements DatastoreConnection {
   }
   @override
   Future<CommitResponse> commit(CommitRequest request) {
-    request.mutation
-        ..insert.forEach(insertEntity)
-        ..update.forEach(updateEntity)
-        ..upsert.forEach(upsertEntity)
-        ..delete.forEach(deleteEntity);
-
     MutationResult mutationResult = new MutationResult()
         ..indexUpdates = 0;
     CommitResponse commitResponse = new CommitResponse()

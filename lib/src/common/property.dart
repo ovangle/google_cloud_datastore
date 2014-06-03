@@ -73,6 +73,13 @@ class _KeyProperty extends PropertyDefinition {
   const _KeyProperty() : super("__key__", PropertyType.KEY, indexed: true);
 }
 
+/**
+ * A property which represents the specific subkind of a concrete kind
+ */
+class _SubkindProperty extends PropertyDefinition {
+  const _SubkindProperty(): super("___subkind", PropertyType.STRING, indexed: true);
+}
+
 class PropertyType<T> {
   /**
    * A [DYNAMIC] property type admits values from any of the valid property types except [LIST].
@@ -119,7 +126,7 @@ class PropertyType<T> {
    * A [LIST] property is a multi valued property. The list generic can be any of
    * [DYNAMIC], [BOOLEAN], [INTEGER], [DOUBLE], [STRING], [BLOB], [DATE_TIME] or [KEY].
    */
-  static PropertyType LIST([PropertyType genericType = DYNAMIC]) => new PropertyType.list(genericType);
+  static PropertyType<List> LIST([PropertyType genericType = DYNAMIC]) => new _ListPropertyType(genericType);
 
   //The string representation of the type
   final String _repr;
@@ -131,10 +138,6 @@ class PropertyType<T> {
   final _FromSchemaValue<T> _fromSchemaValue;
 
   const PropertyType(this._repr, this._toSchemaValue, this._fromSchemaValue);
-
-  factory PropertyType.list(PropertyType<T> generic) {
-    return new _ListPropertyType<T>(generic);
-  }
 
   /**
    * Check that the given value is valid for the property type and return the value.
@@ -286,7 +289,7 @@ class _ListPropertyType<T> implements PropertyType<List<T>> {
   _PropertyInstance create({List<T> initialValue}) =>
       new _ListPropertyInstance(this, initialValue: initialValue);
 
-  T checkType(var value) {
+  List<T> checkType(var value) {
     if (value is List<T>) {
       return value;
     }

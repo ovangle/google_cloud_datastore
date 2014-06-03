@@ -12,8 +12,52 @@ class Entity {
    */
   static const PropertyDefinition KEY_PROPERTY = const _KeyProperty();
 
+  /**
+   * A property definition which can be used to filter for properties
+   * of a specific subkind of a concrete kind
+   */
+  static const PropertyDefinition SUBKIND_PROPERTY = const _SubkindProperty();
+
+  static KindDefinition _initSubkind(String keyKind, String subkind) {
+    var keyKindDefn = Datastore.kindByName(keyKind);
+
+    if (subkind == null) {
+      //There is no subkind. The concrete key is the leaf kind.
+      return null;
+    }
+    var subkindDefn = Datastore.kindByName(subkind);
+
+    if (subkindDefn.concrete) {
+      throw new KindError.concreteSubkind(subkind);
+    }
+
+    var parentKind = subkindDefn.extendsKind;
+    while (parentKind != keyKindDefn) {
+      parentKind = parentKind.extendsKind;
+      if (parentKind == null) {
+        throw new KindError.notDirectSubkind(subkind, keyKind);
+      }
+    }
+
+    return subkindDefn;
+  }
+
   final Key key;
+  /**
+   * The datastore kind of the entity
+   */
   KindDefinition get kind => Datastore.kindByName(key.kind);
+
+  /**
+   * The specific subkind of the entity. If the kind is [:concrete:], then will
+   * be the same as `kind`.
+   */
+  KindDefinition get subkind {
+    if (hasProperty(SUBKIND_PROPERTY.name)) {
+      return Datastore.kindByName(getProperty(SUBKIND_PROPERTY.name));
+    }
+    return kind;
+  }
   final PropertyMap _properties;
 
   /**
@@ -21,9 +65,15 @@ class Entity {
    * with the given [key] and, optionally, initial values
    * for the entity's properties.
    */
-  Entity(Key key, [Map<String,dynamic> propertyInits = const {}]) :
+  Entity(Key key, [Map<String,dynamic> propertyInits = const {}, String subkind]) :
     this.key = key,
-    _properties = new PropertyMap(Datastore.kindByName(key.kind), propertyInits);
+    _properties = new PropertyMap(
+        (subkind != null) ? _initSubkind(key.kind, subkind) : Datastore.kindByName(key.kind),
+        propertyInits);
+
+  bool hasProperty(String propertyName) {
+    return _properties.containsKey(propertyName);
+  }
 
   dynamic getProperty(String propertyName) {
     var prop = _properties[propertyName];
@@ -39,7 +89,8 @@ class Entity {
     schema.Entity schemaEntity = new schema.Entity();
     schemaEntity.key = key._toSchemaKey();
     _properties.forEach((String name, _PropertyInstance prop) {
-      var defn = kind.properties[name];
+      var defn = subkind.properties[name];
+      assert(defn != null);
       schemaEntity.property.add(prop._toSchemaProperty(defn));
     });
     return schemaEntity;
@@ -99,13 +150,16 @@ class PropertyMap extends UnmodifiableMapMixin<String,_PropertyInstance> {
   final KindDefinition kind;
   Map<String,_PropertyInstance> _entityProperties;
 
-  PropertyMap(KindDefinition kind, Map<String,dynamic> propertyInits) :
-    this.kind = kind,
-    _entityProperties = new Map.fromIterable(
-        kind.properties.values,
-        key: (prop) => prop.name,
-        value: (PropertyDefinition prop) => prop.type.create(initialValue: propertyInits[prop.name])
-    );
+  PropertyMap(KindDefinition this.kind, Map<String,dynamic> propertyInits) :
+    _entityProperties = new Map() {
+    this.kind.properties.forEach((name, defn) {
+      if (name == Entity.SUBKIND_PROPERTY.name) {
+        _entityProperties[name] = defn.type.create(initialValue: kind.name);
+      } else {
+        _entityProperties[name] = defn.type.create(initialValue: propertyInits[name]);
+      }
+    });
+  }
 
   @override
   _PropertyInstance operator [](String key) {

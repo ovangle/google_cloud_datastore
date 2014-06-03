@@ -35,7 +35,7 @@ class _ListPropertyInstance<T> implements _PropertyInstance<List<T>> {
       _value.addAll(value);
   }
 
-  _ListPropertyInstance(_ListPropertyType<List<T>> propertyType, {List<T> initialValue}) :
+  _ListPropertyInstance(_ListPropertyType<T> propertyType, {List<T> initialValue}) :
     this.propertyType = propertyType,
     this._value = new _ListValue(propertyType.generic, initialValue);
 

@@ -2,7 +2,6 @@ library connection;
 
 import 'dart:io';
 import 'dart:async';
-import 'dart:convert' show UTF8;
 
 import 'package:logging/logging.dart';
 import 'package:http/http.dart' as http;

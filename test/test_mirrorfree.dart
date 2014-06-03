@@ -19,15 +19,16 @@ final KindDefinition userKind =
         new PropertyDefinition("age", PropertyType.INTEGER, indexed: true),
         new PropertyDefinition("isAdmin", PropertyType.BOOLEAN),
         new PropertyDefinition("friends", PropertyType.LIST(PropertyType.KEY))
-      ]);
+      ],
+      entityFactory: (key) => new Entity(key));
 
 final KindDefinition userDetailsKind =
-  new KindDefinition("UserDetails", []);
+  new KindDefinition("UserDetails", [], entityFactory: (key) => new Entity(key));
 
 final NOW = new DateTime.now();
 
 void defineTests(DatastoreConnection connection) {
-  Datastore datastore = new Datastore(connection, [userKind]);
+  Datastore datastore = new Datastore(connection, [userKind, userDetailsKind]);
 
   group("properties", () {
 

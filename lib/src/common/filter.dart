@@ -20,6 +20,10 @@ abstract class Filter {
   factory Filter.ancestorIs(Key key) =>
       new _AncestorFilter(key);
 
+  factory Filter.subkind(String subkind) {
+    return new Filter(Entity.SUBKIND_PROPERTY, Operator.EQUAL, subkind);
+  }
+
   /**
    * Forms a logical conjuction of a collection of filters.
    */

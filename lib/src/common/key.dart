@@ -2,7 +2,7 @@ part of datastore.common;
 
 /**
  * A [Key] is a reference to an entity in the datastore.
- * 
+ *
  */
 class Key {
   /**
@@ -18,17 +18,17 @@ class Key {
    */
   final int id;
   /**
-   * The [:name:] of a key is an optional user assigned 
+   * The [:name:] of a key is an optional user assigned
    */
   final String name;
-  
+
   List<Key> get path => isTopLevel ? [this] : (parentKey.path..add(this));
-  
+
   /**
    * Test whether this key is at the top level of the datastore.
    */
   bool get isTopLevel => parentKey == null;
-  
+
   /**
    * Gets a reference to the child of this [Key] with the given [:kind:] and [:name:]
    */
@@ -38,11 +38,11 @@ class Key {
     }
     return new Key(kind, parentKey: this, name: name);
   }
-  
-  
+
+
   /**
    * Create a new key with the provided [:parentKey:] and [:name:].
-   * 
+   *
    * If [:parentKey:] is not provided, the created key is a top level key
    * in the datastore.
    * Raises a [KeyError] if [:name:] is not provided.
@@ -52,26 +52,30 @@ class Key {
     if (id == null && name == null) {
       throw new KeyError.incomplete();
     }
+    var kindDefn = Datastore.kindByName(kind);
+    if (!kindDefn.concrete) {
+      throw new KindError.kindOnKeyMustBeConcrete(kind);
+    }
   }
-  
+
   /**
    * Create a new key which refers to the same datastore object as the argument.
    */
   Key.fromKey(Key key) :
-    this._(
-        key.kind, 
-        (key.parentKey != null) ? new Key.fromKey(key.parentKey) : null, 
-        id: key.id, 
+    this(
+        key.kind,
+        parentKey: (key.parentKey != null) ? new Key.fromKey(key.parentKey) : null,
+        id: key.id,
         name: key.name
     );
-    
+
   /**
    * Restore a [Key] from the datastore key.
    */
   factory Key._fromSchemaKey(schema.Key schemaKey) {
     return new Key._fromPath(schemaKey.pathElement);
   }
-  
+
   /**
    * Resotre a [Key] from the path from the root of the datastore to the key.
    * If the [path] is empty, the [Key] exists at the top level of the datastore.
@@ -82,7 +86,7 @@ class Key {
     }
     return new Key._fromPathElement(path.take(path.length - 1), path.last);
   }
-  
+
   /**
    * Restore a [Key] from a path element and the path to the parent.
    */
@@ -93,7 +97,7 @@ class Key {
     var name = (pathElement.hasName()) ? pathElement.name : null;
     return new Key(kind, parentKey: parentKey, id: id, name: name);
   }
-  
+
   /**
    * Create a path element which represents the current [Key].
    */
@@ -108,7 +112,7 @@ class Key {
     }
     return pathElement;
   }
-  
+
   /**
    * Create a datastore key representing the current key.
    */
@@ -116,17 +120,17 @@ class Key {
     return new schema.Key()
       ..pathElement.addAll(path.map((k)=> k._toPathElement()));
   }
-  
+
   bool operator ==(Object other) {
     if (other is Key) {
       if (kind != other.kind) return false;
       if (parentKey != other.parentKey) return false;
       if (name != null) return name == other.name;
-      if (id != null) return id == other.id; 
+      if (id != null) return id == other.id;
     }
     return false;
   }
-  
+
   int get hashCode {
     var hashCode = kind.hashCode;
     hashCode = hashCode * 37 + parentKey.hashCode;
@@ -136,7 +140,7 @@ class Key {
       hashCode = hashCode * 37 + id.hashCode;
     return hashCode;
   }
-  
+
   String toString() {
     StringBuffer sbuf = new StringBuffer('Key($kind');
     if (parentKey != null)
@@ -153,9 +157,9 @@ class Key {
 class KeyError extends Error {
   final String message;
   KeyError(String this.message) : super();
-  
+
   KeyError.incomplete() :
     this("Incomplete key. Either a name or id must be provided");
-  
+
   toString() => "Invalid key: $message";
 }

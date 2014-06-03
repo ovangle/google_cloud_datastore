@@ -11,7 +11,7 @@ import 'test_mirrorfree.dart' as mirrorfree;
 
 @Kind()
 class User extends Entity {
-  User(Key key): super(key);
+  User(Key key, [String subtype]): super(key, {}, subtype);
 
   @Property(indexed: true)
   String get name => getProperty("name");
@@ -33,6 +33,11 @@ class User extends Entity {
   List<Key> get friends => getProperty("friends");
 }
 
+@Kind(name: "PrivateUser", concrete: false)
+class PrivateUser extends User {
+  PrivateUser(Key key): super(key, "PrivateUser");
+}
+
 void defineTests(MockConnection connection) {
   var datastore = new Datastore(connection);
   test("reflected user kind should be identical to mirrorfree kind", () {
@@ -45,5 +50,10 @@ void defineTests(MockConnection connection) {
     var userKind = Datastore.kindByName("User");
     var datastore2 = new Datastore(connection);
     expect(Datastore.kindByName("User"), same(userKind));
+  });
+
+  test("A private user should be an abstract subtype of the kind User", () {
+    var privateUserKind = Datastore.kindByName("PrivateUser");
+    expect(privateUserKind.concrete, false);
   });
 }

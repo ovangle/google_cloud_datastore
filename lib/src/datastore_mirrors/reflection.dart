@@ -39,10 +39,15 @@ KindDefinition _kindFromClassMirror(String kindName, ClassMirror cls, Map<String
   KindDefinition extendsKindDefintion = _extendsKindDefintion(kindName, cls, foundKindDefintions);
   EntityFactory entityFactory = _entityFactory(kindName, cls);
   List<PropertyDefinition> entityProperties = _entityProperties(kindName, cls);
-  return new KindDefinition(kindName, entityProperties, extendsKind: extendsKindDefintion, entityFactory: entityFactory);
+  return new KindDefinition(
+      kindName,
+      entityProperties,
+      extendsKind: extendsKindDefintion,
+      concrete: k.concrete,
+      entityFactory: entityFactory);
 }
 
-final RegExp reservedKey = new RegExp("^__.*__\$");
+final RegExp reservedKey = new RegExp("^__.*__");
 
 /**
  * Get the name of the kind represented by a class.
@@ -191,11 +196,9 @@ PropertyType _propertyType(String kind, String propertyName, TypeMirror type, [b
   return PropertyType.DYNAMIC;
 }
 
-class KindError extends Error {
-  final kind;
-  final message;
+class KindError extends base.KindError {
 
-  KindError(this.kind, this.message) : super();
+  KindError(String kind, String message) : super(kind, message);
 
   KindError.noKindDefintionAnnotations(ClassMirror cls) :
     this(MirrorSystem.getName(cls.simpleName),

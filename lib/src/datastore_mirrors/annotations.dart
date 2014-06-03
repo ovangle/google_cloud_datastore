@@ -6,15 +6,21 @@ part of datastore;
  * If [:name:] is provided, used as the name of the datastore kind. Otherwise the name of the
  * annnotated class is used instead.
  *
+ * If [:concrete:] is `false`, the kind is stored in the datastore as a subtype of the first
+ * concrete parent of the kind. Subkinds will be automatically instantiated as an instance of
+ * the annotated class, but inherit properties from the inherited type. Exactly *one* concrete
+ * class may exist in any inheritance heirarchy.
+ *
  * It is an error if a `kind` annotated class does not define an unnamed, two-argument constructor which
  * redirects to `Entity(Datastore datastore, Key key)`.
  */
-
-
 class Kind {
   final String name;
-  const Kind({String this.name});
+  final bool concrete;
+  const Kind({String this.name, this.concrete: true});
 }
+
+
 
 
 /**

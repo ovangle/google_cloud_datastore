@@ -6,13 +6,13 @@ library  datastore.common;
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:collection';
-import 'dart:mirrors' show reflectClass;
 
+import 'package:collection/wrappers.dart' show UnmodifiableMapMixin;
 import 'package:quiver/core.dart' as qcore;
+import 'package:quiver/collection.dart' as qcollection;
 
 import 'package:crypto/crypto.dart' show CryptoUtils;
 import 'package:fixnum/fixnum.dart';
-import 'package:collection/wrappers.dart';
 import 'package:logging/logging.dart';
 
 import 'schema_v1_pb2.dart' as schema;
@@ -481,6 +481,31 @@ class NoSuchKindError extends Error {
   NoSuchKindError(String this.kind);
 
   toString() => "Unknown kind: $kind";
+}
+
+class KindError extends Error {
+  final String kind;
+  final String message;
+
+  KindError(String this.kind, String this.message);
+
+  KindError.multipleConcreteKindsInInheritanceHeirarchy(String kind, String extendsKind):
+    this.kind = kind,
+    this.message = "Multiple concrete kinds ($kind, $extendsKind) found in inheritance heirarchy";
+
+  KindError.kindOnKeyMustBeConcrete(String name):
+    this.kind = name,
+    this.message = "Key kind ($name) must be concrete";
+
+  KindError.concreteSubkind(String name):
+    this.kind = name,
+    this.message = "Entity subkind cannot be concrete";
+
+  KindError.notDirectSubkind(String subkind, String keyKind):
+    this.kind = subkind,
+    this.message = "Entity subkind ($subkind) must extend the key kind ($keyKind)";
+
+  String toString() => message;
 }
 
 class NoSuchPropertyError extends Error {
