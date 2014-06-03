@@ -1,3 +1,10 @@
+version 0.3.2
+=============
+
+Enhancements
+- Implemented kind inheritance. Multiple kinds can now be stored as the same datastore entity
+
+
 version 0.3.1
 =============
 
@@ -9,7 +16,7 @@ Enhancements
 Bugfixes
 - Weakened kind checks when retrieving entities from datastore
 - Improved error handling on property type checks
-  
+
 Other changes
 - Removed deprecated annotations
 
