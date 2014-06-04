@@ -133,6 +133,12 @@ class KindDefinition {
     return ent;
   }
 
+  /**
+   * Initializes all the properties on the given entity
+   */
+  void initializeEntity(Entity entity) {
+    entity._initProperties( (!concrete) ? this : null );
+  }
 
   schema.KindExpression _toSchemaKindExpression() {
     return new schema.KindExpression()

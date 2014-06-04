@@ -4,7 +4,7 @@ part of datastore;
  * Analyse the current mirror system and return all [KindDefintionDefinition] objects associated
  * with
  */
-List<KindDefinition> _entityKinds() {
+Map<Type, KindDefinition> _entityKinds() {
   Iterable<ClassMirror> annotatedClasses = currentMirrorSystem()
       .libraries.values
       .where((LibraryMirror lib) => lib.uri.scheme != 'dart')
@@ -12,15 +12,15 @@ List<KindDefinition> _entityKinds() {
       .where((ClassMirror cls) =>
           cls.metadata.any((mdata) => mdata.reflectee is Kind)
       );
-  Map<String,KindDefinition> foundKindDefintions = new Map<String,KindDefinition>();
+  Map<Type,KindDefinition> foundKindDefintions = new Map<Type,KindDefinition>();
   for (var cls in annotatedClasses) {
     var kindAnno = _kindAnno(cls);
     var kindName = _kindName(kindAnno, cls);
     if (foundKindDefintions.containsKey(kindName))
       continue;
-    foundKindDefintions[kindName] = _kindFromClassMirror(kindName, cls, foundKindDefintions);
+    foundKindDefintions[cls.reflectedType] = _kindFromClassMirror(kindName, cls, foundKindDefintions);
   }
-  return foundKindDefintions.values.toList(growable: false);
+  return foundKindDefintions;
 }
 
 Kind _kindAnno(ClassMirror cls) {
@@ -32,7 +32,7 @@ Kind _kindAnno(ClassMirror cls) {
   return kindAnnos.single.reflectee;
 }
 
-KindDefinition _kindFromClassMirror(String kindName, ClassMirror cls, Map<String, KindDefinition> foundKindDefintions) {
+KindDefinition _kindFromClassMirror(String kindName, ClassMirror cls, Map<Type, KindDefinition> foundKindDefintions) {
   var k = cls.metadata
       .singleWhere((mdata) => mdata.reflectee is Kind)
       .reflectee;
@@ -118,7 +118,7 @@ bool _isKindDefintion(ClassMirror cls) {
   return _isKindDefintion(cls.superclass);
 }
 
-KindDefinition _extendsKindDefintion(String kindName, ClassMirror cls, Map<String,KindDefinition> foundKindDefintions) {
+KindDefinition _extendsKindDefintion(String kindName, ClassMirror cls, Map<Type,KindDefinition> foundKindDefintions) {
   if (!_isKindDefintion(cls))
     throw new KindError.mustExtendEntity(kindName);
   var supercls = cls.superclass;
@@ -129,9 +129,9 @@ KindDefinition _extendsKindDefintion(String kindName, ClassMirror cls, Map<Strin
   var superKindDefintionAnno = _kindAnno(supercls);
   var superKindDefintionName = _kindName(superKindDefintionAnno, supercls);
 
-  var existingKindDefintion = foundKindDefintions[superKindDefintionName];
+  var existingKindDefintion = foundKindDefintions[supercls.reflectedType];
   if (existingKindDefintion == null) {
-    foundKindDefintions[superKindDefintionName] = _kindFromClassMirror(superKindDefintionName, supercls, foundKindDefintions);
+    existingKindDefintion = foundKindDefintions[supercls.reflectedType] = _kindFromClassMirror(superKindDefintionName, supercls, foundKindDefintions);
   }
   return existingKindDefintion;
 }

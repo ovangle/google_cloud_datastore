@@ -43,7 +43,7 @@ void main() {
     setUp(() {
       return DatastoreConnection.open('41795083', 'crucial-matter-487',
           host: 'http://127.0.0.1:5961').then((connection) {
-        datastore = new Datastore(connection, [fileKind, protectedFileKind, notDirectSubkind, errKind]);
+        datastore = new Datastore.withKinds(connection, [fileKind, protectedFileKind, notDirectSubkind, errKind]);
       });
     });
 
@@ -82,7 +82,9 @@ void main() {
 
     test("Should throw when instantiating an entity where the subkind does not extend the key", () {
       var key = new Key("File", id: 123);
-      expect(() => new Entity(key, {}, "NotSubkind"), throwsA(new isInstanceOf<KindError>()));
+      expect(
+          () => new Entity(key, {}, "NotSubkind"),
+          throwsA(new isInstanceOf<KindError>()));
     });
 
     test("Should be able to store a schema entity", () {

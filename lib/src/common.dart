@@ -9,7 +9,6 @@ import 'dart:collection';
 
 import 'package:collection/wrappers.dart' show UnmodifiableMapMixin;
 import 'package:quiver/core.dart' as qcore;
-import 'package:quiver/collection.dart' as qcollection;
 
 import 'package:crypto/crypto.dart' show CryptoUtils;
 import 'package:fixnum/fixnum.dart';
@@ -58,7 +57,7 @@ class Datastore {
    * authorised to access the datastore.
    * [datasetId] is the name of the dataset to connect to, usally
    */
-  Datastore(DatastoreConnection this.connection, List<KindDefinition> entityKinds) {
+  Datastore.withKinds(DatastoreConnection this.connection, List<KindDefinition> entityKinds) {
     connection.logger = new Logger('${datastoreLogger.fullName}.connection');
     entityKinds.forEach((kind) {
       _entityKinds.putIfAbsent(kind.name, () => kind);
@@ -76,6 +75,8 @@ class Datastore {
       throw new NoSuchKindError(name);
     return kind;
   }
+
+
   /**
    * Retrieve the property associated with the name of the kind.
    * Throws a [NoSuchPropertyError] if the property is not
@@ -92,6 +93,9 @@ class Datastore {
    * Allocate a new unnamed datastore key.
    */
   Future<Key> allocateKey(String kind, {Key parentKey}) {
+    if (!Datastore.kindByName(kind).concrete) {
+      throw new KindError.kindOnKeyMustBeConcrete(kind);
+    }
     var key = (parentKey != null) ? parentKey._toSchemaKey() : new schema.Key();
     key.pathElement.add(
         new schema.Key_PathElement()

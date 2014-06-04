@@ -11,7 +11,7 @@ import 'test_mirrorfree.dart' as mirrorfree;
 
 @Kind()
 class User extends Entity {
-  User(Key key, [String subtype]): super(key, {}, subtype);
+  User(Key key, [String subtype]): super(key, {});
 
   @Property(indexed: true)
   String get name => getProperty("name");
@@ -35,7 +35,7 @@ class User extends Entity {
 
 @Kind(name: "PrivateUser", concrete: false)
 class PrivateUser extends User {
-  PrivateUser(Key key): super(key, "PrivateUser");
+  PrivateUser(Key key): super(key);
 }
 
 void defineTests(MockConnection connection) {
@@ -55,5 +55,17 @@ void defineTests(MockConnection connection) {
   test("A private user should be an abstract subtype of the kind User", () {
     var privateUserKind = Datastore.kindByName("PrivateUser");
     expect(privateUserKind.concrete, false);
+  });
+
+  group("wrappers", () {
+    test("Should be able to initialize an entity wrapper for a normal kind", () {
+      var user = new User(new Key("User", id: 123));
+      expect(user.subkind, Datastore.kindByName("User"));
+    });
+
+    test("Should be able to initialize a subkind", () {
+      var user = new PrivateUser(new Key("User", id: 123));
+      expect(user.subkind, Datastore.kindByName("PrivateUser"));
+    });
   });
 }

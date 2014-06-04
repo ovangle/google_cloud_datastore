@@ -28,7 +28,7 @@ final KindDefinition userDetailsKind =
 final NOW = new DateTime.now();
 
 void defineTests(DatastoreConnection connection) {
-  Datastore datastore = new Datastore(connection, [userKind, userDetailsKind]);
+  Datastore datastore = new Datastore.withKinds(connection, [userKind, userDetailsKind]);
 
   group("properties", () {
 

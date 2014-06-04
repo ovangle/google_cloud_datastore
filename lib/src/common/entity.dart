@@ -18,30 +18,6 @@ class Entity {
    */
   static const PropertyDefinition SUBKIND_PROPERTY = const _SubkindProperty();
 
-  static KindDefinition _initSubkind(String keyKind, String subkind) {
-    var keyKindDefn = Datastore.kindByName(keyKind);
-
-    if (subkind == null) {
-      //There is no subkind. The concrete key is the leaf kind.
-      return null;
-    }
-    var subkindDefn = Datastore.kindByName(subkind);
-
-    if (subkindDefn.concrete) {
-      throw new KindError.concreteSubkind(subkind);
-    }
-
-    var parentKind = subkindDefn.extendsKind;
-    while (parentKind != keyKindDefn) {
-      parentKind = parentKind.extendsKind;
-      if (parentKind == null) {
-        throw new KindError.notDirectSubkind(subkind, keyKind);
-      }
-    }
-
-    return subkindDefn;
-  }
-
   final Key key;
   /**
    * The datastore kind of the entity
@@ -58,18 +34,53 @@ class Entity {
     }
     return kind;
   }
-  final PropertyMap _properties;
+
+  final Map<String,dynamic> _propertyInits;
+  PropertyMap _properties = null;
+
+  /**
+   * Initialise the entity properties.
+   */
+  void _initProperties([KindDefinition subkind]) {
+    assert(_properties == null);
+
+    var keyKindDefn = Datastore.kindByName(key.kind);
+
+    if (subkind == null) {
+      //There is no subkind. The concrete key is the leaf kind.
+      _properties = new PropertyMap(keyKindDefn, _propertyInits);
+      return;
+    }
+
+    if (subkind.concrete) {
+      throw new KindError.concreteSubkind(subkind.name);
+    }
+
+    var parentKind = subkind.extendsKind;
+    while (parentKind != keyKindDefn) {
+      parentKind = parentKind.extendsKind;
+      if (parentKind == null) {
+        throw new KindError.notDirectSubkind(subkind.name, key.kind);
+      }
+    }
+
+    _properties = new PropertyMap(subkind, _propertyInits);
+  }
 
   /**
    * Create a new [Entity] against the given [datastore]
    * with the given [key] and, optionally, initial values
    * for the entity's properties.
+   *
+   * If [:autoInitalize:] is `false`, [:kind.initalizeEntity:] must
+   * be called after constructing the entity.
    */
-  Entity(Key key, [Map<String,dynamic> propertyInits = const {}, String subkind]) :
+  Entity(Key key, [Map<String,dynamic> propertyInits = const {}, String subkind, bool autoInitialise=true]) :
     this.key = key,
-    _properties = new PropertyMap(
-        (subkind != null) ? _initSubkind(key.kind, subkind) : Datastore.kindByName(key.kind),
-        propertyInits);
+    _propertyInits = propertyInits {
+    if (autoInitialise)
+      _initProperties(subkind != null ? Datastore.kindByName(subkind): null);
+  }
 
   bool hasProperty(String propertyName) {
     return _properties.containsKey(propertyName);
@@ -88,8 +99,9 @@ class Entity {
   schema.Entity _toSchemaEntity() {
     schema.Entity schemaEntity = new schema.Entity();
     schemaEntity.key = key._toSchemaKey();
+    var kindProperties = (subkind != null) ? subkind.properties : kind.properties;
     _properties.forEach((String name, _PropertyInstance prop) {
-      var defn = subkind.properties[name];
+      var defn = kind.properties[name];
       assert(defn != null);
       schemaEntity.property.add(prop._toSchemaProperty(defn));
     });
