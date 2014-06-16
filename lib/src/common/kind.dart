@@ -88,6 +88,9 @@ class KindDefinition {
           throw new KindError.multipleConcreteKindsInInheritanceHeirarchy(name, parentKind.name);
       }
     }
+    if (entityFactory == null) {
+      throw new ArgumentError('null entity factory');
+    }
     return new KindDefinition._(
         name,
         properties,
