@@ -101,7 +101,7 @@ class Entity {
     schemaEntity.key = key._toSchemaKey();
     var kindProperties = (subkind != null) ? subkind.properties : kind.properties;
     _properties.forEach((String name, _PropertyInstance prop) {
-      var defn = kind.properties[name];
+      var defn = kindProperties[name];
       assert(defn != null);
       schemaEntity.property.add(prop._toSchemaProperty(defn));
     });
@@ -118,8 +118,8 @@ class Entity {
  * The result of a lookup operation for an [Entity].
  */
 class EntityResult<T extends Entity> {
-  static const KEY_ONLY = 0;
-  static const ENTITY_PRESENT = 1;
+  static const KEY_ONLY = 'key_only';
+  static const ENTITY_PRESENT = 'entity_present';
 
   /**
    * The looked up key
