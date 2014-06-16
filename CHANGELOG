@@ -1,3 +1,9 @@
+version 0.3.3
+=============
+
+Enhancements
+- Subkind now discovered by reflection when using reflective version of library
+
 version 0.3.2
 =============
 
