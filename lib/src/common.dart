@@ -38,6 +38,15 @@ class Datastore {
   final DatastoreConnection connection;
 
   /**
+   * Clear the known kinds from the datastore.
+   * Warning: This will make methods not work until a new [Datastore] instance is
+   * constructed.
+   */
+  static void clearKindCache() {
+    _entityKinds.clear();
+  }
+
+  /**
    * The logger associated with the datastore.
    * By default, log records are written to the logger with name 'datastore'.
    *
@@ -405,8 +414,8 @@ class Datastore {
   Future<Transaction> delete(Key key) {
     logger.info("Deleting ${key} from datastore");
     return withTransaction((Transaction transaction) {
-          lookup(key).then((result) {
-            if (result.isPresent) return;
+        return lookup(key).then((result) {
+            if (!result.isPresent) return;
             transaction.delete.add(key);
           });
         })
@@ -429,12 +438,12 @@ class Datastore {
     return withTransaction((Transaction transaction) {
           return lookupAll(keys, transaction).toList().then((results) {
             transaction.delete.addAll(
-                results.where((r) => r.isPresent).map((r) => r.key)
+                results.where((r) => !r.isPresent).map((r) => r.key)
             );
           });
         })
         .then((transaction) {
-          logger.info("Delete of ${keys} successfull (transaction id: ${transaction.id}");
+          logger.info("Delete of ${keys} successful");
           return transaction;
         });
   }

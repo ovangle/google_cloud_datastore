@@ -29,6 +29,15 @@ class Datastore extends base.Datastore {
     return kind;
   }
 
+  /**
+   * Clear the known kinds from the datastore.
+   * WARNING: Do not call this method!!! For internal use only.
+   */
+  static void clearKindCache() {
+    base.Datastore.clearKindCache();
+    _entityTypes.clear();
+  }
+
   static KindDefinition kindByName(String name) => base.Datastore.kindByName(name);
   static PropertyDefinition propByName(String kind, String name) => base.Datastore.propByName(kind, name);
 
