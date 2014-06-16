@@ -136,6 +136,15 @@ class KindDefinition {
     return ent;
   }
 
+  bool isSubkindOf(var /* String | KindDefinition */ kind) {
+    if (kind is String) {
+      kind = Datastore.kindByName(kind);
+    }
+    if (this == kind) return true;
+    if (extendsKind == null) return false;
+    return extendsKind.isSubkindOf(kind);
+  }
+
   /**
    * Initializes all the properties on the given entity
    */

@@ -20,6 +20,9 @@ abstract class Filter {
   factory Filter.ancestorIs(Key key) =>
       new _AncestorFilter(key);
 
+  /**
+   * Filters the subkinds of entities
+   */
   factory Filter.subkind(String subkind) {
     return new Filter(Entity.SUBKIND_PROPERTY, Operator.EQUAL, subkind);
   }
@@ -36,6 +39,8 @@ abstract class Filter {
 
   // The properties which are filtered for inequality
   Set<PropertyDefinition> get _inequalityProperties;
+  // Gets the set of property names which filter for subkind.
+  Set<String> get _subkindProperties;
 }
 
 /**
@@ -97,11 +102,26 @@ class _PredicateFilter implements Filter {
 
   @override
   void _checkValidFilter(KindDefinition kind) {
+    var subkind;
+    if ((property is String && property == Entity.SUBKIND_PROPERTY.name) ||
+        property == Entity.SUBKIND_PROPERTY) {
+      subkind = Datastore.kindByName(value);
+    } else {
+      subkind = kind;
+    }
+
+    if (!subkind.isSubkindOf(kind))
+      throw new KindError.notDirectSubkind(subkind.name, kind.name);
+
     if (property is String) {
-      property = Datastore.propByName(kind.name, property);
-    } else if (!kind.hasProperty(property)) {
+       property = Datastore.propByName(subkind.name, property);
+    }
+
+
+    if (!subkind.hasProperty(property)) {
       throw new NoSuchPropertyError(kind, property.name);
     }
+
     value = (property as PropertyDefinition).type.checkType(value);
 
     if (!property.indexed) {
@@ -125,6 +145,16 @@ class _PredicateFilter implements Filter {
     return props;
   }
 
+  @override
+  Set<String> get _subkindProperties {
+    var props = new Set();
+    if (property is PropertyDefinition && property.name == Entity.SUBKIND_PROPERTY) {
+      props.add(property.name);
+    } else if (property is String && property == Entity.SUBKIND_PROPERTY.name) {
+      props.add(property);
+    }
+    return props;
+  }
 }
 
 /**
@@ -157,6 +187,8 @@ class _AncestorFilter implements Filter {
 
   @override
   Set<PropertyDefinition> get _inequalityProperties => new Set();
+  @override
+  Set<String> get _subkindProperties => new Set();
 }
 
 class _CompositeFilter implements Filter {
@@ -177,8 +209,21 @@ class _CompositeFilter implements Filter {
   String toString() => operands.join(" AND ");
 
   @override
-  void _checkValidFilter(KindDefinition kind) {
-    operands.forEach((operand) => operand._checkValidFilter(kind));
+  void _checkValidFilter(KindDefinition queryKind) {
+    var subkind;
+    var subkindProps = _subkindProperties;
+    if (subkindProps.isEmpty) {
+      subkind = queryKind;
+    } else if (subkindProps.length > 1) {
+      throw new InvalidQueryException("A query may not filter for more than one subkind");
+    } else {
+      subkind = subkindProps.single;
+    }
+    if (!subkind.isSubkindOf(queryKind)) {
+      throw new KindError.notDirectSubkind(subkind.name, queryKind.name);
+    }
+
+    operands.forEach((operand) => operand._checkValidFilter(subkind));
     if (_inequalityProperties.length > 1) {
       throw new InvalidQueryException(
           "A query may not use an inequality expression more than once"
@@ -189,5 +234,9 @@ class _CompositeFilter implements Filter {
   @override
   Set<PropertyDefinition> get _inequalityProperties =>
       new Set.from(operands.expand((oper) => oper._inequalityProperties));
+
+  @override
+  Set<String> get _subkindProperties =>
+      new Set.from(operands.expand((oper) => oper._subkindProperties));
 }
 
