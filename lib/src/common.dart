@@ -270,11 +270,8 @@ class Datastore {
   Future<Transaction> insert(Entity entity) {
     logger.info("Inserting $entity into datastore");
     return withTransaction((transaction) {
-          return lookup(entity.key, transaction)
-          .then((entityResult) {
-            if (entityResult.isPresent) {
-              return;
-            }
+          return lookup(entity.key, transaction).then((entityResult) {
+            if (entityResult.isPresent) return;
             transaction.insert.add(entity);
           });
         })
