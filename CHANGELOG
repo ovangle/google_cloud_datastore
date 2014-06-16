@@ -1,3 +1,16 @@
+version 0.3.3+1
+===============
+
+Features
+- Added a static `clearKindCache` method to `Datastore`.
+   Should *not* be called by user code 
+
+Bugfixes
+- filter ignored the subkind of an entity, resulting in incorrect 'NoSuchPropertyError's
+- A subkind entity would be incorrectly transformed into a schema entity
+- All errors in `transaction.commit` are thrown asynchronously
+- delete failed to add keys to transaction 
+
 version 0.3.3
 =============
 
