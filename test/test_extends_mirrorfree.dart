@@ -8,7 +8,8 @@ import '../lib/src/common.dart';
 final fileKind =
     new KindDefinition(
         "File",
-        [ new PropertyDefinition("path", PropertyType.STRING, indexed: true) ]
+        [ new PropertyDefinition("path", PropertyType.STRING, indexed: true) ],
+        entityFactory: (key) => new Entity(key)
     );
 
 final protectedFileKind =
@@ -25,7 +26,7 @@ final protectedFileKind =
 //Invalid since both the implementing and base class are concrete
 final concreteBase = new KindDefinition("ConcreteBase", [], concrete: true);
 
-final errKind = new KindDefinition("Err", []);
+final errKind = new KindDefinition("Err", [], entityFactory: (key) => new Entity(key));
 
 final notDirectSubkind =
   new KindDefinition(
@@ -34,16 +35,24 @@ final notDirectSubkind =
         new PropertyDefinition("level", PropertyType.INTEGER)
       ],
       extendsKind: errKind,
-      concrete: false
+      concrete: false,
+      entityFactory: (key) => new Entity(key)
   );
+
 void main() {
 
   group("kind subtyping", () {
     Datastore datastore;
+    bool logging = false;
     setUp(() {
       return DatastoreConnection.open('41795083', 'crucial-matter-487',
           host: 'http://127.0.0.1:5961').then((connection) {
+        Datastore.clearKindCache();
         datastore = new Datastore.withKinds(connection, [fileKind, protectedFileKind, notDirectSubkind, errKind]);
+        if (!logging) {
+          datastore.logger.onRecord.listen(print);
+          logging = true;
+        }
       });
     });
 
@@ -53,7 +62,7 @@ void main() {
     });
 
     test("Should not be able to create a kind which extends a concrete kind", () {
-      var concreteKind = new KindDefinition("Concrete", [], concrete: true);
+      var concreteKind = new KindDefinition("Concrete", [], concrete: true, entityFactory: (key) => new Entity(key));
       expect(() => new KindDefinition("ConcreteSubkind", [], extendsKind: concreteKind, concrete: true),
           throwsA(new isInstanceOf<KindError>()));
     });
@@ -87,24 +96,40 @@ void main() {
           throwsA(new isInstanceOf<KindError>()));
     });
 
-    test("Should be able to store a schema entity", () {
-      var key = new Key("File", id: 123);
-      var ent = new Entity(key,
-          { "path": "/path/to/file",
-            "user": "missy",
-            "level": 0
-          },
-          "ProtectedFile");
-      return datastore.insert(ent)
-          .then((transaction) {
-        return datastore.lookup((key)).then((result) {
+    group("subkind transactions", () {
+
+      var ent;
+
+      setUp(() {
+        return datastore.allocateKey("File").then((key) {
+          ent = new Entity(
+              key,
+              { "path": "/path/to/file",
+               "user": "missy",
+                "level": 0
+              },
+              "ProtectedFile");
+          return datastore.insert(ent);
+        });
+      });
+
+      tearDown(() {
+        return datastore.delete(ent.key);
+      });
+      test("Should be able to store a schema entity", () {
+        return datastore.lookup((ent.key)).then((result) {
           expect(result.isPresent, isTrue);
           expect(result.entity.getProperty(Entity.SUBKIND_PROPERTY.name), "ProtectedFile");
         });
-      })
-      .whenComplete(() => datastore.delete(key));
-    });
+      });
 
+      test("Should be able to query for entities of a specific subkind", () {
+        var query = new Query("File", new Filter.subkind("ProtectedFile"));
+        return datastore.query(query).toList().then((result) {
+          expect(result.map((r) => r.key), anyElement(equals(ent.key)));
+        });
+      });
+    });
 
 
   });

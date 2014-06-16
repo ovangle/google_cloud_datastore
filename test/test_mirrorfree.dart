@@ -1,5 +1,6 @@
 library datastore.mirrorfree.test;
 
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 
@@ -25,9 +26,12 @@ final KindDefinition userKind =
 final KindDefinition userDetailsKind =
   new KindDefinition("UserDetails", [], entityFactory: (key) => new Entity(key));
 
+
+
 final NOW = new DateTime.now();
 
 void defineTests(DatastoreConnection connection) {
+  Datastore.clearKindCache();
   Datastore datastore = new Datastore.withKinds(connection, [userKind, userDetailsKind]);
 
   group("properties", () {

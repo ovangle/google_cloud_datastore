@@ -25,7 +25,7 @@ class User extends Entity {
   @Property(name: "date_joined")
   DateTime get dateJoined => getProperty("date_joined");
 
-  @Property()
+  @Property(indexed: true)
   int get age => getProperty("age");
   @Property()
   bool get isAdmin => getProperty("isAdmin");
@@ -38,8 +38,23 @@ class PrivateUser extends User {
   PrivateUser(Key key): super(key);
 }
 
-void defineTests(MockConnection connection) {
-  var datastore = new Datastore(connection);
+void main() {
+  DatastoreConnection connection;
+  Datastore datastore;
+  bool logging = false;
+  setUp(() {
+    return DatastoreConnection.open('41795083', 'crucial-matter-487',
+        host: 'http://127.0.0.1:5961').then((conn) {
+      connection = conn;
+      Datastore.clearKindCache();
+      datastore = new Datastore(conn);
+      if (!logging) {
+        datastore.logger.onRecord.listen(print);
+        logging = true;
+      }
+    });
+  });
+
   test("reflected user kind should be identical to mirrorfree kind", () {
     var userKind = Datastore.kindByName("User");
     expect(userKind, mirrorfree.userKind);
@@ -48,7 +63,7 @@ void defineTests(MockConnection connection) {
 
   test("reconstructing the datastore should not overwrite existing kinds", () {
     var userKind = Datastore.kindByName("User");
-    var datastore2 = new Datastore(connection);
+    Datastore datastore2 = new Datastore(connection);
     expect(Datastore.kindByName("User"), same(userKind));
   });
 
