@@ -2,6 +2,9 @@ library mirrorfree_test_transactions;
 
 import 'dart:async';
 
+import 'package:quiver/async.dart';
+import 'package:quiver/iterables.dart';
+
 import 'package:unittest/unittest.dart';
 
 import '../lib/src/common.dart';
@@ -29,6 +32,36 @@ void main() {
           datastore.logger.onRecord.listen(print);
           logging = true;
         }
+      });
+    });
+
+    group("list", () {
+      List<Entity> files;
+
+      setUp(() {
+        files = [];
+        return forEachAsync(range(5), (i) {
+          return datastore.allocateKey("File")
+              .then((key) {
+            var f = new Entity(key);
+            f.setProperty("path", "/file$i");
+            files.add(f);
+            return datastore.insert(f);
+          });
+        },
+        maxTasks: 5);
+      });
+
+      tearDown(() {
+        return datastore.list("File", keysOnly: true)
+            .forEach((result) => datastore.delete(result.key));
+      });
+
+      test("should be able to list all keys of a specific kind", () {
+        return datastore.list("File").toList()
+            .then((results) {
+          expect(results.map((r) => r.entity), unorderedEquals(files));
+        });
       });
     });
 

@@ -192,6 +192,35 @@ class Datastore {
   }
 
   /**
+   * List all entities of the given [:kind:] in the datastore.
+   *
+   * If [:keysOnly:] is `true`, then only the entity keys will be fetched and all [EntityResult]s
+   * in the stream will be [:keysOnly:]
+   *
+   * If [:offset:] is provided, represents the number of results to skip before the first result
+   * of the query is returned
+   * If [:limit:] is provided and non-negative, represents the maximum number of results to fetch.
+   * A [:limit:] of `-1` is interpreted as a request for all matched results.
+   */
+  Stream<EntityResult> list(String kind, {bool keysOnly: false, int offset: 0, int limit: -1}) {
+    var kindDefn = Datastore.kindByName(kind);
+    //FIXME: Should be able to list abstract kinds.
+    if (!kindDefn.concrete)
+      throw new KindError.kindOnKeyMustBeConcrete(kind);
+
+    schema.Query query = new schema.Query()
+        ..kind.add(kindDefn._toSchemaKindExpression())
+        ..offset = offset;
+    if (limit >= 0) query.limit = limit;
+    if (keysOnly) {
+      var proj = new schema.PropertyExpression()
+          ..property = Entity.KEY_PROPERTY._toSchemaPropertyReference();
+      query.projection.add(proj);
+    }
+    return _runSchemaQuery(new schema.RunQueryRequest()..query = query);
+  }
+
+  /**
    * Run a query against the datastore, fetching all for [Entity]s which match the provided [Query]
    *
    * If [:offset:] is provided, represents the number of results to skip before the first result
