@@ -131,8 +131,8 @@ class Entity {
           _fkCache[propertyName] = result;
          });
        } else {
-         var propType = _properties[value].propertyType;
-         throw new PropertyTypeError(propType, value);
+         var propType = _properties[propertyName].propertyType;
+         throw new PropertyTypeError(propertyName, propType, value);
        }
     }).then((_) => _fkCache[propertyName]);
   }
@@ -224,9 +224,9 @@ class PropertyMap extends UnmodifiableMapMixin<String,_PropertyInstance> {
     _entityProperties = new Map() {
     this.kind.properties.forEach((name, defn) {
       if (name == Entity.SUBKIND_PROPERTY.name) {
-        _entityProperties[name] = defn.type.create(initialValue: kind.name);
+        _entityProperties[name] = defn.type.create("subkind", initialValue: kind.name);
       } else {
-        _entityProperties[name] = defn.type.create(initialValue: propertyInits[name]);
+        _entityProperties[name] = defn.type.create(name, initialValue: propertyInits[name]);
       }
     });
   }

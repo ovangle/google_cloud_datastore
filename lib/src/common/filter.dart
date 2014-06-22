@@ -122,7 +122,7 @@ class _PredicateFilter implements Filter {
       throw new NoSuchPropertyError(kind, property.name);
     }
 
-    value = (property as PropertyDefinition).type.checkType(value);
+    value = property.type.checkType(property.name, value);
 
     if (!property.indexed) {
       throw new InvalidQueryException(

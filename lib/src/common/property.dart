@@ -146,19 +146,20 @@ class PropertyType<T> {
    * If this is a [PropertyType.BLOB] property, [List<int>]s are automatically converted
    * to Uint8List via the [:Uint8List.fromList:]  constructor.
    */
-  T checkType(var value) {
+  T checkType(String prop, var value) {
     if (this == BLOB && value is List<int>) {
       value = new Uint8List.fromList(value);
     }
     try {
       assert(value == null || value is T);
     } on AssertionError {
-      throw new PropertyTypeError(this, value);
+      throw new PropertyTypeError(prop, this, value);
     }
     return value;
   }
 
-  _PropertyInstance create({T initialValue}) => new _PropertyInstance(this, initialValue: initialValue);
+  _PropertyInstance create(String prop, {dynamic initialValue}) =>
+      new _PropertyInstance(prop, this, initialValue: checkType(prop, initialValue));
 
   static _boolToSchemaValue(schema.Value value, bool b) {
     if (b != null)
@@ -286,14 +287,14 @@ class _ListPropertyType<T> implements PropertyType<List<T>> {
     }
   }
 
-  _PropertyInstance create({List<T> initialValue}) =>
-      new _ListPropertyInstance(this, initialValue: initialValue);
+  _PropertyInstance create(String propertyName, {List<T> initialValue}) =>
+      new _ListPropertyInstance(propertyName, this, initialValue: initialValue);
 
-  List<T> checkType(var value) {
+  List<T> checkType(String prop, var value) {
     if (value is List<T>) {
       return value;
     }
-    throw new PropertyTypeError(this, value);
+    throw new PropertyTypeError(prop, this, value);
   }
 
   toString() => "list<${generic._repr}>";

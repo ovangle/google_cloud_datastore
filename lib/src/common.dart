@@ -561,11 +561,12 @@ class NoSuchPropertyError extends Error {
 }
 
 class PropertyTypeError extends Error {
+  final String propertyName;
   final PropertyType propertyType;
   final value;
 
-  PropertyTypeError(this.propertyType, this.value);
+  PropertyTypeError(String this.propertyName, this.propertyType, this.value);
 
   toString() =>
-      "TypeError: Invalid value for ${propertyType} property";
+      "TypeError: Invalid value for ${propertyType} property '$propertyName'";
 }
