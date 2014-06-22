@@ -42,7 +42,9 @@ class Entity {
    * Initialise the entity properties.
    */
   void _initProperties([KindDefinition subkind]) {
-    assert(_properties == null);
+    if (_properties != null) {
+      throw new StateError("Properties already initialized");
+    }
 
     var keyKindDefn = Datastore.kindByName(key.kind);
 
@@ -75,9 +77,9 @@ class Entity {
    * If [:autoInitalize:] is `false`, [:kind.initalizeEntity:] must
    * be called after constructing the entity.
    */
-  Entity(Key key, [Map<String,dynamic> propertyInits = const {}, String subkind, bool autoInitialise=true]) :
+  Entity(Key key, [Map<String,dynamic> propertyInits, String subkind, bool autoInitialise=true]) :
     this.key = key,
-    _propertyInits = propertyInits {
+    _propertyInits = (propertyInits != null) ? propertyInits : const {} {
     if (autoInitialise)
       _initProperties(subkind != null ? Datastore.kindByName(subkind): null);
   }
