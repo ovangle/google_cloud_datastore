@@ -194,6 +194,10 @@ class Datastore {
   /**
    * List all entities of the given [:kind:] in the datastore.
    *
+   * If the kind is a subkind of a concrete kind, then this method is equivalent to
+   *
+   *       query(new Query(<concrete superkind>, new Filter.subkind(kind));
+   *
    * If [:keysOnly:] is `true`, then only the entity keys will be fetched and all [EntityResult]s
    * in the stream will be [:keysOnly:]
    *
@@ -204,14 +208,24 @@ class Datastore {
    */
   Stream<EntityResult> list(String kind, {bool keysOnly: false, int offset: 0, int limit: -1}) {
     var kindDefn = Datastore.kindByName(kind);
-    //FIXME: Should be able to list abstract kinds.
-    if (!kindDefn.concrete)
-      throw new KindError.kindOnKeyMustBeConcrete(kind);
+    schema.Query query;
+    if (kindDefn.concrete) {
+      query = new schema.Query()
+          ..kind.add(kindDefn._toSchemaKindExpression());
+    } else {
+      while (!kindDefn.concrete) {
+        kindDefn = kindDefn.extendsKind;
+        if (kindDefn == null) {
+          throw new KindError.noConcreteSuper(kind);
+        }
+      }
+      Query subkindQuery = new Query(kindDefn, new Filter.subkind(kind));
+      query = subkindQuery._toSchemaQuery();
+    }
 
-    schema.Query query = new schema.Query()
-        ..kind.add(kindDefn._toSchemaKindExpression())
-        ..offset = offset;
+    query.offset = offset;
     if (limit >= 0) query.limit = limit;
+
     if (keysOnly) {
       var proj = new schema.PropertyExpression()
           ..property = Entity.KEY_PROPERTY._toSchemaPropertyReference();
@@ -527,6 +541,9 @@ class KindError extends Error {
   final String message;
 
   KindError(String this.kind, String this.message);
+
+  KindError.noConcreteSuper(String kind):
+    this(kind, "$kind has no concrete super kind");
 
   KindError.multipleConcreteKindsInInheritanceHeirarchy(String kind, String extendsKind):
     this.kind = kind,
