@@ -502,32 +502,17 @@ class Datastore {
    * Returns the committed transaction.
    */
   Future<Transaction> withTransaction(dynamic action(Transaction transaction)) {
-    Completer<Transaction> completer = new Completer<Transaction>();
-
-    Transaction.begin(this)
-      .then((transaction) {
-      //Check whether the transaction has already been committed and if not
-      //commit it.
-      void commitIfOpenTransaction() {
-        if (transaction.isCommitted) {
-          completer.complete(transaction);
+    return Transaction.begin(this).then((transaction) {
+      return new Future.sync(() {
+        return action(transaction);
+      }).then((_) {
+        if (transaction.isCommitted){
+          return transaction;
         } else {
-          transaction.commit().then(
-              (_) => completer.complete(transaction),
-              onError: completer.completeError);
+          return transaction.commit();
         }
-      }
-      var result = action(transaction);
-      if (result is Future) {
-        result.then(
-            (_) => commitIfOpenTransaction(),
-            onError: completer.completeError);
-      } else {
-        commitIfOpenTransaction();
-      }
+      });
     });
-
-    return completer.future;
   }
 }
 
