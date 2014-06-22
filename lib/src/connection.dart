@@ -132,7 +132,7 @@ class DatastoreConnection {
       _call("commit", request, (bytes) => new CommitResponse.fromBuffer(bytes));
 
   Future<RollbackResponse> rollback(RollbackRequest request) =>
-      _call("rollck", request, (bytes) => new RollbackResponse.fromBuffer(bytes));
+      _call("rollback", request, (bytes) => new RollbackResponse.fromBuffer(bytes));
 
   Future<AllocateIdsResponse> allocateIds(AllocateIdsRequest request) =>
       _call("allocateIds", request, (bytes) => new AllocateIdsResponse.fromBuffer(bytes));
