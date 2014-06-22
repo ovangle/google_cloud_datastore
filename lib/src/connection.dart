@@ -2,6 +2,7 @@ library connection;
 
 import 'dart:io';
 import 'dart:async';
+import 'dart:convert' show JSON;
 
 import 'package:logging/logging.dart';
 import 'package:http/http.dart' as http;
@@ -163,7 +164,8 @@ class DatastoreConnection {
           if (response.statusCode != 200) {
             logger.severe("Request to $method failed with status ${response.statusCode}");
             logger.severe(response.body);
-            throw new RPCException(response.statusCode, method, response.reasonPhrase);
+            var jsonResponse = JSON.decode(response.body);
+            throw new RPCException(response.statusCode, method, jsonResponse['error']['message']);
           }
           logger.info("Server returned valid ($method) response");
           return reconstructResponse(response.bodyBytes);
@@ -179,6 +181,10 @@ class RPCException implements Exception {
   RPCException(int this.status, String this.method, this.reason);
 
   String toString() {
-    return "Remote procedure call $method failed with status $status ($reason)";
+    var msg = "Remote procedure call $method failed with status $status";
+    if (reason != null) {
+      msg += "\n\tmessage: $reason";
+    }
+    return msg;
   }
 }
