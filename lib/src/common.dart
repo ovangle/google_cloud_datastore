@@ -102,20 +102,22 @@ class Datastore {
    * Allocate a new unnamed datastore key.
    */
   Future<Key> allocateKey(String kind, {Key parentKey}) {
-    if (!Datastore.kindByName(kind).concrete) {
-      throw new KindError.kindOnKeyMustBeConcrete(kind);
-    }
-    var key = (parentKey != null) ? parentKey._toSchemaKey() : new schema.Key();
-    key.pathElement.add(
-        new schema.Key_PathElement()
-        ..kind = kind
-    );
-    schema.AllocateIdsRequest request = new schema.AllocateIdsRequest()
-        ..key.add(key);
-    return connection.allocateIds(request)
-        .then((schema.AllocateIdsResponse response) {
-          return new Key._fromSchemaKey(response.key.first);
-        });
+    return new Future.sync(() {
+      if (!Datastore.kindByName(kind).concrete) {
+        throw new KindError.kindOnKeyMustBeConcrete(kind);
+      }
+      var key = (parentKey != null) ? parentKey._toSchemaKey() : new schema.Key();
+      key.pathElement.add(
+          new schema.Key_PathElement()
+          ..kind = kind
+      );
+      schema.AllocateIdsRequest request = new schema.AllocateIdsRequest()
+          ..key.add(key);
+      return connection.allocateIds(request)
+          .then((schema.AllocateIdsResponse response) {
+            return new Key._fromSchemaKey(response.key.first);
+          });
+      });
   }
 
   /**
