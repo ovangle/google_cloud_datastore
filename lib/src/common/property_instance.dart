@@ -45,8 +45,10 @@ class _ListPropertyInstance<T> implements _PropertyInstance<List<T>> {
 
   @override
   schema.Property _toSchemaProperty(PropertyDefinition definition) {
-    var schemaValue = propertyType._toSchemaValue(_value)
-        ..indexed = definition.indexed;
+    if (definition.indexed) {
+      throw new PropertyException("A list property cannot be indexed");
+    }
+    var schemaValue = propertyType._toSchemaValue(new schema.Value(), _value);
     return new schema.Property()
       ..name = definition.name
       ..value = schemaValue;
