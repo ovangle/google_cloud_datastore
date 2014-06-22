@@ -39,6 +39,11 @@ class Entity {
   PropertyMap _properties = null;
 
   /**
+   * A cache of the entities associated with foreign keys on the entity
+   */
+  final Map<String, /* Key | List<Key> */ dynamic> _fkCache = new Map();
+
+  /**
    * Initialise the entity properties.
    */
   void _initProperties([KindDefinition subkind]) {
@@ -88,15 +93,66 @@ class Entity {
     return _properties.containsKey(propertyName);
   }
 
+  /**
+   * Get the value of the property with the given [:propertyName:]
+   */
   dynamic getProperty(String propertyName) {
     var prop = _properties[propertyName];
     return prop.value;
   }
 
   void setProperty(String propertyName, var value) {
+    //Clear the cache entry for the given property
+    _fkCache.remove(propertyName);
     var prop = _properties[propertyName];
     prop.value = value;
   }
+
+  /**
+   * Get the [Entity] associated with the given key property, fetching
+   * from the datastore if necessary.
+   *
+   * Throws a [PropertyError] if the value of the property is not a
+   * [Key] or a [List<Key>].
+   */
+  Future<EntityResult> getForeignKeyProperty(Datastore datastore, String propertyName) {
+    return new Future.sync(() {
+      if (_fkCache[propertyName] != null)
+        return null;
+      var value = getProperty(propertyName);
+      if (value == null)
+        return null;
+      if (value is Key) {
+        return datastore.lookup(value).then((result) {
+           _fkCache[propertyName] = result;
+         });
+       } else if (value is List<Key>) {
+         return datastore.lookupAll(value).toList().then((result) {
+          _fkCache[propertyName] = result;
+         });
+       } else {
+         var propType = _properties[value].propertyType;
+         throw new PropertyTypeError(propType, value);
+       }
+    }).then((_) => _fkCache[propertyName]);
+  }
+
+  /**
+   * Set the value of the foreign key property [:propertyName:] to the
+   * key of the given [:entity:].
+   *
+   * Cache the result to avoid fetching it from the datastore on the
+   * next access
+   */
+  void setForeignKeyProperty(String propertyName, Entity entity) {
+    setProperty(propertyName, entity.key);
+    //Add the entity to the foreign key cache so
+    //it's not fetched from the datastore
+    //on next access.
+    _fkCache[propertyName] = entity;
+  }
+
+
 
   schema.Entity _toSchemaEntity() {
     schema.Entity schemaEntity = new schema.Entity();
