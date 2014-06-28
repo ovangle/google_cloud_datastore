@@ -1,15 +1,40 @@
+version 0.4.0
+=============
+
+Breaking changes
+- Key.kind is now a `KindDefinition` (previously a String)
+
+
+Features
+- Added a `datastore.list` method, which will stream all entities of a particular kind
+  from the datastore
+- All methods which accept a Kind can either accept
+- Improved error handling
+    - Exceptions in remote procedure calls now provide more informative error messages
+    - Exceptions which were previously thrown synchronously are now thrown asynchronously
+- Added instance caching of the entity values of foreign key properties, and utility
+  methods `getForeignKeyProperty` and `setForeignKeyProperty` which will access the
+  value from the cache without fetching from the datastore
+
+Bugfixes
+- Fixed problem where attempting to rollback a transaction hit an invalid remote endpoint
+- Check for list indexation. Datastore lists cannot be indexed, but the library would have
+  no problem creating an indexed list property
+
+
+
 version 0.3.3+1
 ===============
 
 Features
 - Added a static `clearKindCache` method to `Datastore`.
-   Should *not* be called by user code 
+   Should *not* be called by user code
 
 Bugfixes
 - filter ignored the subkind of an entity, resulting in incorrect 'NoSuchPropertyError's
 - A subkind entity would be incorrectly transformed into a schema entity
 - All errors in `transaction.commit` are thrown asynchronously
-- delete failed to add keys to transaction 
+- delete failed to add keys to transaction
 
 version 0.3.3
 =============
@@ -44,7 +69,6 @@ version 0.3.0
 
 Breaking changes
 - Entity constructor only takes single argument
-
 Enhancements
 - Query and filter improvements
   - Query arguments type checks relaxed so either a String or KindDefinition can specify a query
