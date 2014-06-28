@@ -23,8 +23,12 @@ abstract class Filter {
   /**
    * Filters the subkinds of entities
    */
-  factory Filter.subkind(String subkind) {
-    return new Filter(Entity.SUBKIND_PROPERTY, Operator.EQUAL, subkind);
+  factory Filter.subkind(dynamic /* String | KindDefinition */ subkind) {
+    return new Filter(
+        Entity.SUBKIND_PROPERTY,
+        Operator.EQUAL,
+        subkind is KindDefinition ? subkind.name : subkind);
+
   }
 
   /**
@@ -47,6 +51,7 @@ abstract class Filter {
  * An operator for use in a predicate filter.
  */
 class Operator {
+
   static const EQUAL =
       const Operator._("==", schema.PropertyFilter_Operator.EQUAL);
   static const GREATER_THAN =

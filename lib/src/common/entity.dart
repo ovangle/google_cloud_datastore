@@ -22,7 +22,7 @@ class Entity {
   /**
    * The datastore kind of the entity
    */
-  KindDefinition get kind => Datastore.kindByName(key.kind);
+  KindDefinition get kind => key.kind;
 
   /**
    * The specific subkind of the entity. If the kind is [:concrete:], then will
@@ -51,11 +51,9 @@ class Entity {
       throw new StateError("Properties already initialized");
     }
 
-    var keyKindDefn = Datastore.kindByName(key.kind);
-
     if (subkind == null) {
       //There is no subkind. The concrete key is the leaf kind.
-      _properties = new PropertyMap(keyKindDefn, _propertyInits);
+      _properties = new PropertyMap(key.kind, _propertyInits);
       return;
     }
 
@@ -64,7 +62,7 @@ class Entity {
     }
 
     var parentKind = subkind.extendsKind;
-    while (parentKind != keyKindDefn) {
+    while (parentKind != key.kind) {
       parentKind = parentKind.extendsKind;
       if (parentKind == null) {
         throw new KindError.notDirectSubkind(subkind.name, key.kind);

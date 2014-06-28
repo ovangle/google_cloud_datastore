@@ -8,7 +8,7 @@ class Key {
   /**
    * The name of the kind of the [Key].
    */
-  final String kind;
+  final KindDefinition kind;
   /**
    * A reference to the parent of this key
    */
@@ -32,7 +32,7 @@ class Key {
   /**
    * Gets a reference to the child of this [Key] with the given [:kind:] and [:name:]
    */
-  Key getChild(String kind, {String name}) {
+  Key getChild(dynamic /* String | KindDefinition */ kind, {String name}) {
     if (name == null) {
       throw new KeyError.incomplete();
     }
@@ -48,7 +48,8 @@ class Key {
    * Raises a [KeyError] if [:name:] is not provided.
    */
 
-  Key(String this.kind, {Key this.parentKey, int this.id, String this.name}) {
+  Key(dynamic /* String | KindDefinition */ kind, {Key this.parentKey, int this.id, String this.name}):
+      this.kind = (kind is KindDefinition) ? kind : Datastore.kindByName(kind) {
     if (id == null && name == null) {
       throw new KeyError.incomplete();
     }
@@ -103,7 +104,7 @@ class Key {
    */
   schema.Key_PathElement _toPathElement() {
     var pathElement = new schema.Key_PathElement()
-        ..kind = this.kind;
+        ..kind = this.kind.name;
     if (id != null) {
       pathElement.id = new Int64(id);
     }
@@ -142,7 +143,7 @@ class Key {
   }
 
   String toString() {
-    StringBuffer sbuf = new StringBuffer('Key($kind');
+    StringBuffer sbuf = new StringBuffer('Key(${kind.name}');
     if (parentKey != null)
       sbuf.write(", $parentKey");
     if (id != null)

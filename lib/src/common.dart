@@ -544,7 +544,7 @@ class KindError extends Error {
     this.kind = name,
     this.message = "Entity subkind cannot be concrete";
 
-  KindError.notDirectSubkind(String subkind, String keyKind):
+  KindError.notDirectSubkind(String subkind, dynamic /* String | Kind */ keyKind):
     this.kind = subkind,
     this.message = "Entity subkind ($subkind) must extend the key kind ($keyKind)";
 
