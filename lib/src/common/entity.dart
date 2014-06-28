@@ -22,7 +22,7 @@ class Entity {
   /**
    * The datastore kind of the entity
    */
-  KindDefinition get kind => Datastore.kindByName(key.kind);
+  KindDefinition get kind => key.kind;
 
   /**
    * The specific subkind of the entity. If the kind is [:concrete:], then will
@@ -39,16 +39,21 @@ class Entity {
   PropertyMap _properties = null;
 
   /**
+   * A cache of the entities associated with foreign keys on the entity
+   */
+  final Map<String, /* Key | List<Key> */ dynamic> _fkCache = new Map();
+
+  /**
    * Initialise the entity properties.
    */
   void _initProperties([KindDefinition subkind]) {
-    assert(_properties == null);
-
-    var keyKindDefn = Datastore.kindByName(key.kind);
+    if (_properties != null) {
+      throw new StateError("Properties already initialized");
+    }
 
     if (subkind == null) {
       //There is no subkind. The concrete key is the leaf kind.
-      _properties = new PropertyMap(keyKindDefn, _propertyInits);
+      _properties = new PropertyMap(key.kind, _propertyInits);
       return;
     }
 
@@ -57,7 +62,7 @@ class Entity {
     }
 
     var parentKind = subkind.extendsKind;
-    while (parentKind != keyKindDefn) {
+    while (parentKind != key.kind) {
       parentKind = parentKind.extendsKind;
       if (parentKind == null) {
         throw new KindError.notDirectSubkind(subkind.name, key.kind);
@@ -75,9 +80,9 @@ class Entity {
    * If [:autoInitalize:] is `false`, [:kind.initalizeEntity:] must
    * be called after constructing the entity.
    */
-  Entity(Key key, [Map<String,dynamic> propertyInits = const {}, String subkind, bool autoInitialise=true]) :
+  Entity(Key key, [Map<String,dynamic> propertyInits, String subkind, bool autoInitialise=true]) :
     this.key = key,
-    _propertyInits = propertyInits {
+    _propertyInits = (propertyInits != null) ? propertyInits : const {} {
     if (autoInitialise)
       _initProperties(subkind != null ? Datastore.kindByName(subkind): null);
   }
@@ -86,15 +91,66 @@ class Entity {
     return _properties.containsKey(propertyName);
   }
 
+  /**
+   * Get the value of the property with the given [:propertyName:]
+   */
   dynamic getProperty(String propertyName) {
     var prop = _properties[propertyName];
     return prop.value;
   }
 
   void setProperty(String propertyName, var value) {
+    //Clear the cache entry for the given property
+    _fkCache.remove(propertyName);
     var prop = _properties[propertyName];
     prop.value = value;
   }
+
+  /**
+   * Get the [Entity] associated with the given key property, fetching
+   * from the datastore if necessary.
+   *
+   * Throws a [PropertyError] if the value of the property is not a
+   * [Key] or a [List<Key>].
+   */
+  Future<EntityResult> getForeignKeyProperty(Datastore datastore, String propertyName) {
+    return new Future.sync(() {
+      if (_fkCache[propertyName] != null)
+        return null;
+      var value = getProperty(propertyName);
+      if (value == null)
+        return null;
+      if (value is Key) {
+        return datastore.lookup(value).then((result) {
+           _fkCache[propertyName] = result;
+         });
+       } else if (value is List<Key>) {
+         return datastore.lookupAll(value).toList().then((result) {
+          _fkCache[propertyName] = result;
+         });
+       } else {
+         var propType = _properties[propertyName].propertyType;
+         throw new PropertyTypeError(propertyName, propType, value);
+       }
+    }).then((_) => _fkCache[propertyName]);
+  }
+
+  /**
+   * Set the value of the foreign key property [:propertyName:] to the
+   * key of the given [:entity:].
+   *
+   * Cache the result to avoid fetching it from the datastore on the
+   * next access
+   */
+  void setForeignKeyProperty(String propertyName, Entity entity) {
+    setProperty(propertyName, entity.key);
+    //Add the entity to the foreign key cache so
+    //it's not fetched from the datastore
+    //on next access.
+    _fkCache[propertyName] = entity;
+  }
+
+
 
   schema.Entity _toSchemaEntity() {
     schema.Entity schemaEntity = new schema.Entity();
@@ -166,9 +222,9 @@ class PropertyMap extends UnmodifiableMapMixin<String,_PropertyInstance> {
     _entityProperties = new Map() {
     this.kind.properties.forEach((name, defn) {
       if (name == Entity.SUBKIND_PROPERTY.name) {
-        _entityProperties[name] = defn.type.create(initialValue: kind.name);
+        _entityProperties[name] = defn.type.create("subkind", initialValue: kind.name);
       } else {
-        _entityProperties[name] = defn.type.create(initialValue: propertyInits[name]);
+        _entityProperties[name] = defn.type.create(name, initialValue: propertyInits[name]);
       }
     });
   }

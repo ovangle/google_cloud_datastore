@@ -102,20 +102,22 @@ class Datastore {
    * Allocate a new unnamed datastore key.
    */
   Future<Key> allocateKey(String kind, {Key parentKey}) {
-    if (!Datastore.kindByName(kind).concrete) {
-      throw new KindError.kindOnKeyMustBeConcrete(kind);
-    }
-    var key = (parentKey != null) ? parentKey._toSchemaKey() : new schema.Key();
-    key.pathElement.add(
-        new schema.Key_PathElement()
-        ..kind = kind
-    );
-    schema.AllocateIdsRequest request = new schema.AllocateIdsRequest()
-        ..key.add(key);
-    return connection.allocateIds(request)
-        .then((schema.AllocateIdsResponse response) {
-          return new Key._fromSchemaKey(response.key.first);
-        });
+    return new Future.sync(() {
+      if (!Datastore.kindByName(kind).concrete) {
+        throw new KindError.kindOnKeyMustBeConcrete(kind);
+      }
+      var key = (parentKey != null) ? parentKey._toSchemaKey() : new schema.Key();
+      key.pathElement.add(
+          new schema.Key_PathElement()
+          ..kind = kind
+      );
+      schema.AllocateIdsRequest request = new schema.AllocateIdsRequest()
+          ..key.add(key);
+      return connection.allocateIds(request)
+          .then((schema.AllocateIdsResponse response) {
+            return new Key._fromSchemaKey(response.key.first);
+          });
+      });
   }
 
   /**
@@ -189,6 +191,49 @@ class Datastore {
         .catchError(controller.addError);
 
     return controller.stream;
+  }
+
+  /**
+   * List all entities of the given [:kind:] in the datastore.
+   *
+   * If the kind is a subkind of a concrete kind, then this method is equivalent to
+   *
+   *       query(new Query(<concrete superkind>, new Filter.subkind(kind));
+   *
+   * If [:keysOnly:] is `true`, then only the entity keys will be fetched and all [EntityResult]s
+   * in the stream will be [:keysOnly:]
+   *
+   * If [:offset:] is provided, represents the number of results to skip before the first result
+   * of the query is returned
+   * If [:limit:] is provided and non-negative, represents the maximum number of results to fetch.
+   * A [:limit:] of `-1` is interpreted as a request for all matched results.
+   */
+  Stream<EntityResult> list(String kind, {bool keysOnly: false, int offset: 0, int limit: -1}) {
+    var kindDefn = Datastore.kindByName(kind);
+    schema.Query query;
+    if (kindDefn.concrete) {
+      query = new schema.Query()
+          ..kind.add(kindDefn._toSchemaKindExpression());
+    } else {
+      while (!kindDefn.concrete) {
+        kindDefn = kindDefn.extendsKind;
+        if (kindDefn == null) {
+          throw new KindError.noConcreteSuper(kind);
+        }
+      }
+      Query subkindQuery = new Query(kindDefn, new Filter.subkind(kind));
+      query = subkindQuery._toSchemaQuery();
+    }
+
+    query.offset = offset;
+    if (limit >= 0) query.limit = limit;
+
+    if (keysOnly) {
+      var proj = new schema.PropertyExpression()
+          ..property = Entity.KEY_PROPERTY._toSchemaPropertyReference();
+      query.projection.add(proj);
+    }
+    return _runSchemaQuery(new schema.RunQueryRequest()..query = query);
   }
 
   /**
@@ -457,32 +502,17 @@ class Datastore {
    * Returns the committed transaction.
    */
   Future<Transaction> withTransaction(dynamic action(Transaction transaction)) {
-    Completer<Transaction> completer = new Completer<Transaction>();
-
-    Transaction.begin(this)
-      .then((transaction) {
-      //Check whether the transaction has already been committed and if not
-      //commit it.
-      void commitIfOpenTransaction() {
-        if (transaction.isCommitted) {
-          completer.complete(transaction);
+    return Transaction.begin(this).then((transaction) {
+      return new Future.sync(() {
+        return action(transaction);
+      }).then((_) {
+        if (transaction.isCommitted){
+          return transaction;
         } else {
-          transaction.commit().then(
-              (_) => completer.complete(transaction),
-              onError: completer.completeError);
+          return transaction.commit();
         }
-      }
-      var result = action(transaction);
-      if (result is Future) {
-        result.then(
-            (_) => commitIfOpenTransaction(),
-            onError: completer.completeError);
-      } else {
-        commitIfOpenTransaction();
-      }
+      });
     });
-
-    return completer.future;
   }
 }
 
@@ -499,6 +529,9 @@ class KindError extends Error {
 
   KindError(String this.kind, String this.message);
 
+  KindError.noConcreteSuper(String kind):
+    this(kind, "$kind has no concrete super kind");
+
   KindError.multipleConcreteKindsInInheritanceHeirarchy(String kind, String extendsKind):
     this.kind = kind,
     this.message = "Multiple concrete kinds ($kind, $extendsKind) found in inheritance heirarchy";
@@ -511,7 +544,7 @@ class KindError extends Error {
     this.kind = name,
     this.message = "Entity subkind cannot be concrete";
 
-  KindError.notDirectSubkind(String subkind, String keyKind):
+  KindError.notDirectSubkind(String subkind, dynamic /* String | Kind */ keyKind):
     this.kind = subkind,
     this.message = "Entity subkind ($subkind) must extend the key kind ($keyKind)";
 
@@ -528,11 +561,12 @@ class NoSuchPropertyError extends Error {
 }
 
 class PropertyTypeError extends Error {
+  final String propertyName;
   final PropertyType propertyType;
   final value;
 
-  PropertyTypeError(this.propertyType, this.value);
+  PropertyTypeError(String this.propertyName, this.propertyType, this.value);
 
   toString() =>
-      "TypeError: Invalid value for ${propertyType} property";
+      "TypeError: Invalid value for ${propertyType} property '$propertyName'";
 }

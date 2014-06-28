@@ -35,7 +35,7 @@ Future clean() {
       .then((files) {
         return forEachAsync(
             files,
-            (f) => f.remove());
+            (f) => f.delete());
       });
 }
 

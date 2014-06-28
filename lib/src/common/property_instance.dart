@@ -1,18 +1,20 @@
 part of datastore.common;
 
 class _PropertyInstance<T> {
+  final String propertyName;
   final PropertyType<T> propertyType;
   T _value;
 
-  T get value => propertyType.checkType(_value);
-    set value(T value) => _value = propertyType.checkType(value);
+  T get value => propertyType.checkType(propertyName, _value);
+    set value(T value) => _value = propertyType.checkType(propertyName, value);
 
-  _PropertyInstance(PropertyType<T> propertyType, {T initialValue}) :
+  _PropertyInstance(String propertyName, PropertyType<T> propertyType, {T initialValue}) :
+    this.propertyName = propertyName,
     this.propertyType = propertyType,
-    this._value = propertyType.checkType(initialValue);
+    this._value = propertyType.checkType(propertyName, initialValue);
 
-  _PropertyInstance.fromSchemaProperty(PropertyType this.propertyType, schema.Property schemaProperty) {
-    this.value = propertyType._fromSchemaValue(schemaProperty.value);
+  _PropertyInstance.fromSchemaProperty(String this.propertyName, PropertyType this.propertyType, schema.Property schemaProperty) {
+    this.value = propertyType._fromSchemaValue(propertyName, schemaProperty.value);
   }
 
   schema.Property _toSchemaProperty(PropertyDefinition definition) {
@@ -25,6 +27,7 @@ class _PropertyInstance<T> {
 }
 
 class _ListPropertyInstance<T> implements _PropertyInstance<List<T>> {
+  final String propertyName;
   final PropertyType<List<T>> propertyType;
   _ListValue<T> _value;
 
@@ -35,18 +38,21 @@ class _ListPropertyInstance<T> implements _PropertyInstance<List<T>> {
       _value.addAll(value);
   }
 
-  _ListPropertyInstance(_ListPropertyType<T> propertyType, {List<T> initialValue}) :
+  _ListPropertyInstance(String propertyName, _ListPropertyType<T> propertyType, {List<T> initialValue}) :
+    this.propertyName = propertyName,
     this.propertyType = propertyType,
     this._value = new _ListValue(propertyType.generic, initialValue);
 
-  _ListPropertyInstance.fromSchemaProperty(PropertyType this.propertyType, schema.Property schemaProperty) {
+  _ListPropertyInstance.fromSchemaProperty(String this.propertyName, PropertyType this.propertyType, schema.Property schemaProperty) {
     this._value = propertyType._fromSchemaValue(schemaProperty.value);
   }
 
   @override
   schema.Property _toSchemaProperty(PropertyDefinition definition) {
-    var schemaValue = propertyType._toSchemaValue(_value)
-        ..indexed = definition.indexed;
+    if (definition.indexed) {
+      throw new PropertyException("A list property cannot be indexed");
+    }
+    var schemaValue = propertyType._toSchemaValue(new schema.Value(), _value);
     return new schema.Property()
       ..name = definition.name
       ..value = schemaValue;
@@ -67,10 +73,10 @@ class _ListValue<T> extends ListMixin<T> {
   //Implementation of List<T>
 
   void add(T element) =>
-      elements.add(generic.create(initialValue: element));
+      elements.add(generic.create("list element", initialValue: element));
 
   void addAll(Iterable<T> iterable) {
-    elements.addAll(iterable.map((e) => generic.create(initialValue: e)));
+    elements.addAll(iterable.map((e) => generic.create("list element", initialValue: e)));
   }
 
   T operator [](int i) => elements[i].value;
@@ -83,7 +89,7 @@ class _ListValue<T> extends ListMixin<T> {
     var oldLength = length;
     elements.length = length;
     while (oldLength < length) {
-      elements[oldLength++] = generic.create();
+      elements[oldLength++] = generic.create("list element");
     }
   }
 }
