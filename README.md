@@ -12,15 +12,15 @@ Two methods for interacting with the datastore are offered by the library. In ad
 Include the datastore library in your `pubspec.yaml` file:
 
     dependencies:
-      googleclouddatastore: '>=0.2.0'
+      google_cloud_datastore: '>=0.2.0'
       
 The packages exposes two APIs, the `datastore` API, which provides a mechanism for defining persistent objects based on standard dart class definitions and provides utility methods for interacting with the datastore. To use this library, import the `datastore` library from the root of the `package`
 
-    import 'package:googleclouddatastore/datastore.dart';
+    import 'package:google_cloud_datastore/datastore.dart';
     
 A minimal library which provides access to the raw protobuffer API (which is generated directly from the [datastore protobuffer API schema][6]) and to the `DatastoreConnection` instance is avialable vial the `datastore.protobuf` library.
 
-    import 'package:googleclouddatastore/datastore_protobuf.dart';
+    import 'package:google_cloud_datastore/datastore_protobuf.dart';
     
 ### Connections ###
       
