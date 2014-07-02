@@ -233,9 +233,29 @@ The [canonical example][4] provided for datastore connections is the `example/ad
 
 A similar example demonstrating usage of the `protobuf` API is available as `example/adams_protobuf.dart`.
 
+## Testing ##
+
+Running the unit tests requires an instance of the [gcd tool][3] installed on the machine.
+
+1. Create an instance of the tool using
+    
+    `bash gcd.sh create --datset_id='test-id`
+
+
+2. Start the gcd server running on localhost port `5961` in `testing` mode.
+
+
+    `bash gcd.sh start --port=5961 --testing ~/.gcd`
+
+3. Run the unit tests in dart checked mode
+
+
+    `dart -c test/all_tests.dart`
+
 
 [1]: https://developers.google.com/datastore/
 [2]: https://github.com/dart-lang/dart-protobuf
 [3]: https://developers.google.com/datastore/docs/tools/
 [4]: https://developers.google.com/datastore/docs/getstarted/start_python/
 [5]: https://console.developers.google.com/
+[6]: https://github.com/GoogleCloudPlatform/google-cloud-datastore/blob/v1beta2-rev1-2.1.0/proto/datastore_v1.proto
