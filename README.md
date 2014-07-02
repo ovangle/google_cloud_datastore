@@ -91,7 +91,75 @@ eg. The following class declaration a `Kind` with no properties which can be per
     }
     
 The `Entity` constructor also accepts an (optional) map of property names to values, which can be used to provide initial values for entities during object construction.
-    
+
+#### Abstract Kinds ####
+
+By default, all `Kind`s are `concrete`, which means that they are persisted as a datastore entity. To save duplicating code, it might be advantageous to create a single base kind holding properties applicable to multiple entity kinds.
+
+This can be accomplished in a variety of ways.
+
+- The first option is to not annotate the base kind , eg:
+
+```
+class BaseKind extends Entity {
+  BaseKind(Key key): super(key);
+  //Properties
+}
+
+@Kind()
+class Subkind extends BaseKind {
+
+   Subkind(Key key): super(key);
+}
+```
+
+In this case, `Subkind` will inherit all properties of `BaseKind` and `BaseKind` can even be an `abstract` kind, disabling dart instantiation of the type.
+
+- The second option is to create a `concrete` base kind and `abstract` subkinds. eg.
+
+```
+@Kind()
+class BaseKind extends Entity {
+  BaseKind(Key key): super(key);
+  //Properties
+}
+
+@Kind(concrete: false)
+class Subkind extends BaseKind {
+  Subkind(Key key): super(key);
+}
+```
+
+In this latter case, `Subkind` will, when persisted to the datastore, be stored as a `BaseKind` entity, but have an implicit `___subkind` property which associates it with the subclass definition.
+
+This can be useful if you want to create multiple different kinds of entities with the same basic structure that can be accessed using the same query, without providing a lot of useless optional fields on `BaseKind`
+
+For instance, if you had a datastore entity `Message` and you wanted to create a type of `Message` that was only visible to certain users, you could do:
+
+```
+@Kind()
+class Message extends Entity {
+  @Property()
+  String content => getProperty('content');
+} 
+
+@Kind(concrete: False)
+class PrivateMessage extends Message {
+  /**
+   * All `User`s who can view this message
+   */ 
+  @Property()
+  List<Key> visibleTo => getProperty('visibleTo');
+}
+```
+
+**NOTE:**
+The use of abstract kinds is limited to the following limitations:
+
+- Exactly one kind in an inheritance heirarchy can have `concrete: True`.
+- `Key`s and `Query`s must be instantiated with the name of the `concrete` parent (so, you would pass `Key('BaseKind', ...)` into the above constructor).
+
+
 #### Entity ####
 
 An `entity` represents a persisted instance of a `kind` from the datastore.
@@ -105,8 +173,8 @@ is a user provided `String`), or `unnamed` (in which case the identifier is a da
 
 **NOTE:**
 While named entities can be created directly, unnamed
-entities (those with an `id`) need to be allocated in the datastore before use 
-using the `datastore.allocateKey` method.
+entities (those with an `id`) need to be allocated in the datastore before they can be used
+using the `datastore.allocateKey` method. 
 
 A `key` is analagous to a file system path and represents a path from the root of the datastore 
 to the location of the entity. An `entity` can *own* other entities, and queries within this 
@@ -118,17 +186,17 @@ Every `Entity` is built from multiple `Property`s, which represent the data stor
 
  - `int`
  - `double`
- - `num` 
- 	- *`num` types are stored as a `doubleValue` in  the datastore* 
+ - `num`*
  - `String`
  - `DateTime`
  - `Key`
- - `Uint8List` 
-   -  *stored as a `blobValue` on the datastore entity. Note that a property typed as `List<int>` is to be a `List` of `intValue`, whereas `Uint8List` is stored as a `blobValue`.*
- - `dynamic`
-   - *A value of any of the above types.*
+ - `Uint8List`**
+ - `dynamic` - *A value of any of the above types.*
    
 Or a `List` of any of the above types.
+
+\* *`num` values are stored as a `doubleValue` in the datastore.*<br />
+\*\* *stored as a `blobValue` on the datastore entity. Note that a property typed as `List<int>` is to be a `List` of `intValue`, whereas `Uint8List` is stored as a `blobValue`.*
 
 eg.
 
@@ -165,15 +233,6 @@ The [canonical example][4] provided for datastore connections is the `example/ad
 
 A similar example demonstrating usage of the `protobuf` API is available as `example/adams_protobuf.dart`.
 
-### Filesystem storage ###
-
-An additional example demonstrating how to define kinds which could (possibly) be used for storage of file-like objects see `example/file_storage.dart`.
-
-## Limitiations ##
-
-A `DatastoreConnection` object can presently only be used for connecting to the datastore from inside a compute engine instance or for connecting to an instance of a local [gcd][3] server.
-
-Connecting to a remote production datastore instance via a google service account is not yet supported, but is planned for a future release.
 
 [1]: https://developers.google.com/datastore/
 [2]: https://github.com/dart-lang/dart-protobuf
