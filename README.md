@@ -12,7 +12,7 @@ Two methods for interacting with the datastore are offered by the library. In ad
 Include the datastore library in your `pubspec.yaml` file:
 
     dependencies:
-      google_cloud_datastore: '>=0.2.0'
+      google_cloud_datastore: any
       
 The packages exposes two APIs, the `datastore` API, which provides a mechanism for defining persistent objects based on standard dart class definitions and provides utility methods for interacting with the datastore. To use this library, import the `datastore` library from the root of the `package`
 
