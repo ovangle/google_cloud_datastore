@@ -14,7 +14,7 @@ import 'package:crypto/crypto.dart' show CryptoUtils;
 import 'package:fixnum/fixnum.dart';
 import 'package:logging/logging.dart';
 
-import 'schema_v1_pb2.dart' as schema;
+import 'proto/schema_v1_pb2.dart' as schema;
 import 'connection.dart';
 
 part 'common/key.dart';

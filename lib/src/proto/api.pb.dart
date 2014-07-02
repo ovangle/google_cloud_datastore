@@ -1,7 +1,7 @@
 ///
 //  Generated code. Do not modify.
 ///
-library api;
+library pb_api;
 
 import 'package:fixnum/fixnum.dart';
 import 'package:protobuf/protobuf.dart';
@@ -345,6 +345,7 @@ class GqlQueryArg extends GeneratedMessage {
     ..a(1, 'name', GeneratedMessage.OS)
     ..a(2, 'value', GeneratedMessage.OM, () => new Value(), () => new Value())
     ..a(3, 'cursor', GeneratedMessage.OY)
+    ..hasRequiredFields = false
   ;
 
   GqlQueryArg() : super();
@@ -432,6 +433,7 @@ class Mutation extends GeneratedMessage {
     ..m(4, 'insertAutoId', () => new Entity(), () => new PbList<Entity>())
     ..m(5, 'delete', () => new Key(), () => new PbList<Key>())
     ..a(6, 'force', GeneratedMessage.OB)
+    ..hasRequiredFields = false
   ;
 
   Mutation() : super();
@@ -521,6 +523,7 @@ class LookupRequest extends GeneratedMessage {
   static final BuilderInfo _i = new BuilderInfo('LookupRequest')
     ..a(1, 'readOptions', GeneratedMessage.OM, () => new ReadOptions(), () => new ReadOptions())
     ..m(3, 'key', () => new Key(), () => new PbList<Key>())
+    ..hasRequiredFields = false
   ;
 
   LookupRequest() : super();
@@ -709,6 +712,7 @@ class CommitRequest extends GeneratedMessage {
     ..a(1, 'transaction', GeneratedMessage.OY)
     ..a(2, 'mutation', GeneratedMessage.OM, () => new Mutation(), () => new Mutation())
     ..e(5, 'mode', GeneratedMessage.OE, () => CommitRequest_Mode.TRANSACTIONAL, (var v) => CommitRequest_Mode.valueOf(v))
+    ..hasRequiredFields = false
   ;
 
   CommitRequest() : super();
@@ -753,6 +757,7 @@ class CommitResponse extends GeneratedMessage {
 class AllocateIdsRequest extends GeneratedMessage {
   static final BuilderInfo _i = new BuilderInfo('AllocateIdsRequest')
     ..m(1, 'key', () => new Key(), () => new PbList<Key>())
+    ..hasRequiredFields = false
   ;
 
   AllocateIdsRequest() : super();
@@ -767,6 +772,7 @@ class AllocateIdsRequest extends GeneratedMessage {
 class AllocateIdsResponse extends GeneratedMessage {
   static final BuilderInfo _i = new BuilderInfo('AllocateIdsResponse')
     ..m(1, 'key', () => new Key(), () => new PbList<Key>())
+    ..hasRequiredFields = false
   ;
 
   AllocateIdsResponse() : super();

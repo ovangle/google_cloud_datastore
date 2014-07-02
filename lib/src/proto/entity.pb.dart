@@ -1,7 +1,7 @@
 ///
 //  Generated code. Do not modify.
 ///
-library entity;
+library pb_entity;
 
 import 'package:fixnum/fixnum.dart';
 import 'package:protobuf/protobuf.dart';

@@ -1,7 +1,7 @@
 ///
 //  Generated code. Do not modify.
 ///
-library service;
+library pb_service;
 
 import 'package:fixnum/fixnum.dart';
 import 'package:protobuf/protobuf.dart';

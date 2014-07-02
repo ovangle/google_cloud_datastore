@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:protobuf/protobuf.dart';
 import 'package:google_oauth2_client/google_oauth2_console.dart' as oauth2;
 
-import 'schema_v1_pb2.dart';
+import 'proto/schema_v1_pb2.dart';
 
 
 /**

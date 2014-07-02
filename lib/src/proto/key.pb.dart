@@ -1,7 +1,7 @@
 ///
 //  Generated code. Do not modify.
 ///
-library key;
+library pb_key;
 
 import 'package:fixnum/fixnum.dart';
 import 'package:protobuf/protobuf.dart';
