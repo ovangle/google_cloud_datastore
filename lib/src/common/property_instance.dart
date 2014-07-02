@@ -13,10 +13,6 @@ class _PropertyInstance<T> {
     this.propertyType = propertyType,
     this._value = propertyType.checkType(propertyName, initialValue);
 
-  _PropertyInstance.fromSchemaProperty(String this.propertyName, PropertyType this.propertyType, schema.Property schemaProperty) {
-    this.value = propertyType._fromSchemaValue(propertyName, schemaProperty.value);
-  }
-
   schema.Property _toSchemaProperty(PropertyDefinition definition) {
     schema.Value schemaValue = propertyType._toSchemaValue(new schema.Value(), _value)
       ..indexed = definition.indexed;
