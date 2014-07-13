@@ -53,8 +53,9 @@ class Key {
     if (id == null && name == null) {
       throw new KeyError.incomplete();
     }
-    var kindDefn = Datastore.kindByName(kind);
-    if (!kindDefn.concrete) {
+    if (kind is String)
+      kind = Datastore.kindByName(kind);
+    if (!kind.concrete) {
       throw new KindError.kindOnKeyMustBeConcrete(kind);
     }
   }

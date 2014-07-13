@@ -103,7 +103,7 @@ EntityFactory _entityFactory(String kind, ClassMirror cls) {
     throw new KindError.noValidConstructor(kind);
   }
 
-  return (Key key) =>
+  return (base.Key key) =>
       cls.newInstance(constructor.constructorName,[key]).reflectee;
 }
 
@@ -112,7 +112,8 @@ bool _isKindDefintion(ClassMirror cls) {
   if (superCls.reflectedType == Object) {
     return false;
   }
-  if (superCls.reflectedType == Entity) {
+  if (superCls.reflectedType == Entity ||
+      superCls.reflectedType == base.Entity) {
     return true;
   }
   return _isKindDefintion(cls.superclass);
@@ -123,7 +124,8 @@ KindDefinition _extendsKindDefintion(String kindName, ClassMirror cls, Map<Type,
     throw new KindError.mustExtendEntity(kindName);
   var supercls = cls.superclass;
 
-  if (supercls.reflectedType == Entity)
+  if (supercls.reflectedType == Entity ||
+      supercls.reflectedType == base.Entity)
     return null;
 
   var superKindDefintionAnno = _kindAnno(supercls);
@@ -182,6 +184,7 @@ PropertyType _propertyType(String kind, String propertyName, TypeMirror type, [b
       case Uint8List:
         return PropertyType.BLOB;
       case Key:
+      case base.Key:
         return PropertyType.KEY;
       case DateTime:
         return PropertyType.DATE_TIME;
