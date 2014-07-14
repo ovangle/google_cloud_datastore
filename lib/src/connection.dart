@@ -147,7 +147,7 @@ class DatastoreConnection {
     return http.post('$host/_ah/admin/quit');
   }
 
-  Future<GeneratedMessage> _call(String method, GeneratedMessage message, GeneratedMessage reconstructResponse(List<int> bytes)) {
+  Future _call(String method, GeneratedMessage message, GeneratedMessage reconstructResponse(List<int> bytes)) {
     var request = new http.Request("POST", Uri.parse("$_url/$method"))
         ..headers['content-type'] = 'application/x-protobuf'
         ..bodyBytes = message.writeToBuffer();

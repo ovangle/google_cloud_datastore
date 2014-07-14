@@ -17,7 +17,6 @@ export 'src/connection.dart';
 
 part 'src/datastore_mirrors/annotations.dart';
 part 'src/datastore_mirrors/reflection.dart';
-part 'src/datastore_mirrors/wrappers.dart';
 
 class Datastore extends base.Datastore {
   static Map<Type, KindDefinition> _entityTypes = new Map();
@@ -52,4 +51,17 @@ class Datastore extends base.Datastore {
     return new Datastore._(connection, _entityTypes.values.toList(growable: false));
   }
 }
+
+
+class Entity extends base.Entity {
+  static Map<Type, String> _clsToKindDefn = new Map();
+
+  Entity(Key key, [Map<String,dynamic> propertyInits=const {}]):
+      super(key, propertyInits, null, false) {
+
+    var kind = Datastore.kindByType(runtimeType);
+    kind.initializeEntity(this);
+  }
+}
+
 

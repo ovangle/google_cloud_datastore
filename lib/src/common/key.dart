@@ -47,15 +47,12 @@ class Key {
    * in the datastore.
    * Raises a [KeyError] if [:name:] is not provided.
    */
-
   Key(dynamic /* String | KindDefinition */ kind, {Key this.parentKey, int this.id, String this.name}):
-      this.kind = (kind is KindDefinition) ? kind : Datastore.kindByName(kind) {
+      this.kind = (kind is String) ? Datastore.kindByName(kind) : kind {
     if (id == null && name == null) {
       throw new KeyError.incomplete();
     }
-    if (kind is String)
-      kind = Datastore.kindByName(kind);
-    if (!kind.concrete) {
+    if (!this.kind.concrete) {
       throw new KindError.kindOnKeyMustBeConcrete(kind);
     }
   }
