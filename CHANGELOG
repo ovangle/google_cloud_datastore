@@ -1,8 +1,14 @@
+version 0.4.0+2
+===============
+
+Bugfixes
+- Type errors caused by wrapper classes shadowing mirrorfree classes
+
 version 0.4.0+1
 ===============
 
 Bugfixes
-- When reconstructing entity from schema, `key.kind` was 
+- When reconstructing entity from schema, `key.kind` was
   assumed to be a `String`.
 
 version 0.4.0
