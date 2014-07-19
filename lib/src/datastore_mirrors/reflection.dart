@@ -155,12 +155,15 @@ List<PropertyDefinition> _entityProperties(String kind, ClassMirror cls) {
 }
 
 PropertyDefinition _propertyFromMethod(String kind, MethodMirror method) {
-  var prop = method.metadata.singleWhere((mdata) => mdata.reflectee is Property).reflectee;
+  Property prop = method.metadata.singleWhere((mdata) => mdata.reflectee is Property).reflectee;
     String propertyName = _propertyName(prop, method);
   if (!method.isGetter || method.isStatic) {
     throw new KindError.invalidProperty(kind, propertyName);
   }
-  var propertyType = _propertyType(kind, propertyName, method.returnType);
+  var propertyType =
+      (prop.type != null)
+      ? prop.type
+      : _propertyType(kind, propertyName, method.returnType);
   return new PropertyDefinition(propertyName, propertyType, indexed: prop.indexed);
 }
 
