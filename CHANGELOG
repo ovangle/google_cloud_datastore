@@ -1,3 +1,10 @@
+version 0.4.1
+=============
+
+Breaking changes
+- Removed horrible "reflection wrappers" misfeature. It just doesn't work.
+Be more careful about releasing features in future!
+
 version 0.4.0+2
 ===============
 
