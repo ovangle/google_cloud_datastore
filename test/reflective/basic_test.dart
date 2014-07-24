@@ -13,6 +13,12 @@ import 'package:unittest/unittest.dart';
 import '../../lib/datastore.dart';
 import '../mirrorfree/kinds.dart' as mirrorfree_kinds;
 
+class MyBool {
+  final bool isTrue;
+
+  MyBool(bool this.isTrue);
+}
+
 @Kind()
 class User extends Entity {
   User(Key key, [String subtype]): super(key, {});
@@ -31,8 +37,9 @@ class User extends Entity {
 
   @Property(indexed: true)
   int get age => getProperty("age");
-  @Property()
-  bool get isAdmin => getProperty("isAdmin");
+
+  @Property(type: PropertyType.BOOLEAN)
+  MyBool get isAdmin => new MyBool(getProperty("isAdmin"));
   @Property()
   List<Key> get friends => getProperty("friends");
 }
