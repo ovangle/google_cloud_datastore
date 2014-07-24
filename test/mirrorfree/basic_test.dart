@@ -89,6 +89,7 @@ void main() {
       Entity user;
       var userDetails;
       var friends = new List();
+
       setUp(() {
         return new Future.value().then((_) {
           return datastore.allocateKey("UserDetails").then((key) {
@@ -137,6 +138,16 @@ void main() {
           expect(value.isPresent, isTrue);
           expect(value.entity, userDetails);
         });
+      });
+
+      test("foreign key properties should be nullable", () {
+        user.setForeignKeyProperty('user_details', null);
+        user.getForeignKeyProperty(datastore, 'user_details').then((result) {
+          expect(result, isNotNull);
+          expect(result.isPresent, false);
+          expect(result.entity, isNull);
+        });
+
       });
 
       test("should cache the foreign key value", () {

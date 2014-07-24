@@ -118,8 +118,10 @@ class Entity {
       if (_fkCache[propertyName] != null)
         return null;
       var value = getProperty(propertyName);
-      if (value == null)
+      if (value == null) {
+        _fkCache[propertyName] = new EntityResult._(EntityResult.KEY_ABSENT, null, null);
         return null;
+      }
       if (value is Key) {
         return datastore.lookup(value).then((result) {
            _fkCache[propertyName] = result;
@@ -143,7 +145,10 @@ class Entity {
    * next access
    */
   void setForeignKeyProperty(String propertyName, Entity entity) {
-    setProperty(propertyName, entity.key);
+    setProperty(
+        propertyName,
+        entity != null ? entity.key: null
+    );
     //Add the entity to the foreign key cache so
     //it's not fetched from the datastore
     //on next access.
@@ -174,6 +179,8 @@ class Entity {
  * The result of a lookup operation for an [Entity].
  */
 class EntityResult<T extends Entity> {
+  /// A `null` key was associated with a foreign key property
+  static const KEY_ABSENT = 'absent';
   static const KEY_ONLY = 'key_only';
   static const ENTITY_PRESENT = 'entity_present';
 
