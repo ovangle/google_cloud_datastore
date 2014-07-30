@@ -9,6 +9,8 @@ Be more careful about releasing features in future!
 bugfixes
 - If type was provided on @Property annotation, it was ignored when analyzing
   types during reflection
+- getForeignKeyProperty returned `null` (rather than an empty EntityResult) when
+  no foreign key was set
 
 version 0.4.0+2
 ===============
