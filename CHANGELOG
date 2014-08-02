@@ -14,6 +14,7 @@ bugfixes
   types during reflection
 - getForeignKeyProperty returned `null` (rather than an empty EntityResult) when
   no foreign key was set
+- setForeignKeyProperty did not set an EntityResult in the cache
 
 version 0.4.0+2
 ===============
