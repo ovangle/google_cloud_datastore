@@ -152,7 +152,7 @@ class Entity {
     //Add the entity to the foreign key cache so
     //it's not fetched from the datastore
     //on next access.
-    _fkCache[propertyName] = entity;
+    _fkCache[propertyName] = new EntityResult._fromNullable(entity);
   }
 
 
@@ -210,6 +210,12 @@ class EntityResult<T extends Entity> {
 
   EntityResult.present(Entity entity):
     this._(ENTITY_PRESENT, entity.key, entity);
+
+  factory EntityResult._fromNullable(Entity entity) {
+    return (entity != null)
+        ? new EntityResult.present(entity)
+        : new EntityResult.absent();
+  }
 
   factory EntityResult._fromSchemaEntityResult(
       Datastore datastore,
