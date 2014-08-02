@@ -6,6 +6,9 @@ Breaking changes
 - Removed horrible "reflection wrappers" misfeature. It just doesn't work.
 Be more careful about releasing features in future!
 
+features
+- Added helper constructors to EntityResult
+
 bugfixes
 - If type was provided on @Property annotation, it was ignored when analyzing
   types during reflection
