@@ -202,6 +202,15 @@ class EntityResult<T extends Entity> {
 
   EntityResult._(this.resultType, this.key, this.entity);
 
+  EntityResult.absent():
+    this._(KEY_ABSENT, null, null);
+
+  EntityResult.keyOnly(Key key):
+    this._(KEY_ONLY, key, null);
+
+  EntityResult.present(Entity entity):
+    this._(ENTITY_PRESENT, entity.key, entity);
+
   factory EntityResult._fromSchemaEntityResult(
       Datastore datastore,
       schema.EntityResult entityResult,
